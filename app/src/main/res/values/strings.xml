@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Back4AppExample</string>
+
+
+    <string name="back4app_server_url" translatable="false">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id" translatable="false">vORa9F9cxvwynlXzi9sfziI0iPXz1EujQvwMSUr2</string>
+    <string name="back4app_client_key" translatable="false">5GDWuKhTZxJfdIKBTz9dq6iPf1JJgws7FMNDLvDb</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="prompt_firstName">First Name</string>
+    <string name="prompt_surname">Surname</string>
+    <string name="prompt_phoneNo">Phone No</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid email</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+
+</resources>
