@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
+import com.parse.ParseException;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -120,12 +121,16 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //!!!//
-                databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
-                        surnameEditText.getText().toString(), phoneNoEditText.getText().toString(),
-                        emailEditText.getText().toString(), passwordEditText.getText().toString());
+                try {
+                    databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
+                            surnameEditText.getText().toString(), phoneNoEditText.getText().toString(),
+                            emailEditText.getText().toString(), passwordEditText.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                intent.putExtra("FIRSTNAME",firstNameEditText.getText().toString());
+                intent.putExtra("USERNAME",emailEditText.getText().toString());
                 startActivity(intent);
             }
         });

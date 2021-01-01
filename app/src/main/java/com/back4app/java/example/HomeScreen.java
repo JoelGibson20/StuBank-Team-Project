@@ -24,18 +24,14 @@ public class HomeScreen extends AppCompatActivity {
         final TextView greeting = findViewById(R.id.greeting);
         ParseObject userDetails = null;
 
-        try{
-            greeting.setText(String.format("Welcome %s", getIntent().getStringExtra("FIRSTNAME")));
-        } catch(NullPointerException e){
-            try {
-                userDetails = databaseMethods.retrieveUserDetails(getIntent().getStringExtra("USERNAME"));
-                greeting.setText(String.format("Welcome %s", userDetails.getString("firstName")));
-            } catch (ParseException e2) {
-                e2.printStackTrace();
-            }
-
+        try {
+            userDetails = databaseMethods.retrieveUserDetails(getIntent().getStringExtra("USERNAME"));
+            greeting.setText(String.format("Welcome %s", userDetails.getString("firstName")));
+        } catch (ParseException e2) {
+            e2.printStackTrace();
         }
-        }
+        
+    }
 
 
 }

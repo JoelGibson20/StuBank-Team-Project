@@ -16,7 +16,7 @@ import java.util.List;
 
 public class databaseMethods {
 
-    public static void addToDatabase(String firstName, String surname, String phoneNo, String email, String password) {
+    public static void addToDatabase(String firstName, String surname, String phoneNo, String email, String password) throws ParseException {
         //Might add a return type to return correct error message to display on screen?
         ParseUser user = new ParseUser();
         user.setUsername(email);
@@ -27,23 +27,8 @@ public class databaseMethods {
         user.put("firstName", firstName);
         user.put("surname", surname);
         user.put("phone", phoneNo);
+        user.signUp();
 
-        user.signUpInBackground(new SignUpCallback() {
-            public void done(ParseException e) {
-                if (e == null) {
-                    //Sign up succeeded without exception
-                    System.out.println("placeholder");
-
-                } else {
-                    // Sign up didn't succeed. Look at the ParseException
-                    // to figure out what went wrong
-                    //Would give user an error message on screen to let them know
-                    System.out.println("placeholder 2");
-                    System.out.println(e);
-                }
-
-            }
-        });
     }
 
     public static boolean attemptLogin(String email, String password) throws ParseException {
