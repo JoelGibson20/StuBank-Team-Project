@@ -14,23 +14,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
-import com.back4app.java.example.ui.login.LoginViewModel;
-import com.back4app.java.example.ui.login.LoginViewModelFactory;
-import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.signup.SignUpActivity;
-
-import org.w3c.dom.Text;
+import com.parse.ParseException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -45,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final EditText emailEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
+        final Button loginButton = findViewById(R.id.register);
         final TextView dontHaveAccount = findViewById(R.id.dontHaveAccount);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -123,13 +118,23 @@ public class LoginActivity extends AppCompatActivity {
    /*             loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());*/
-                databaseMethods.attemptLogin(emailEditText.getText().toString(), passwordEditText.getText().toString());
+
+                try {
+                    if (databaseMethods.attemptLogin(emailEditText.getText().toString(), passwordEditText.getText().toString())){
+                        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                        intent.putExtra("USERNAME", emailEditText.getText().toString());
+                        startActivity(intent);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         dontHaveAccount.setOnClickListener(new View.OnClickListener(){
             //Listens for clicking of the don't have account text
             public void onClick(View v){
+                //Redirect to another page
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intent);
             }

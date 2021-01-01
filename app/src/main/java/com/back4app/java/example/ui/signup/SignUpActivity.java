@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
 
@@ -40,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
         final EditText emailEditText = findViewById(R.id.email);
         final EditText passwordEditText = findViewById(R.id.password);
 
-        final Button loginButton = findViewById(R.id.login);
+        final Button registerButton = findViewById(R.id.register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -49,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
                 if (loginFormState == null) {
                     return;
                 }
-                loginButton.setEnabled(loginFormState.isDataValid());
+                registerButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
                     emailEditText.setError(getString(loginFormState.getUsernameError()));
                 }
@@ -114,16 +116,17 @@ public class SignUpActivity extends AppCompatActivity {
         /*Above is commented out as it lacks the checks to see if the form has been filled out before
         allowing submission */
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(emailEditText.getText().toString(),
-                        passwordEditText.getText().toString());
                 //!!!//
                 databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
                         surnameEditText.getText().toString(), phoneNoEditText.getText().toString(),
                         emailEditText.getText().toString(), passwordEditText.getText().toString());
+
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                intent.putExtra("FIRSTNAME",firstNameEditText.getText().toString());
+                startActivity(intent);
             }
         });
     }

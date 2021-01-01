@@ -1,11 +1,18 @@
 package com.back4app.java.example.ui;
 
+import android.util.Log;
+
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.sql.SQLOutput;
+import java.util.List;
 
 public class databaseMethods {
 
@@ -38,20 +45,32 @@ public class databaseMethods {
             }
         });
     }
-    public static void attemptLogin(String email, String password){
-        ParseUser.logInInBackground(email, password, new LogInCallback() {
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-                    // Hooray! The user is logged in.
-                    System.out.println("SUCCESSFUL LOGIN!");
-                } else {
-                    // Signup failed. Look at the ParseException to see what happened.
-                    System.out.println("unsuccessful login");
-                }
-            }
-        });
+
+    public static boolean attemptLogin(String email, String password) throws ParseException {
+        boolean loginSuccess = true;
+        try {
+            ParseUser test = ParseUser.logIn(email, password);
+        } catch (ParseException e) {
+            System.out.println(e);
+            loginSuccess = false;
+            //Exception will occur if username/password pair isn't found
+
+        }
+        return (loginSuccess);
     }
 
+
+    public static ParseObject retrieveUserDetails(String username) throws ParseException {
+        ParseObject userDetails = null;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        query.whereEqualTo("username", username);
+        try {
+            userDetails = query.getFirst();
+        } catch (ParseException e) {
+            System.out.println(e);
+        }
+        return(userDetails);
+    }
 }
 
 
