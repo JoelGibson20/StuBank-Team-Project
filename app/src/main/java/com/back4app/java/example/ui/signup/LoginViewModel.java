@@ -1,4 +1,4 @@
-package com.back4app.java.example.ui.login;
+package com.back4app.java.example.ui.signup;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -41,11 +41,18 @@ public class LoginViewModel extends ViewModel {
         }
     }
 
-    public void loginDataChanged(String username, String password) {
+    public void loginDataChanged(String username, String password, String firstName, String surname, String phoneNo) {
+        //Checks if each input has relevant data input in it
         if (!isUserNameValid(username)) {
             loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
         } else if (!isPasswordValid(password)) {
             loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
+        } else if (firstName.equals("")) {
+            loginFormState.setValue(new LoginFormState(null, null));
+        } else if (surname.equals("")){
+            loginFormState.setValue(new LoginFormState(null, null));
+        }else if (phoneNo.equals("")){
+            loginFormState.setValue(new LoginFormState(null, null));
         } else {
             loginFormState.setValue(new LoginFormState(true));
         }

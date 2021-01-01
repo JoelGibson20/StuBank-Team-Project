@@ -23,24 +23,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.back4app.java.example.R;
+import com.back4app.java.example.ui.databaseMethods;
+import com.back4app.java.example.ui.login.LoginViewModel;
+import com.back4app.java.example.ui.login.LoginViewModelFactory;
+import com.back4app.java.example.ui.databaseMethods;
 
-public class SignUpActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText firstNameEditText = findViewById(R.id.firstName);
-        final EditText surnameEditText = findViewById(R.id.surname);
-        final EditText phoneNoEditText = findViewById(R.id.phoneNo);
-        final EditText emailEditText = findViewById(R.id.email);
+        final EditText emailEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
-
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -94,8 +94,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 loginViewModel.loginDataChanged(emailEditText.getText().toString(),
-                        passwordEditText.getText().toString(),firstNameEditText.getText().toString(),
-                        surnameEditText.getText().toString(),phoneNoEditText.getText().toString());
+                        passwordEditText.getText().toString());
             }
         };
         emailEditText.addTextChangedListener(afterTextChangedListener);
@@ -104,7 +103,6 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                //Clicking enter to submit form rather than button
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(emailEditText.getText().toString(),
                             passwordEditText.getText().toString());
@@ -116,13 +114,10 @@ public class SignUpActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
+   /*             loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(emailEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-                //!!!//
-                databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
-                        surnameEditText.getText().toString(), phoneNoEditText.getText().toString(),
-                        emailEditText.getText().toString(), passwordEditText.getText().toString());
+                        passwordEditText.getText().toString());*/
+                databaseMethods.attemptLogin(emailEditText.getText().toString(), passwordEditText.getText().toString());
             }
         });
     }
