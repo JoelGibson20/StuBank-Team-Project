@@ -18,6 +18,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="dont_have_account">Don\'t have an account? Click here to sign up</string>
 
 
 </resources>

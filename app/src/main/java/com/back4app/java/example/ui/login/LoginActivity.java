@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -27,6 +28,9 @@ import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.login.LoginViewModel;
 import com.back4app.java.example.ui.login.LoginViewModelFactory;
 import com.back4app.java.example.ui.databaseMethods;
+import com.back4app.java.example.ui.signup.SignUpActivity;
+
+import org.w3c.dom.Text;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText emailEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final TextView dontHaveAccount = findViewById(R.id.dontHaveAccount);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -113,11 +118,20 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
+            //Listens for clicking the sign in button
             public void onClick(View v) {
    /*             loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());*/
                 databaseMethods.attemptLogin(emailEditText.getText().toString(), passwordEditText.getText().toString());
+            }
+        });
+
+        dontHaveAccount.setOnClickListener(new View.OnClickListener(){
+            //Listens for clicking of the don't have account text
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }
