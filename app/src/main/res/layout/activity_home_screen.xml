@@ -33,6 +33,7 @@
 
     <ImageButton
         android:id="@+id/homeImageButton"
+        android:onClick="homeButtonOnClick"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -47,6 +48,7 @@
 
     <ImageButton
         android:id="@+id/graphImageButton"
+        android:onClick="graphButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -59,6 +61,7 @@
 
     <ImageButton
         android:id="@+id/poundImageButton"
+        android:onClick="poundButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -73,6 +76,7 @@
 
     <ImageButton
         android:id="@+id/cardImageButton"
+        android:onClick="cardButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -85,6 +89,7 @@
 
     <ImageButton
         android:id="@+id/gearsImageButton"
+        android:onClick="gearsButtonOnClick"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
