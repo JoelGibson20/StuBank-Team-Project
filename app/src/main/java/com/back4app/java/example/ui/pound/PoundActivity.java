@@ -36,8 +36,8 @@ public class PoundActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void poundButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
-        startActivity(intent);
+/*        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
+        startActivity(intent);*/
     }
     public void cardButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), CardActivity.class);

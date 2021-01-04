@@ -32,8 +32,8 @@ public class GraphActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void graphButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-        startActivity(intent);
+/*        Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+        startActivity(intent);*/
     }
     public void poundButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), PoundActivity.class);

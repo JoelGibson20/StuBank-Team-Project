@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void gearsButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-        startActivity(intent);
+/*        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);*/
     }
 }
