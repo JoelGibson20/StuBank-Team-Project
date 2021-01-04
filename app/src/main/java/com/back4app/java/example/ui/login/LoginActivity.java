@@ -126,10 +126,19 @@ public class LoginActivity extends AppCompatActivity {
    /*             loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());*/
-                //Directs to home page
-                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                intent.putExtra("USERNAME",emailEditText.getText().toString());
-                startActivity(intent);
+
+                 try {
+                    if(databaseMethods.attemptLogin(emailEditText.getText().toString(),passwordEditText.getText().toString())){
+                        //If email and password match
+                        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                        intent.putExtra("USERNAME",emailEditText.getText().toString());
+                        startActivity(intent);
+                        //Directs to home page
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
