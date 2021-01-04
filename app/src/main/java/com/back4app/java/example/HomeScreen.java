@@ -25,8 +25,6 @@ import com.parse.ParseUser;
 
 public class HomeScreen extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +47,9 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void homeButtonOnClick(View v){
-      Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-      startActivity(intent);
+      /*Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+      startActivity(intent);*/
+        //Disabled for home screen as unnecessary
     }
     public void graphButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);

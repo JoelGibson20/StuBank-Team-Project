@@ -13,6 +13,7 @@ import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
 
+
 public class CardActivity extends AppCompatActivity {
 
     @Override
@@ -26,26 +27,25 @@ public class CardActivity extends AppCompatActivity {
         final ImageButton cardImageButton = findViewById(R.id.cardImageButton);
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
 
-       /* public void homeButtonOnClick(View v){
+    }
+    public void homeButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-        intent.putExtra("USERNAME",emailEditText.getText().toString());
         startActivity(intent);
-        }
-        public void graphButtonOnClick(View v){
-            Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-            startActivity(intent);
-        }
-        public void poundButtonOnClick(View v){
-            Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
-            startActivity(intent);
-        }
-        public void cardButtonOnClick(View v){
-            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-            startActivity(intent);
-        }
-        public void gearsButtonOnClick(View v){
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
-        }*/
+    }
+    public void graphButtonOnClick(View v){
+        Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+        startActivity(intent);
+    }
+    public void poundButtonOnClick(View v){
+        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
+        startActivity(intent);
+    }
+    public void cardButtonOnClick(View v){
+        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+        startActivity(intent);
+    }
+    public void gearsButtonOnClick(View v){
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
     }
 }
