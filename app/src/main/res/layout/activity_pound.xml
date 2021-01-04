@@ -13,4 +13,90 @@
         android:text="Pound activity?"
         tools:layout_editor_absoluteX="176dp"
         tools:layout_editor_absoluteY="291dp" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/homeBottomAppBar"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:backgroundTint="@color/teal_700"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greeting"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/homeImageButton"
+        android:onClick="homeButtonOnClick"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="#0000"
+        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
+        app:layout_constraintEnd_toStartOf="@+id/graphImageButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
+        app:srcCompat="@drawable/icons8_home_page_48"
+        android:contentDescription="TODO" />
+
+    <ImageButton
+        android:id="@+id/graphImageButton"
+        android:onClick="graphButtonOnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#0000"
+        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
+        app:layout_constraintEnd_toStartOf="@+id/poundImageButton"
+        app:layout_constraintStart_toEndOf="@+id/homeImageButton"
+        app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
+        app:srcCompat="@drawable/icons8_combo_chart_48" />
+
+    <ImageButton
+        android:id="@+id/poundImageButton"
+        android:onClick="poundButtonOnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="#0000"
+        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
+        app:layout_constraintEnd_toStartOf="@+id/cardImageButton"
+        app:layout_constraintStart_toEndOf="@+id/graphImageButton"
+        app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
+        app:srcCompat="@drawable/icons8_money_pound_48" />
+
+    <ImageButton
+        android:id="@+id/cardImageButton"
+        android:onClick="cardButtonOnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#0000"
+        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
+        app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
+        app:layout_constraintStart_toEndOf="@+id/poundImageButton"
+        app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
+        app:srcCompat="@drawable/icons8_debit_card_48" />
+
+    <ImageButton
+        android:id="@+id/gearsImageButton"
+        android:onClick="gearsButtonOnClick"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:background="#0000"
+        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
+        app:layout_constraintEnd_toEndOf="@+id/homeBottomAppBar"
+        app:layout_constraintStart_toEndOf="@+id/cardImageButton"
+        app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
+        app:srcCompat="@drawable/icons8_automation_48" />
 </androidx.constraintlayout.widget.ConstraintLayout>

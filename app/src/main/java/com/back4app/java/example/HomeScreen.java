@@ -21,6 +21,7 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 import com.back4app.java.example.ui.databaseMethods;
+import com.parse.ParseUser;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -42,6 +43,7 @@ public class HomeScreen extends AppCompatActivity {
 
         ParseObject userDetails = null;
         try {
+            System.out.println("Current user: " + ParseUser.getCurrentUser().getString("firstName"));
             //Gets the user's name to greet them by name
             userDetails = databaseMethods.retrieveUserDetails(getIntent().getStringExtra("USERNAME"));
             greeting.setText(String.format("Welcome %s", userDetails.getString("firstName")));
@@ -52,7 +54,9 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void homeButtonOnClick(View v){
-        //Button does nothing when on home screen
+      /*  Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+        intent.putExtra("USERNAME",emailEditText.getText().toString());
+        startActivity(intent);*/
     }
     public void graphButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
