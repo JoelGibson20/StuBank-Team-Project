@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Back4AppExample">
-        <activity android:name=".HomeScreen"></activity>
+        <activity android:name=".ui.settings.SettingsActivity"></activity>
+        <activity android:name=".ui.pound.PoundActivity" />
+        <activity android:name=".ui.graph.GraphActivity" />
+        <activity android:name=".ui.card.CardActivity" />
+        <activity android:name=".HomeScreen" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login">
@@ -25,7 +29,7 @@
         </activity>
         <activity
             android:name=".ui.signup.SignUpActivity"
-            android:label="@string/title_activity_sign_up"></activity> <!-- PARSE -->
+            android:label="@string/title_activity_sign_up" /> <!-- PARSE -->
         <meta-data
             android:name="com.parse.SERVER_URL"
             android:value="@string/back4app_server_url" />
@@ -34,8 +38,7 @@
             android:value="@string/back4app_app_id" />
         <meta-data
             android:name="com.parse.CLIENT_KEY"
-            android:value="@string/back4app_client_key" /> <!-- PARSE -->
-
+            android:value="@string/back4app_client_key" />
     </application>
 
 </manifest>

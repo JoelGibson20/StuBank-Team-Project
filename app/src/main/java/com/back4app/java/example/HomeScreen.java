@@ -10,6 +10,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.back4app.java.example.ui.card.CardActivity;
+import com.back4app.java.example.ui.graph.GraphActivity;
+import com.back4app.java.example.ui.pound.PoundActivity;
+import com.back4app.java.example.ui.settings.SettingsActivity;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -48,24 +52,23 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void homeButtonOnClick(View v){
-        System.out.println("test 1");
-        //Do something
+        //Button does nothing when on home screen
     }
     public void graphButtonOnClick(View v){
-        System.out.println("test 2");
-        //Do something
+        Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+        startActivity(intent);
     }
     public void poundButtonOnClick(View v){
-        System.out.println("test 3");
-        //Do something
+        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
+        startActivity(intent);
     }
     public void cardButtonOnClick(View v){
-        System.out.println("test 4");
-        //Do something
+        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+        startActivity(intent);
     }
     public void gearsButtonOnClick(View v){
-        System.out.println("test 5");
-        //Do something
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
     }
 
 
