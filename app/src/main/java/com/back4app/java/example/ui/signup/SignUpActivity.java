@@ -37,12 +37,13 @@ public class SignUpActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
+        //Loads all the edit text boxes on the sign up form
         final EditText firstNameEditText = findViewById(R.id.firstName);
         final EditText surnameEditText = findViewById(R.id.surname);
         final EditText phoneNoEditText = findViewById(R.id.phoneNo);
         final EditText emailEditText = findViewById(R.id.email);
         final EditText passwordEditText = findViewById(R.id.password);
-
+        //Loads the register button
         final Button registerButton = findViewById(R.id.register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -51,12 +52,16 @@ public class SignUpActivity extends AppCompatActivity {
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
                     return;
+                    //If signup form is untouched do nothing
                 }
+                //If data input in login form is valid enable button
                 registerButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
+                    //Present error text for username
                     emailEditText.setError(getString(loginFormState.getUsernameError()));
                 }
                 if (loginFormState.getPasswordError() != null) {
+                    //Present error text for password
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
                 }
             }
@@ -120,15 +125,16 @@ public class SignUpActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //!!!//
+                //Listens for clicking the register button
                 try {
+                    //New account added to database
                     databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
                             surnameEditText.getText().toString(), phoneNoEditText.getText().toString(),
                             emailEditText.getText().toString(), passwordEditText.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
+                //Directs to home page
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                 intent.putExtra("USERNAME",emailEditText.getText().toString());
                 startActivity(intent);

@@ -27,17 +27,18 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        //Load all the clickable buttons on the page
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
         final ImageButton cardImageButton = findViewById(R.id.cardImageButton);
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
-
+        //Load the greeting text
         final TextView greeting = findViewById(R.id.greeting);
+
         ParseObject userDetails = null;
-
-
         try {
+            //Gets the user's name to greet them by name
             userDetails = databaseMethods.retrieveUserDetails(getIntent().getStringExtra("USERNAME"));
             greeting.setText(String.format("Welcome %s", userDetails.getString("firstName")));
         } catch (ParseException e2) {

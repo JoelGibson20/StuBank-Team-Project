@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
+        //Load all the text input boxes, buttons etc
         final EditText emailEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.register);
@@ -49,13 +50,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
                     return;
+                    //If login form is untouched do nothing
                 }
+                //If data input in login form is valid enable button
                 loginButton.setEnabled(loginFormState.isDataValid());
                 if (loginFormState.getUsernameError() != null) {
+                    //Present error text for username
                     emailEditText.setError(getString(loginFormState.getUsernameError()));
                 }
                 if (loginFormState.getPasswordError() != null) {
+                    //Present error text for password
                     passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                    //!!! This needs removed when logging in
                 }
             }
         });
@@ -99,6 +105,8 @@ public class LoginActivity extends AppCompatActivity {
         };
         emailEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
+
+        //This section submits form when enter is clicked, but doesn't check if form is completed
 /*        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -118,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
    /*             loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(emailEditText.getText().toString(),
                         passwordEditText.getText().toString());*/
-
+                //Directs to home page
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                 intent.putExtra("USERNAME",emailEditText.getText().toString());
                 startActivity(intent);
@@ -128,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         dontHaveAccount.setOnClickListener(new View.OnClickListener(){
             //Listens for clicking of the don't have account text
             public void onClick(View v){
-                //Redirect to another page
+                //Redirects to sign up page
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intent);
             }

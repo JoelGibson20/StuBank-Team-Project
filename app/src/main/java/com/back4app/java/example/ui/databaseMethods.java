@@ -50,7 +50,7 @@ public class databaseMethods {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
         query.whereEqualTo("username", username);
         try {
-            userDetails = query.getFirst();
+            userDetails = query.getFirst(); //Tries to execute query
         } catch (ParseException e) {
             System.out.println(e);
         }
