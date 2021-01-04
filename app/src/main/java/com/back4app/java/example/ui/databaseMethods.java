@@ -28,7 +28,7 @@ public class databaseMethods {
                     // The token could not be validated.
                 }
             }
-        });
+        });//
 
     }
 
