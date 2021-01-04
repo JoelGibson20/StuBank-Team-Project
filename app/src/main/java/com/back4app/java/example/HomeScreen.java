@@ -42,14 +42,9 @@ public class HomeScreen extends AppCompatActivity {
         final TextView greeting = findViewById(R.id.greeting);
 
         ParseObject userDetails = null;
-        try {
-            System.out.println("Current user: " + ParseUser.getCurrentUser().getString("firstName"));
-            //Gets the user's name to greet them by name
-            userDetails = databaseMethods.retrieveUserDetails(getIntent().getStringExtra("USERNAME"));
-            greeting.setText(String.format("Welcome %s", userDetails.getString("firstName")));
-        } catch (ParseException e2) {
-            e2.printStackTrace();
-        }
+        //Gets the user's name to greet them by name
+        greeting.setText(String.format("Welcome %s", databaseMethods.getCurrentUser().getString("firstName")));
+
         
     }
 

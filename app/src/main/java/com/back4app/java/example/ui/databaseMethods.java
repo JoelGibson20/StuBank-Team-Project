@@ -1,5 +1,6 @@
 package com.back4app.java.example.ui;
 
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -19,6 +20,15 @@ public class databaseMethods {
         user.put("surname", surname);
         user.put("phone", phoneNo);
         user.signUp();
+        ParseUser.becomeInBackground("session-token-here", new LogInCallback() {
+            public void done(ParseUser user, ParseException e) {
+                if (user != null) {
+                    // The current user is now set to user.
+                } else {
+                    // The token could not be validated.
+                }
+            }
+        });
 
     }
 
@@ -26,6 +36,15 @@ public class databaseMethods {
         boolean loginSuccess = true;
         try {
             ParseUser test = ParseUser.logIn(email, password);
+            ParseUser.becomeInBackground("session-token-here", new LogInCallback() {
+                public void done(ParseUser user, ParseException e) {
+                    if (user != null) {
+                        // The current user is now set to user.
+                    } else {
+                        // The token could not be validated.
+                    }
+                }
+            });
         } catch (ParseException e) {
             System.out.println(e);
             loginSuccess = false;
@@ -46,6 +65,10 @@ public class databaseMethods {
             System.out.println(e);
         }
         return(userDetails);
+    }
+
+    public static ParseObject getCurrentUser(){
+       return(ParseUser.getCurrentUser());
     }
 }
 
