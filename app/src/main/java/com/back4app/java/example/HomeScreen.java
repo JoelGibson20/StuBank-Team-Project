@@ -49,9 +49,8 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     public void homeButtonOnClick(View v){
-      /*  Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-        intent.putExtra("USERNAME",emailEditText.getText().toString());
-        startActivity(intent);*/
+      Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+      startActivity(intent);
     }
     public void graphButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);

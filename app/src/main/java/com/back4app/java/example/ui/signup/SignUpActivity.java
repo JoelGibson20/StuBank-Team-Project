@@ -136,7 +136,6 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 //Directs to home page
                 Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                intent.putExtra("USERNAME",emailEditText.getText().toString());
                 startActivity(intent);
             }
         });

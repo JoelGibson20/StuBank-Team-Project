@@ -131,7 +131,6 @@ public class LoginActivity extends AppCompatActivity {
                     if(databaseMethods.attemptLogin(emailEditText.getText().toString(),passwordEditText.getText().toString())){
                         //If email and password match
                         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                        intent.putExtra("USERNAME",emailEditText.getText().toString());
                         startActivity(intent);
                         //Directs to home page
                     }
