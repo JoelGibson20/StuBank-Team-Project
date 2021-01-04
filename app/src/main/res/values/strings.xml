@@ -19,6 +19,10 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">Login</string>
     <string name="dont_have_account">Don\'t have an account? Click here to sign up</string>
+    <string name="account1Name">Savings Account (placeholder)</string>
+    <string name="account1Number">00001111</string>
+    <string name="account1SortCode">06-07-08</string>
+    <string name="account1Balance">£4300</string>
 
 
 </resources>

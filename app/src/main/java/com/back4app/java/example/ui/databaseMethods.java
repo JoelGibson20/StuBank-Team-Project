@@ -1,18 +1,9 @@
 package com.back4app.java.example.ui;
 
-import android.util.Log;
-
-import com.parse.FindCallback;
-import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
-import java.sql.SQLOutput;
-import java.util.List;
 
 public class databaseMethods {
 
