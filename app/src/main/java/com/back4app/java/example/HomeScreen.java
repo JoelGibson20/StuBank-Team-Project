@@ -3,17 +3,13 @@ package com.back4app.java.example;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,15 +17,12 @@ import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 import com.back4app.java.example.ui.databaseMethods;
-import com.parse.ParseUser;
 
 public class HomeScreen extends AppCompatActivity {
     int x = 0;
@@ -52,7 +45,11 @@ public class HomeScreen extends AppCompatActivity {
         //Gets the user's name to greet them by name
         greeting.setText(String.format("Welcome %s", databaseMethods.getCurrentUser().getString("firstName")));
 
+    }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public void homeButtonOnClick(View v){
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
         try {
             accountsList = databaseMethods.getAccounts();
@@ -61,14 +58,10 @@ public class HomeScreen extends AppCompatActivity {
         }
         for(int i = 0; i < accountsList.size(); i++){
             System.out.println(accountsList.get(i).getString("accountName"));
+            createMyCardView(accountsList.get(i).getString("accountName"));
         }
-    }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void homeButtonOnClick(View v){
-        x += 50;
-        CreateMyCardView(x);
       /*Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
       startActivity(intent);*/
         //Disabled for home screen as unnecessary
@@ -92,7 +85,7 @@ public class HomeScreen extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void CreateMyCardView(int x){
+    public void createMyCardView(String accountName){
         System.out.println("X =" + x);
         LinearLayout linearLayout = findViewById(R.id.linearLayout);
         // Initialise the CardView
@@ -126,7 +119,7 @@ public class HomeScreen extends AppCompatActivity {
         textview.setLayoutParams(layoutparams);
 
         // Define the text you want to display
-        textview.setText("Hello, World!");
+        textview.setText(accountName);
 
         // Define the text’s appearance, including its color
         textview.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
