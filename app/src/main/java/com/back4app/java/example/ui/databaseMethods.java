@@ -6,6 +6,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 public class databaseMethods {
 
     public static void addToDatabase(String firstName, String surname, String phoneNo, String email, String password) throws ParseException {
@@ -69,6 +71,14 @@ public class databaseMethods {
 
     public static ParseObject getCurrentUser(){
        return(ParseUser.getCurrentUser());
+    }
+
+    public static List<ParseObject> getAccounts() throws ParseException {
+        ParseObject currentUser = getCurrentUser();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+        query.whereEqualTo("accountOwner", currentUser.getObjectId());
+        return(query.find());
     }
 }
 

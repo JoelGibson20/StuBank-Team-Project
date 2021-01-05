@@ -26,6 +26,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseUser;
@@ -51,7 +52,16 @@ public class HomeScreen extends AppCompatActivity {
         //Gets the user's name to greet them by name
         greeting.setText(String.format("Welcome %s", databaseMethods.getCurrentUser().getString("firstName")));
 
-        
+
+        List<ParseObject> accountsList = new ArrayList<ParseObject>();
+        try {
+            accountsList = databaseMethods.getAccounts();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < accountsList.size(); i++){
+            System.out.println(accountsList.get(i).getString("accountName"));
+        }
     }
 
 
