@@ -111,6 +111,7 @@ public class HomeScreen extends AppCompatActivity {
         cardview.setRadius(20);
         cardview.setMaxCardElevation(20);
         cardview.setPadding(0,100,0,20);
+        cardview.setClipToPadding(true);
 
 
         //Create a TextView for the account name
