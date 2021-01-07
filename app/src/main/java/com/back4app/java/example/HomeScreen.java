@@ -3,12 +3,15 @@ package com.back4app.java.example;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,7 +28,6 @@ import java.util.List;
 import com.back4app.java.example.ui.databaseMethods;
 
 public class HomeScreen extends AppCompatActivity {
-    int x = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,10 @@ public class HomeScreen extends AppCompatActivity {
         }
         for(int i = 0; i < accountsList.size(); i++){
             System.out.println(accountsList.get(i).getString("accountName"));
-            createMyCardView(accountsList.get(i).getString("accountName"));
+            createMyCardView(accountsList.get(i).getString("accountName"),
+                    accountsList.get(i).getString("accountNumber"),
+                    accountsList.get(i).getString("sortCode"),
+                    accountsList.get(i).getString("balance"));
         }
 
 
@@ -85,52 +90,79 @@ public class HomeScreen extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void createMyCardView(String accountName){
-        System.out.println("X =" + x);
+    public void createMyCardView(String accountName, String accountNumber, String sortCode, String balance){
         LinearLayout linearLayout = findViewById(R.id.linearLayout);
         // Initialise the CardView
         CardView cardview = new CardView(getApplicationContext());
 
-        // Create the “wrap_content” layout params that you’ll apply to the various
-        // UI elements we’re going to create
+       //Layout params which will be applied to the cardView
         LinearLayout.LayoutParams layoutparams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
 
-        // Set the layoutParams on the CardView
+        //Set params for CardView
+        cardview.setUseCompatPadding(true);
         cardview.setLayoutParams(layoutparams);
-
-        // Set the card’s corner radius
-        cardview.setRadius(6);
-
-        // Set its background color
-        cardview.setCardBackgroundColor(Color.GRAY);
-
-        // Set its maximum elevation
-        cardview.setMaxCardElevation(6);
-
-        cardview.setLeftTopRightBottom(400,x,50,0);
-
-        // Create a TextView
-        TextView textview = new TextView(getApplicationContext());
-
-        // Apply the layoutParams (wrap_content) to this TextView
-        textview.setLayoutParams(layoutparams);
-
-        // Define the text you want to display
-        textview.setText(accountName);
-
-        // Define the text’s appearance, including its color
-        textview.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
-        textview.setTextColor(Color.BLACK);
+        cardview.setMinimumHeight(60);
+        cardview.setPreventCornerOverlap(true);
+        cardview.setPadding(0,0,0,80);
+        cardview.setCardBackgroundColor(Color.parseColor("#FF03DAC5"));
+        cardview.setRadius(20);
+        cardview.setMaxCardElevation(20);
+        cardview.setPadding(0,100,0,20);
 
 
-        // Add the content to your CardView. Here, we’re adding the TextView//
-        cardview.addView(textview);
+        //Create a TextView for the account name
+        TextView accountNameText = new TextView(getApplicationContext());
+        accountNameText.setPadding(10,10,0,0);
+        accountNameText.setLayoutParams(layoutparams);
+        accountNameText.setText(accountName);
+        accountNameText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+        accountNameText.setTextColor(Color.WHITE);
+        accountNameText.setTextSize(16);
+        accountNameText.setTypeface(accountNameText.getTypeface(), Typeface.BOLD);
 
 
-        // Add the CardView to your layout
+
+
+        //Create a TextView for the account number
+        TextView accountNumberText = new TextView(getApplicationContext());
+        accountNumberText.setPadding(10,70,0,0);
+        accountNumberText.setLayoutParams(layoutparams);
+        accountNumberText.setText(accountNumber);
+        accountNumberText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+        accountNumberText.setTextColor(Color.WHITE);
+        accountNumberText.setTextSize(16);
+
+        //Create a TextView for the sort code
+        TextView sortCodeText = new TextView(getApplicationContext());
+        sortCodeText.setPadding(10,130,0,10);
+        sortCodeText.setLayoutParams(layoutparams);
+        sortCodeText.setText(sortCode);
+        sortCodeText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+        sortCodeText.setTextColor(Color.WHITE);
+        sortCodeText.setTextSize(16);
+
+
+        //Create a TextView for the account balance
+        TextView balanceText = new TextView(getApplicationContext());
+        balanceText.setPadding(700,70,10,0);
+        balanceText.setLayoutParams(layoutparams);
+        balanceText.setText(balance);
+        balanceText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+        balanceText.setTextColor(Color.WHITE);
+        balanceText.setTextSize(16);
+        balanceText.setTypeface(accountNameText.getTypeface(), Typeface.BOLD);
+
+        //Add the TextViews to the CardView
+        cardview.addView(accountNameText);
+        cardview.addView(accountNumberText);
+        cardview.addView(sortCodeText);
+        cardview.addView(balanceText);
+
+
+        //Add the CardView to the linear layout in the ScrollView
         linearLayout.addView(cardview);
     }
 
