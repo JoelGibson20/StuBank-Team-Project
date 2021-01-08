@@ -28,6 +28,7 @@ import java.util.List;
 import com.back4app.java.example.ui.databaseMethods;
 
 public class HomeScreen extends AppCompatActivity {
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +48,8 @@ public class HomeScreen extends AppCompatActivity {
         //Gets the user's name to greet them by name
         greeting.setText(String.format("Welcome %s", databaseMethods.getCurrentUser().getString("firstName")));
 
-    }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void homeButtonOnClick(View v){
+        //Create cards for the user's accounts
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
         try {
             accountsList = databaseMethods.getAccounts();
@@ -66,10 +64,12 @@ public class HomeScreen extends AppCompatActivity {
                     accountsList.get(i).getString("balance"));
         }
 
+    }
 
-      /*Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-      startActivity(intent);*/
-        //Disabled for home screen as unnecessary
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public void homeButtonOnClick(View v){
+        //Disabled for home screen as unnecessary when already on home screen
     }
     public void graphButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
@@ -112,6 +112,8 @@ public class HomeScreen extends AppCompatActivity {
         cardview.setMaxCardElevation(20);
         cardview.setPadding(0,100,0,20);
         cardview.setClipToPadding(true);
+
+        cardview.setOnClickListener(this::poundButtonOnClick);
 
 
         //Create a TextView for the account name
