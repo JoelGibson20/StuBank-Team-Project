@@ -56,13 +56,7 @@ public class HomeScreen extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        for(int i = 0; i < accountsList.size(); i++){
-            System.out.println(accountsList.get(i).getString("accountName"));
-            createMyCardView(accountsList.get(i).getString("accountName"),
-                    accountsList.get(i).getString("accountNumber"),
-                    accountsList.get(i).getString("sortCode"),
-                    accountsList.get(i).getString("balance"));
-        }
+        createMyCardView(accountsList);
 
     }
 
@@ -87,86 +81,88 @@ public class HomeScreen extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
     }
+    public void accountClicked(){
+        ;
+    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void createMyCardView(String accountName, String accountNumber, String sortCode, String balance){
+    public void createMyCardView(List<ParseObject> accountsList){
         LinearLayout linearLayout = findViewById(R.id.linearLayout);
-        // Initialise the CardView
-        CardView cardview = new CardView(getApplicationContext());
-
-       //Layout params which will be applied to the cardView
+        //Layout params which will be applied to the cardView
         LinearLayout.LayoutParams layoutparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
 
-        //Set params for CardView
-        cardview.setUseCompatPadding(true);
-        cardview.setLayoutParams(layoutparams);
-        cardview.setMinimumHeight(60);
-        cardview.setPreventCornerOverlap(true);
-        cardview.setPadding(0,0,0,80);
-        cardview.setCardBackgroundColor(Color.parseColor("#FF03DAC5"));
-        cardview.setRadius(20);
-        cardview.setMaxCardElevation(20);
-        cardview.setPadding(0,100,0,20);
-        cardview.setClipToPadding(true);
+        for(int i = 0; i < accountsList.size(); i++){
+            // Initialise the CardView
+            CardView cardview = new CardView(getApplicationContext());
 
-        cardview.setOnClickListener(this::poundButtonOnClick);
+            //Set params for CardView
+            cardview.setUseCompatPadding(true);
+            cardview.setLayoutParams(layoutparams);
+            cardview.setMinimumHeight(60);
+            cardview.setPreventCornerOverlap(true);
+            cardview.setPadding(0,0,0,80);
+            cardview.setCardBackgroundColor(Color.parseColor("#FF03DAC5"));
+            cardview.setRadius(20);
+            cardview.setMaxCardElevation(20);
+            cardview.setPadding(0,100,0,20);
+            cardview.setClipToPadding(true);
 
-
-        //Create a TextView for the account name
-        TextView accountNameText = new TextView(getApplicationContext());
-        accountNameText.setPadding(10,10,0,0);
-        accountNameText.setLayoutParams(layoutparams);
-        accountNameText.setText(accountName);
-        accountNameText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
-        accountNameText.setTextColor(Color.WHITE);
-        accountNameText.setTextSize(16);
-        accountNameText.setTypeface(accountNameText.getTypeface(), Typeface.BOLD);
+            cardview.setOnClickListener(this::poundButtonOnClick);
 
 
+            //Create a TextView for the account name
+            TextView accountNameText = new TextView(getApplicationContext());
+            accountNameText.setPadding(10,10,0,0);
+            accountNameText.setLayoutParams(layoutparams);
+            accountNameText.setText(accountsList.get(i).getString("accountName"));
+            accountNameText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+            accountNameText.setTextColor(Color.WHITE);
+            accountNameText.setTextSize(16);
+            accountNameText.setTypeface(accountNameText.getTypeface(), Typeface.BOLD);
+
+            //Create a TextView for the account number
+            TextView accountNumberText = new TextView(getApplicationContext());
+            accountNumberText.setPadding(10,70,0,0);
+            accountNumberText.setLayoutParams(layoutparams);
+            accountNumberText.setText(accountsList.get(i).getString("accountNumber"));
+            accountNumberText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+            accountNumberText.setTextColor(Color.WHITE);
+            accountNumberText.setTextSize(16);
+
+            //Create a TextView for the sort code
+            TextView sortCodeText = new TextView(getApplicationContext());
+            sortCodeText.setPadding(10,130,0,10);
+            sortCodeText.setLayoutParams(layoutparams);
+            sortCodeText.setText(accountsList.get(i).getString("sortCode"));
+            sortCodeText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+            sortCodeText.setTextColor(Color.WHITE);
+            sortCodeText.setTextSize(16);
+
+            //Create a TextView for the account balance
+            TextView balanceText = new TextView(getApplicationContext());
+            balanceText.setPadding(700,70,10,0);
+            balanceText.setLayoutParams(layoutparams);
+            balanceText.setText(accountsList.get(i).getString("balance"));
+            balanceText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+            balanceText.setTextColor(Color.WHITE);
+            balanceText.setTextSize(16);
+            balanceText.setTypeface(accountNameText.getTypeface(), Typeface.BOLD);
+
+            //Add the TextViews to the CardView
+            cardview.addView(accountNameText);
+            cardview.addView(accountNumberText);
+            cardview.addView(sortCodeText);
+            cardview.addView(balanceText);
 
 
-        //Create a TextView for the account number
-        TextView accountNumberText = new TextView(getApplicationContext());
-        accountNumberText.setPadding(10,70,0,0);
-        accountNumberText.setLayoutParams(layoutparams);
-        accountNumberText.setText(accountNumber);
-        accountNumberText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
-        accountNumberText.setTextColor(Color.WHITE);
-        accountNumberText.setTextSize(16);
+            //Add the CardView to the linear layout in the ScrollView
+            linearLayout.addView(cardview);
+        }
 
-        //Create a TextView for the sort code
-        TextView sortCodeText = new TextView(getApplicationContext());
-        sortCodeText.setPadding(10,130,0,10);
-        sortCodeText.setLayoutParams(layoutparams);
-        sortCodeText.setText(sortCode);
-        sortCodeText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
-        sortCodeText.setTextColor(Color.WHITE);
-        sortCodeText.setTextSize(16);
-
-
-        //Create a TextView for the account balance
-        TextView balanceText = new TextView(getApplicationContext());
-        balanceText.setPadding(700,70,10,0);
-        balanceText.setLayoutParams(layoutparams);
-        balanceText.setText(balance);
-        balanceText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
-        balanceText.setTextColor(Color.WHITE);
-        balanceText.setTextSize(16);
-        balanceText.setTypeface(accountNameText.getTypeface(), Typeface.BOLD);
-
-        //Add the TextViews to the CardView
-        cardview.addView(accountNameText);
-        cardview.addView(accountNumberText);
-        cardview.addView(sortCodeText);
-        cardview.addView(balanceText);
-
-
-        //Add the CardView to the linear layout in the ScrollView
-        linearLayout.addView(cardview);
     }
 
 
