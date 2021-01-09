@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -81,8 +83,8 @@ public class HomeScreen extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
     }
-    public void accountClicked(){
-        ;
+    public void accountClicked(ParseObject accountParseObject){
+        System.out.println("ACCOUNT PRESSED: " + accountParseObject.getString("accountName"));
     }
 
 
@@ -111,7 +113,14 @@ public class HomeScreen extends AppCompatActivity {
             cardview.setPadding(0,100,0,20);
             cardview.setClipToPadding(true);
 
-            cardview.setOnClickListener(this::poundButtonOnClick);
+            /*Add onClickListener so when the account is clicked, the account ParseObject can be
+            passed to the account page to */
+            int finalI = i;
+            cardview.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    accountClicked(accountsList.get(finalI));
+                }
+            });
 
 
             //Create a TextView for the account name
