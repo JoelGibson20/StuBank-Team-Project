@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.back4app.java.example.ui.accountPage.accountPage;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
@@ -84,7 +85,9 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
     public void accountClicked(ParseObject accountParseObject){
-        System.out.println("ACCOUNT PRESSED: " + accountParseObject.getString("accountName"));
+        Intent intent = new Intent(getApplicationContext(), accountPage.class);
+        intent.putExtra("accountParseObject", accountParseObject);
+        startActivity(intent);
     }
 
 
