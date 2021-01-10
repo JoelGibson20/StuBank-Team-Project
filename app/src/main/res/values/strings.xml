@@ -25,6 +25,10 @@
     <string name="account1Number">00001111</string>
     <string name="account1SortCode">06-07-08</string>
     <string name="account1Balance">£4300</string>
+    <string name="shareDetailsButton">Share Details</string>
+    <string name="statementButton">Statement</string>
+    <string name="lockButton">Lock</string>
+    <string name="renameButton">Rename</string>
 
 
 </resources>
