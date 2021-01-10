@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.back4app.java.example.HomeScreen;
+import com.back4app.java.example.NewRecipient;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
+import com.back4app.java.example.ui.signup.SignUpActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class PoundActivity extends AppCompatActivity {
 
@@ -26,25 +29,32 @@ public class PoundActivity extends AppCompatActivity {
         final ImageButton cardImageButton = findViewById(R.id.cardImageButton);
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
 
-    }
-    public void homeButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+        final FloatingActionButton addButton = findViewById(R.id.add);
+        addButton.setOnClickListener(new View.OnClickListener() {
+        public void onClick(View view) { Intent intent = new Intent(getApplicationContext(), NewRecipient.class);
         startActivity(intent);
-    }
-    public void graphButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-        startActivity(intent);
-    }
-    public void poundButtonOnClick(View v){
+        }
+    });}
+        public void homeButtonOnClick (View v){
+            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+            startActivity(intent);
+        }
+        public void graphButtonOnClick (View v){
+            Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+            startActivity(intent);
+        }
+        public void poundButtonOnClick (View v){
 /*        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
         startActivity(intent);*/
+        }
+        public void cardButtonOnClick (View v){
+            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+            startActivity(intent);
+        }
+        public void gearsButtonOnClick (View v){
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        }
+
+
     }
-    public void cardButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-        startActivity(intent);
-    }
-    public void gearsButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-        startActivity(intent);
-    }
-}

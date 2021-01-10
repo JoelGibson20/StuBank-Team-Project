@@ -8,11 +8,16 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pound activity?"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="291dp" />
+        android:layout_width="195dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
+        android:text="Transfers"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
@@ -99,4 +104,27 @@
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
         app:srcCompat="@drawable/icons8_automation_48" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="68dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="316dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="80dp"
+        android:text="Choose from your saved recipients or add another"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
