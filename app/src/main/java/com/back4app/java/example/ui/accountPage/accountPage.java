@@ -47,6 +47,15 @@ public class accountPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("Rename button clicked");
+                try {
+                    //Changes name to account
+                    //Want a text-bx pop-up here to allow user input for new account name
+                    databaseMethods.changeAccountName(accountParseObject,"name change test");
+                    accountName.setText(accountParseObject.getString("accountName"));
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

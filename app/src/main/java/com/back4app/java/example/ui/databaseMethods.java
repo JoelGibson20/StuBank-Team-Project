@@ -80,6 +80,11 @@ public class databaseMethods {
         query.whereEqualTo("accountOwner", currentUser.getObjectId());
         return(query.find());
     }
+
+    public static void changeAccountName(ParseObject accountParseObject, String newName) throws ParseException {
+        accountParseObject.put("accountName", newName);
+        accountParseObject.save();
+    }
 }
 
 
