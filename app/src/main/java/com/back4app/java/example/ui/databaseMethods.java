@@ -75,10 +75,14 @@ public class databaseMethods {
 
     public static List<ParseObject> getAccounts() throws ParseException {
         ParseObject currentUser = getCurrentUser();
-
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", currentUser.getObjectId());
         return(query.find());
+    }
+
+    public static void changeAccountName(ParseObject accountParseObject, String newName) throws ParseException {
+        accountParseObject.put("accountName", newName);
+        accountParseObject.save();
     }
 }
 
