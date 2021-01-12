@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.accountPage.accountPage">
+
+    <TextView
+        android:id="@+id/accountName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@color/teal_200"
+        android:text="Account Name"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/accountNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="16dp"
+        android:text="Account Number"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/sortCode"
+        app:layout_constraintEnd_toStartOf="@+id/balance"
+        app:layout_constraintHorizontal_bias="0.074"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountName" />
+
+    <TextView
+        android:id="@+id/sortCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="16dp"
+        android:text="Sort Code"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountNumber" />
+
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="2dp"
+        android:background="@color/teal_200"
+        android:text="Balance"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.867"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountName"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sortCode">
+
+        <Button
+            android:id="@+id/renameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:backgroundTint="@color/teal_200"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/renameButton"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+
+        <Button
+            android:id="@+id/lockButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:backgroundTint="@color/teal_200"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/lockButton"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+
+        <Button
+            android:id="@+id/statementButton"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:backgroundTint="@color/teal_200"
+            android:fontFamily="sans-serif-condensed"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/statementButton"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+
+        <Button
+            android:id="@+id/shareDetailsButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/teal_200"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/shareDetailsButton"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
