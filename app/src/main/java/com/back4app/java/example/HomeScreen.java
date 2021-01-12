@@ -172,6 +172,19 @@ public class HomeScreen extends AppCompatActivity {
         }
 
     }
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //Create cards for the user's accounts
+        List<ParseObject> accountsList = new ArrayList<ParseObject>();
+        try {
+            accountsList = databaseMethods.getAccounts();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        createMyCardView(accountsList);
 
+    }
 
 }
