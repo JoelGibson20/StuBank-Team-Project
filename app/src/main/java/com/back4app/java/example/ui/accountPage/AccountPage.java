@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +36,6 @@ public class AccountPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_page);
-
         //Load the TextViews for modification
         final EditText accountName = findViewById(R.id.accountName);
         final TextView accountNumber = findViewById(R.id.accountNumber);
@@ -53,26 +56,33 @@ public class AccountPage extends AppCompatActivity {
         sortCode.setText(String.format("Sort Code: %s",accountParseObject.getString("sortCode")));
         balance.setText(accountParseObject.getString("balance"));
 
-
-
         renameButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                System.out.println("Rename button clicked");
-                accountName.setFocusableInTouchMode(true);
-                accountName.requestFocus();
+            public void onClick(View v) { //After rename button is clicked
+                accountName.setFocusableInTouchMode(true); //Allows account name text to be edited
+                accountName.requestFocus(); //Account name EditText gets focus
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(accountName, InputMethodManager.SHOW_IMPLICIT);
+                //On-screen keyboard shown
                 accountName.setSelection(accountName.getText().length());
-                /*try {
-                    //Changes name to account
-                    //Want a text-bx pop-up here to allow user input for new account name
-                    databaseMethods.changeAccountName(accountParseObject,"name change test");
-                    accountName.setText(accountParseObject.getString("accountName"));
+                //Sets position in EditText to the end
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }*/
+                accountName.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                                actionId == EditorInfo.IME_ACTION_DONE ||
+                                event != null &&
+                                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            if (event == null || !event.isShiftPressed()) {
+                                // The user exits the edit text
+                                changeAccountName(); //Change account name in database
+                            }
+                        }
+                        return false; // pass on to other listeners.
+                    }
+                });
             }
         });
 
@@ -97,5 +107,14 @@ public class AccountPage extends AppCompatActivity {
             }
         });
 
+    }
+    public void changeAccountName(){
+        final EditText accountName = findViewById(R.id.accountName);
+        ParseObject accountParseObject = (ParseObject) getIntent().getExtras().get("accountParseObject");
+        try {
+            databaseMethods.changeAccountName(accountParseObject, accountName.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
