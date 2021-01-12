@@ -3,22 +3,18 @@ package com.back4app.java.example;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.back4app.java.example.ui.accountPage.accountPage;
+import com.back4app.java.example.ui.accountPage.AccountPage;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
@@ -85,7 +81,7 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
     public void accountClicked(ParseObject accountParseObject){
-        Intent intent = new Intent(getApplicationContext(), accountPage.class);
+        Intent intent = new Intent(getApplicationContext(), AccountPage.class);
         intent.putExtra("accountParseObject", accountParseObject);
         startActivity(intent);
     }
