@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-
+import com.back4app.java.example.ui.graph.CalendarActivity;
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardActivity;
@@ -15,7 +15,7 @@ import com.back4app.java.example.ui.settings.SettingsActivity;
 
 public class GraphActivity extends AppCompatActivity {
 
-    private ImageButton calendarButton;
+    //ImageButton calendarButton;
 
 
     @Override
@@ -28,21 +28,21 @@ public class GraphActivity extends AppCompatActivity {
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
         final ImageButton cardImageButton = findViewById(R.id.cardImageButton);
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
-        //final ImageButton calendarImageButton = findViewById(R.id.calendarImageButton);
+        final ImageButton calendarImageButton = findViewById(R.id.calendarImageButton);
 
-        calendarButton = findViewById(R.id.calendarImageButton);
+        //calendarButton = findViewById(R.id.calendarImageButton);
 
-        calendarButton.setOnClickListener(new View.OnClickListener() {
+        //calendarButton.setOnClickListener(v -> {
+            //Intent intent = new Intent(GraphActivity.this, CalendarActivity.class);
+            //startActivity(intent);
+        //});
 
-            @Override
-            public void onClick(View v) {
-                openCalendar();
-            }
-        });
+
+
 
     }
     public void openCalendar(){
-        Intent intent = new Intent(this, CalendarActivity.class);
+        Intent intent = new Intent(GraphActivity.this, CalendarActivity.class);
         startActivity(intent);
     }
 
@@ -71,8 +71,8 @@ public class GraphActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*public void calendarButtonOnClick(View v) {
+    public void calendarButtonOnClick(View v) {
         Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
         startActivity(intent);
-    } */
+    }
 }
