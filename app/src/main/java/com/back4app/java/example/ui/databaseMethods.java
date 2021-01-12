@@ -9,7 +9,6 @@ import com.parse.ParseUser;
 import java.util.List;
 
 public class databaseMethods {
-
     public static void addToDatabase(String firstName, String surname, String phoneNo, String email, String password) throws ParseException {
         //Might add a return type to return correct error message to display on screen?
         ParseUser user = new ParseUser();
