@@ -103,7 +103,18 @@ public class AccountPage extends AppCompatActivity {
         shareDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ParseObject accountParseObject = (ParseObject) getIntent().getExtras().get("accountParseObject");
                 System.out.println("Share Details button clicked");
+
+                //Use Android Sharesheet to bring up the Android share menu
+                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                //Below is the text which will be sent
+                sendIntent.putExtra(Intent.EXTRA_TEXT, String.format("Here's my StuBank account details - \n" +
+                        "Sort code: %s\nAccount number: %s",accountParseObject.getString("sortCode"),
+                        accountParseObject.getString("accountNumber")));
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
             }
         });
 
