@@ -84,7 +84,7 @@ public class databaseMethods {
         accountParseObject.saveInBackground();
     }
 
-    public static ParseObject toggleAccountLock(ParseObject accountParseObject){
+    public static ParseObject toggleAccountLock(ParseObject accountParseObject) throws ParseException {
         if(accountParseObject.getBoolean("locked")){
             System.out.println("ACCOUNT NOW UNLOCKED");
             accountParseObject.put("locked", false);
@@ -93,9 +93,10 @@ public class databaseMethods {
             System.out.println("ACCOUNT NOW LOCKED");
             accountParseObject.put("locked", true);
         }
-        accountParseObject.saveInBackground();
+        accountParseObject.save();
         return(accountParseObject);
     }
+
 }
 
 

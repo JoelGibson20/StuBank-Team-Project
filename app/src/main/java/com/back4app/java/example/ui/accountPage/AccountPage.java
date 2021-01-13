@@ -56,6 +56,9 @@ public class AccountPage extends AppCompatActivity {
         sortCode.setText(String.format("Sort Code: %s",accountParseObject.getString("sortCode")));
         balance.setText(accountParseObject.getString("balance"));
 
+        //Call method to set the button text based on whether the account is locked or not
+        setLockButtonText(accountParseObject,lockButton);
+
         renameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //After rename button is clicked
@@ -90,9 +93,15 @@ public class AccountPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("Lock button clicked");
-                getIntent().putExtra("accountParseObject",databaseMethods.toggleAccountLock((ParseObject) getIntent().getExtras().get("accountParseObject")));
+                try {
+                    getIntent().putExtra("accountParseObject",databaseMethods.toggleAccountLock((ParseObject) getIntent().getExtras().get("accountParseObject")));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 /*Toggles the locking of the account, changes the extra in intent (where all the
                 account details are stored) to match this change */
+                setLockButtonText((ParseObject) getIntent().getExtras().get("accountParseObject"),lockButton);
+                //Change lock button text
             }
         });
 
@@ -128,6 +137,18 @@ public class AccountPage extends AppCompatActivity {
             databaseMethods.changeAccountName(accountParseObject, accountName.getText().toString());
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setLockButtonText(ParseObject accountParseObject, Button lockButton){
+        //Correct text set for lock button based on whether or not the account is locked
+        if(accountParseObject.getBoolean("locked")) {
+            System.out.println("TRIGGERED 1");
+            lockButton.setText("Unlock");
+        }
+        else{
+            lockButton.setText("Lock");
+            System.out.println("TRIGGERED 2");
         }
     }
 

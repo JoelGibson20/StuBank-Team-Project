@@ -101,7 +101,6 @@
             android:backgroundTint="@color/teal_200"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="@string/lockButton"
             android:textSize="11sp"
             android:textStyle="bold"
             app:cornerRadius="10dp" />
