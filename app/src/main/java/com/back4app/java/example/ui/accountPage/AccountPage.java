@@ -90,6 +90,9 @@ public class AccountPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("Lock button clicked");
+                getIntent().putExtra("accountParseObject",databaseMethods.toggleAccountLock((ParseObject) getIntent().getExtras().get("accountParseObject")));
+                /*Toggles the locking of the account, changes the extra in intent (where all the
+                account details are stored) to match this change */
             }
         });
 
@@ -104,7 +107,6 @@ public class AccountPage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ParseObject accountParseObject = (ParseObject) getIntent().getExtras().get("accountParseObject");
-                System.out.println("Share Details button clicked");
 
                 //Use Android Sharesheet to bring up the Android share menu
                 Intent sendIntent = new Intent(Intent.ACTION_SEND);
