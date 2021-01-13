@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -18,6 +19,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -141,13 +143,19 @@ public class AccountPage extends AppCompatActivity {
     }
 
     public void setLockButtonText(ParseObject accountParseObject, Button lockButton){
+        ImageView locked = findViewById(R.id.lockedImage);
+        ImageView unlocked = findViewById(R.id.unlockedImage);
         //Correct text set for lock button based on whether or not the account is locked
         if(accountParseObject.getBoolean("locked")) {
             System.out.println("TRIGGERED 1");
+            unlocked.setVisibility(View.INVISIBLE);
+            locked.setVisibility(View.VISIBLE);
             lockButton.setText("Unlock");
         }
         else{
             lockButton.setText("Lock");
+            locked.setVisibility(View.INVISIBLE);
+            unlocked.setVisibility(View.VISIBLE);
             System.out.println("TRIGGERED 2");
         }
     }
