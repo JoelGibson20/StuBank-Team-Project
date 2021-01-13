@@ -30,6 +30,8 @@
     <string name="lockButton">Lock</string>
     <string name="renameButton">Rename</string>
     <string name="renamePopUp">Change Account Name:</string>
+    <string name="icons8Credits">Taskbar icons from ICONS8: https://icons8.com</string>
+    <string name="flaticonCredits">Lock icons made by Those Icons from www.flaticon.com</string>
 
 
 </resources>
