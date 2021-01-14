@@ -7,16 +7,16 @@
     tools:context=".ui.graph.CalendarActivity">
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calendar Page"
-        tools:layout_editor_absoluteX="154dp"
-        tools:layout_editor_absoluteY="291dp"
+        android:id="@+id/myDate"
+        android:layout_width="84dp"
+        android:layout_height="35dp"
+        android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName"
+        app:layout_constraintVertical_bias="0.139" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
@@ -103,5 +103,34 @@
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
         app:srcCompat="@drawable/icons8_automation_48" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="363dp"
+        android:layout_height="375dp"
+        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.432"
+        tools:layout_editor_absoluteX="24dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="407dp"
+        android:layout_height="51dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Calendar"
+        android:textSize="23sp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:onClick="cancelbuttonOnClick"
+        tools:layout_editor_absoluteX="208dp"
+        tools:layout_editor_absoluteY="627dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
