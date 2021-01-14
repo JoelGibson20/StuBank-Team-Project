@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.card.CardActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Digital Card Page"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="323dp" />
-
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
@@ -30,27 +22,27 @@
 
     <ImageButton
         android:id="@+id/homeImageButton"
-        android:onClick="homeButtonOnClick"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
+        android:contentDescription="TODO"
+        android:onClick="homeButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/graphImageButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_home_page_48"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/icons8_home_page_48" />
 
     <ImageButton
         android:id="@+id/graphImageButton"
-        android:onClick="graphButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
+        android:onClick="graphButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/poundImageButton"
         app:layout_constraintStart_toEndOf="@+id/homeImageButton"
@@ -59,13 +51,13 @@
 
     <ImageButton
         android:id="@+id/poundImageButton"
-        android:onClick="poundButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
+        android:onClick="poundButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/cardImageButton"
         app:layout_constraintStart_toEndOf="@+id/graphImageButton"
@@ -74,11 +66,11 @@
 
     <ImageButton
         android:id="@+id/cardImageButton"
-        android:onClick="cardButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
+        android:onClick="cardButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
         app:layout_constraintStart_toEndOf="@+id/poundImageButton"
@@ -87,16 +79,107 @@
 
     <ImageButton
         android:id="@+id/gearsImageButton"
-        android:onClick="gearsButtonOnClick"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
+        android:onClick="gearsButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toEndOf="@+id/homeBottomAppBar"
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
         app:srcCompat="@drawable/icons8_automation_48" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="252dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-4dp" />
+
+    <Button
+        android:id="@+id/viewPIN"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:text="View PIN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardDetails" />
+
+    <Button
+        android:id="@+id/addToWallet"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="12dp"
+        android:text="Add to Wallet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <Button
+        android:id="@+id/cardDetails"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:text="Show Card Details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addToWallet" />
+
+    <Button
+        android:id="@+id/changePIN"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:text="Change PIN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPIN" />
+
+    <Button
+        android:id="@+id/removeCard"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:text="Remove Card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freezeCard" />
+
+    <ToggleButton
+        android:id="@+id/freezeCard"
+        android:layout_width="382dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="8dp"
+        android:background="#FF6200EE"
+        android:fontFamily="sans-serif-medium"
+        android:text="freezeCard"
+        android:textColor="#FFFFFF"
+        android:textOff="Freeze Card"
+        android:textOn="Unfreeze Card"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changePIN" />
+
+    <ImageView
+        android:id="@+id/card"
+        android:layout_width="262dp"
+        android:layout_height="185dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="40dp"
+        android:clickable="false"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bank_card" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
