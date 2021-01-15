@@ -4,8 +4,9 @@
 
     <string name="back4app_server_url" translatable="false">https://parseapi.back4app.com/</string>
 
-    <string name="back4app_app_id" translatable="false">vORa9F9cxvwynlXzi9sfziI0iPXz1EujQvwMSUr2</string>
-    <string name="back4app_client_key" translatable="false">5GDWuKhTZxJfdIKBTz9dq6iPf1JJgws7FMNDLvDb</string>
+    <string name="back4app_app_id" translatable="false">WqPh0y3MH8HaVKj0vfb71xAefv1u3mAkyjD1ypcx</string>
+    <string name="back4app_client_key" translatable="false">xbVNeAwgFAV6fkeQmyVAkW0R6jQpFJUAXWhUPm62</string>
+
 
     <string name="title_activity_sign_up">SignUp</string>
     <string name="prompt_firstName">First Name</string>
@@ -25,6 +26,14 @@
     <string name="account1Number">00001111</string>
     <string name="account1SortCode">06-07-08</string>
     <string name="account1Balance">£4300</string>
+    <string-array name="accounts">
+        <item>One</item>
+        <item>Two</item>
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+
+    </string-array>
 
 
 </resources>
