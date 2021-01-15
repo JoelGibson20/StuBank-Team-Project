@@ -34,6 +34,10 @@
     <string name="flaticonCredits">Lock icons made by Those Icons from www.flaticon.com</string>
     <string name="yourAccounts">Your Accounts:</string>
     <string name="newAccountButton">+New Account</string>
+    <string name="newAccountPopup">Name your new account:</string>
+    <string name="prompt_accountName">Account Name</string>
+    <string name="backButton">Back</string>
+    <string name="createButton">Create Account</string>
 
 
 </resources>
