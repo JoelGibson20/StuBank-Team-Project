@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,7 +42,7 @@ public class HomeScreen extends AppCompatActivity {
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
         //Load the greeting text
         final TextView greeting = findViewById(R.id.greeting);
-
+        final Button newAccountButton = findViewById(R.id.newAccountButton);
 
         ParseObject userDetails = null;
         //Gets the user's name to greet them by name
@@ -84,6 +85,9 @@ public class HomeScreen extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), AccountPage.class);
         intent.putExtra("accountParseObject", accountParseObject);
         startActivity(intent);
+    }
+    public void newAccountButtonOnClick(View v){
+        System.out.println("NEW ACCOUNT BUTTON CLICKED");
     }
 
 
