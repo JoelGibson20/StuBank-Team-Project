@@ -126,6 +126,7 @@
         android:layout_width="382dp"
         android:layout_height="55dp"
         android:layout_marginTop="4dp"
+        android:onClick="showCardDetailsOnClick"
         android:text="Show Card Details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -180,6 +181,39 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421"
         app:srcCompat="@drawable/bank_card" />
+
+    <Button
+        android:id="@+id/addCard"
+        android:layout_width="102dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="216dp"
+        android:onClick="addCardButtonOnClick"
+        android:text="Add Card"
+        android:textSize="8sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/accountNumber"
+        android:layout_width="64dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="168dp"
+        android:text="@string/account1Number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sortCode"
+        android:layout_width="64dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="168dp"
+        android:text="@string/account1SortCode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
