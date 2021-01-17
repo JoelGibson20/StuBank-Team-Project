@@ -3,7 +3,6 @@ package com.back4app.java.example;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -92,11 +90,10 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
     public void newAccountButtonOnClick(View v){
-        System.out.println("NEW ACCOUNT BUTTON CLICKED");
         // inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup, null);
+        View popupView = inflater.inflate(R.layout.activity_popup, null);
 
         // create the popup window
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
@@ -107,8 +104,24 @@ public class HomeScreen extends AppCompatActivity {
         // which view you pass in doesn't matter, it is only used for the window tolken
         popupWindow.showAtLocation(findViewById(R.id.greeting), Gravity.CENTER, 0, 0);
 
-    }
+        Button backButton = popupView.findViewById(R.id.backButton);
+        Button createButton = popupView.findViewById(R.id.createButton);
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("BACK BUTTON CLICKED");
+            }
+        });
+
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("CREATE BUTTON CLICKED");
+            }
+        });
+
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     public void createMyCardView(List<ParseObject> accountsList){
