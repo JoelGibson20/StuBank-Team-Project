@@ -111,6 +111,7 @@ public class HomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("BACK BUTTON CLICKED");
+                popupWindow.dismiss();
             }
         });
 
