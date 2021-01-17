@@ -32,11 +32,15 @@ import com.parse.ParseQuery;
 
 public class CardActivity extends AppCompatActivity {
     final String[] cardDetails = new String[4];
-    String username = "";
+    private String username = "";
     private String userInputPassword = "";
     private String userInputOldPIN = "";
     private String userInputNewPIN = "";
     private String userInputNewPINReenter = "";
+    private final String userObjectId = databaseMethods.getCurrentUser().getObjectId();
+    private String accountNumber;
+    private String sortCode;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class CardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card);
         getCardDetails();
         getUsername();
+        getAccountDetails();
 
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
@@ -54,13 +59,42 @@ public class CardActivity extends AppCompatActivity {
     }
 
     public void getUsername(){
-        String userObjectId = databaseMethods.getCurrentUser().getObjectId();
         ParseQuery<ParseObject> query1 = ParseQuery.getQuery("_User");
         query1.getInBackground(userObjectId, new GetCallback<ParseObject>() {
             public void done(ParseObject result, ParseException e) {
                 if (e == null) {
                     username = result.getString("username");
                 }
+            }
+        });
+    }
+
+    public void removeCard() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
+
+        // Retrieve the object by id
+        query.getInBackground("<PARSE_OBJECT_ID>", new GetCallback<ParseObject>() {
+            public void done(ParseObject entity, ParseException e) {
+                if (e == null) {
+                        entity.deleteInBackground();
+                    }
+                }
+
+        });
+    }
+
+    public void getAccountDetails(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+        query.whereEqualTo("accountOwner", userObjectId);
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            public void done(ParseObject account, ParseException e) {
+                if (e == null) {
+                    accountNumber = account.getString("accountNumber");
+                    sortCode = account.getString("sortCode");
+                    ((TextView)findViewById(R.id.accountNumber)).setText(accountNumber);
+                    ((TextView)findViewById(R.id.sortCode)).setText(sortCode);
+                }
+
             }
         });
     }

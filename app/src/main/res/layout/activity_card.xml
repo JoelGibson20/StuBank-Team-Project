@@ -204,7 +204,6 @@
         android:layout_height="17dp"
         android:layout_marginStart="172dp"
         android:layout_marginTop="168dp"
-        android:text="@string/account1Number"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -214,7 +213,6 @@
         android:layout_height="17dp"
         android:layout_marginStart="252dp"
         android:layout_marginTop="168dp"
-        android:text="@string/account1SortCode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
