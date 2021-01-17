@@ -40,24 +40,22 @@ public class CardActivity extends AppCompatActivity {
     private final String userObjectId = databaseMethods.getCurrentUser().getObjectId();
     private String accountNumber;
     private String sortCode;
+    private String accountID;
+    private String cardID;
+    private String userInputPIN;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
-        getCardDetails();
-        getUsername();
         getAccountDetails();
+        getUsername();
 
-        final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
-        final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
-        final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
-        final ImageButton cardImageButton = findViewById(R.id.cardImageButton);
-        final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
+
+
 
     }
-
     public void getUsername(){
         ParseQuery<ParseObject> query1 = ParseQuery.getQuery("_User");
         query1.getInBackground(userObjectId, new GetCallback<ParseObject>() {
@@ -68,54 +66,53 @@ public class CardActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void removeCard() {
+    public void removeCardFromDB() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
-
         // Retrieve the object by id
-        query.getInBackground("<PARSE_OBJECT_ID>", new GetCallback<ParseObject>() {
+        query.getInBackground(cardID, new GetCallback<ParseObject>() {
             public void done(ParseObject entity, ParseException e) {
                 if (e == null) {
                         entity.deleteInBackground();
                     }
                 }
-
         });
     }
-
     public void getAccountDetails(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", userObjectId);
+        query.whereEqualTo("accountType", "current");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             public void done(ParseObject account, ParseException e) {
                 if (e == null) {
                     accountNumber = account.getString("accountNumber");
                     sortCode = account.getString("sortCode");
+                    accountID = account.getObjectId();
                     ((TextView)findViewById(R.id.accountNumber)).setText(accountNumber);
                     ((TextView)findViewById(R.id.sortCode)).setText(sortCode);
+                    getCardDetails();
                 }
 
             }
         });
     }
-
     public void getCardDetails(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
         // The query will search for a ParseObject, given its objectId.
         // When the query finishes running, it will invoke the GetCallback
         // with either the object, or the exception thrown
-        query.getInBackground("HXVXy0xBT3", new GetCallback<ParseObject>() {
+        query.whereEqualTo("accountID", accountID);
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
             public void done(ParseObject result, ParseException e) {
                 if (e == null) {
                     cardDetails[0] = result.getString("cardNumber");
                     cardDetails[1] = result.getString("cvv");
                     cardDetails[2] = String.valueOf(result.getString("expiryDate"));
                     cardDetails[3] = result.getString("PIN");
+                    cardID = result.getObjectId();
                 }
             }
         });
     }
-
     public void homeButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
         startActivity(intent);
@@ -141,6 +138,7 @@ public class CardActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void showCardDetailsOnClick(View v){
+        getCardDetails();
         Button cardDetailsButton = findViewById(R.id.cardDetails);
         cardDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +160,7 @@ public class CardActivity extends AppCompatActivity {
         });
     }
     public void viewPINOnClick(View v){
+        getCardDetails();
         Button viewPINButton = findViewById(R.id.viewPIN);
         viewPINButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,10 +201,10 @@ public class CardActivity extends AppCompatActivity {
         });
     }
     public void updatePINInDB(String newPIN){
+//        getCardDetails();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
-
         // Retrieve the object by id
-        query.getInBackground("HXVXy0xBT3", new GetCallback<ParseObject>() {
+        query.getInBackground(cardID, new GetCallback<ParseObject>() {
             public void done(ParseObject entity, ParseException e) {
                 if (e == null) {
                     // Update the fields we want to
@@ -216,8 +215,49 @@ public class CardActivity extends AppCompatActivity {
             }
         });
     }
+    public void removeCardOnClick(View v){
+        getCardDetails();
+        Button removeCardButton = findViewById(R.id.removeCard);
+        removeCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("Please enter your PIN to remove the card");
+                // Set up the input
+                final EditText input = new EditText(CardActivity.this);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                builder.setView(input);
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        userInputPIN = input.getText().toString();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                        builder.setCancelable(true);
+                        if (userInputPIN.equals(cardDetails[3])){
+                            removeCardFromDB();
+                            builder.setMessage("Card successfully removed!");
+                            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            builder.setMessage("Incorrect PIN. Please try again.");
+                        }
+                        AlertDialog dialog5 = builder.show();
+                        TextView messageText = (TextView)dialog5.findViewById(android.R.id.message);
+                        messageText.setGravity(Gravity.CENTER);
+                        dialog5.show();
+                    }
+                });
+                builder.show();
+
+            }
+        });
+    }
 
     public void changePINOnClick(View v){
+        getCardDetails();
         Button changePINbutton = findViewById(R.id.changePIN);
         changePINbutton.setOnClickListener(new View.OnClickListener() {
             @Override
