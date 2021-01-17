@@ -31,6 +31,8 @@ public class CalendarActivity extends GraphActivity {
         calendarview = (CalendarView) findViewById(R.id.calendarView);
         myDate  = (TextView) findViewById(R.id.myDate);
 
+
+        //changes the date depending on which date is clicked on the calendar.
         calendarview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -46,6 +48,7 @@ public class CalendarActivity extends GraphActivity {
         final ImageButton cardImageButton = findViewById(R.id.cardImageButton);
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
         final Button cancelbutton = findViewById(R.id.button_cancel);
+        final Button okbutton = findViewById(R.id.button_ok);
 
 
     }
@@ -72,6 +75,11 @@ public class CalendarActivity extends GraphActivity {
 
     public void cancelbuttonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+        startActivity(intent);
+    }
+
+    public void okbuttonOnClick(View V){
+        Intent intent = new Intent(getApplicationContext(), DateTransferActivity.class);
         startActivity(intent);
     }
 

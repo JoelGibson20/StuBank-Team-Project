@@ -142,6 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ok"
+        android:onClick="okbuttonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/gearsImageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"

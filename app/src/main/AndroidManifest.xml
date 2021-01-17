@@ -16,6 +16,7 @@
         <activity android:name=".ui.settings.SettingsActivity"></activity>
         <activity android:name=".ui.pound.PoundActivity" />
         <activity android:name=".ui.graph.CalendarActivity"/>
+        <activity android:name=".ui.graph.DateTransferActivity"/>
         <activity android:name=".ui.graph.GraphActivity" />
         <activity android:name=".ui.card.CardActivity" />
         <activity android:name=".HomeScreen" />
