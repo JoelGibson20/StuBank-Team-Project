@@ -65,8 +65,9 @@ public class HomeScreen extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void homeButtonOnClick(View v){
+    public void homeButtonOnClick(View v) throws ParseException {
         //Disabled for home screen as unnecessary when already on home screen
+        databaseMethods.createAccount("b","e");
     }
     public void graphButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
@@ -89,29 +90,30 @@ public class HomeScreen extends AppCompatActivity {
         intent.putExtra("accountParseObject", accountParseObject);
         startActivity(intent);
     }
-    public void newAccountButtonOnClick(View v){
-        // inflate the layout of the popup window
+    public void newVaultButtonOnClick(View v){
+        //Inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = inflater.inflate(R.layout.activity_popup, null);
 
-        // create the popup window
+        //Set the properties for the popup window
         int width = LinearLayout.LayoutParams.MATCH_PARENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true; // lets taps outside the popup also dismiss it
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-        // show the popup window
-        // which view you pass in doesn't matter, it is only used for the window tolken
+
+        //Show the popup window
         popupWindow.showAtLocation(findViewById(R.id.greeting), Gravity.CENTER, 0, 0);
 
+        //Load the buttons on the popup window
         Button backButton = popupView.findViewById(R.id.backButton);
         Button createButton = popupView.findViewById(R.id.createButton);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("BACK BUTTON CLICKED");
                 popupWindow.dismiss();
+                //If the back button is clicked close the popup
             }
         });
 
