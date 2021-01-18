@@ -45,7 +45,7 @@ public class HomeScreen extends AppCompatActivity {
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
         //Load the greeting text
         final TextView greeting = findViewById(R.id.greeting);
-        final Button newAccountButton = findViewById(R.id.newAccountButton);
+        final Button newVaultButton = findViewById(R.id.newVaultButton);
 
         ParseObject userDetails = null;
         //Gets the user's name to greet them by name
@@ -132,7 +132,7 @@ public class HomeScreen extends AppCompatActivity {
         TextView currentAccountBalance = findViewById(R.id.currentAccountBalance);
 
 
-        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+        LinearLayout scrollViewLinearLayout = findViewById(R.id.scrollViewLinearLayout);
         //Layout params which will be applied to the cardView
         LinearLayout.LayoutParams layoutparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -159,11 +159,10 @@ public class HomeScreen extends AppCompatActivity {
                 //Set params for CardView
                 cardview.setUseCompatPadding(true);
                 cardview.setLayoutParams(layoutparams);
-                cardview.setMinimumHeight(60);
                 cardview.setPreventCornerOverlap(true);
                 cardview.setPadding(0,0,0,80);
                 cardview.setCardBackgroundColor(Color.parseColor("#FF03DAC5"));
-                cardview.setRadius(20);
+                cardview.setRadius(50);
                 cardview.setMaxCardElevation(20);
                 cardview.setPadding(0,100,0,20);
                 cardview.setClipToPadding(true);
@@ -180,7 +179,7 @@ public class HomeScreen extends AppCompatActivity {
 
                 //Create a TextView for the account name
                 TextView accountNameText = new TextView(getApplicationContext());
-                accountNameText.setPadding(10,10,0,0);
+                accountNameText.setPadding(10,30,0,30);
                 accountNameText.setLayoutParams(layoutparams);
                 accountNameText.setText(accountsList.get(i).getString("accountName"));
                 accountNameText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
@@ -188,7 +187,7 @@ public class HomeScreen extends AppCompatActivity {
                 accountNameText.setTextSize(16);
                 accountNameText.setTypeface(accountNameText.getTypeface(), Typeface.BOLD);
 
-                //Create a TextView for the account number
+               /* //Create a TextView for the account number
                 TextView accountNumberText = new TextView(getApplicationContext());
                 accountNumberText.setPadding(10,70,0,0);
                 accountNumberText.setLayoutParams(layoutparams);
@@ -204,11 +203,11 @@ public class HomeScreen extends AppCompatActivity {
                 sortCodeText.setText(accountsList.get(i).getString("sortCode"));
                 sortCodeText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
                 sortCodeText.setTextColor(Color.WHITE);
-                sortCodeText.setTextSize(16);
+                sortCodeText.setTextSize(16);*/
 
                 //Create a TextView for the account balance
                 TextView balanceText = new TextView(getApplicationContext());
-                balanceText.setPadding(700,70,10,0);
+                balanceText.setPadding(700,30,10,30);
                 balanceText.setLayoutParams(layoutparams);
                 balanceText.setText(accountsList.get(i).getString("balance"));
                 balanceText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
@@ -218,13 +217,13 @@ public class HomeScreen extends AppCompatActivity {
 
                 //Add the TextViews to the CardView
                 cardview.addView(accountNameText);
-                cardview.addView(accountNumberText);
-                cardview.addView(sortCodeText);
+               /* cardview.addView(accountNumberText);
+                cardview.addView(sortCodeText);*/
                 cardview.addView(balanceText);
 
 
                 //Add the CardView to the linear layout in the ScrollView
-                linearLayout.addView(cardview);}
+                scrollViewLinearLayout.addView(cardview);}
 
         }
     }

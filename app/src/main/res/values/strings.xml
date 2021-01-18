@@ -32,8 +32,8 @@
     <string name="renamePopUp">Change Account Name:</string>
     <string name="icons8Credits">Taskbar icons from ICONS8: https://icons8.com</string>
     <string name="flaticonCredits">Lock icons made by Those Icons from www.flaticon.com</string>
-    <string name="yourAccounts">Your Accounts:</string>
-    <string name="newAccountButton">+New Account</string>
+    <string name="yourAccounts">Your Account:</string>
+    <string name="newAccountButton">+New Vault</string>
     <string name="newAccountPopup">Name your new account:</string>
     <string name="prompt_accountName">Account Name</string>
     <string name="backButton">Back</string>
