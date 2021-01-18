@@ -37,7 +37,6 @@ public class GraphActivity extends AppCompatActivity {
     private Account selectedAccount;
     private final String TAG = "GraphActivityTag";
 
-    //ImageButton calendarButton;
 
 
     @Override
@@ -67,24 +66,16 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                selectedAccount = (Account) parent.getSelectedItem();
-               String total = totalTransactionsFromOneSeller("test", databaseMethods.getAllTransactionsFromOneAccount(selectedAccount));
+               Map<String,String> allTotals = totalTransactionsFromAllSellers();
+               Log.d(TAG, allTotals.toString());
 
-               Toast.makeText(getApplicationContext(), total, Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getApplicationContext(), "Please open an account", Toast.LENGTH_SHORT).show();
 
             }
         });
-
-
-        //calendarButton = findViewById(R.id.calendarImageButton);
-
-        //calendarButton.setOnClickListener(v -> {
-            //Intent intent = new Intent(GraphActivity.this, CalendarActivity.class);
-            //startActivity(intent);
-        //});
 
     }
 
@@ -101,11 +92,25 @@ public class GraphActivity extends AppCompatActivity {
                 total += Integer.parseInt(valueAsString.substring(1));
 
             }
-        };
+        }
 
         return Integer.toString(total);
     }
 
+    //collects totals spent on each seller and stores amount in a hashmap with seller's name as a key
+    private Map<String, String> totalTransactionsFromAllSellers(){
+        Map<String, String> allTotals = new HashMap<>();
+
+
+        List<ParseObject> transactionList = databaseMethods.getAllTransactionsFromOneAccount(selectedAccount);
+        for(ParseObject transaction:transactionList){
+            String seller = transaction.getString("ingoingAccount");
+            if(!allTotals.containsKey(seller)){
+                allTotals.put(seller, totalTransactionsFromOneSeller(seller, transactionList));
+            }
+        }
+        return allTotals;
+    }
 
     // creates a List of Account objects generated from all accounts of the current user
     private List<Account> populateAccountList(){
