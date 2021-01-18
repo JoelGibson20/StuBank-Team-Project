@@ -28,12 +28,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GraphActivity extends AppCompatActivity {
     private Spinner spinner;
     private Account selectedAccount;
-    private final String TAG = "GraphActivity";
+    private final String TAG = "GraphActivityTag";
 
     //ImageButton calendarButton;
 
@@ -64,10 +66,10 @@ public class GraphActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Account account = (Account) parent.getSelectedItem();
-                String accountName = account.getAccountName();
-                Toast.makeText(getApplicationContext(), accountName, Toast.LENGTH_SHORT).show();
+               selectedAccount = (Account) parent.getSelectedItem();
+               String total = totalTransactionsFromOneSeller("test", databaseMethods.getAllTransactionsFromOneAccount(selectedAccount));
 
+               Toast.makeText(getApplicationContext(), total, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -84,26 +86,32 @@ public class GraphActivity extends AppCompatActivity {
             //startActivity(intent);
         //});
 
-
-
     }
 
-    private List<ParseObject> getAllAccounts() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
-        query.whereEqualTo("accountOwner", databaseMethods.getCurrentUser().getObjectId());
-        try {
-            return (query.find());
-        }
-        catch (ParseException e){
-            Log.d(TAG, e.toString());
-            return null;
-        }
+
+
+    // returns how much was payed to a given seller from one account
+    private String totalTransactionsFromOneSeller(String seller, List<ParseObject> transactionList){
+        String userAccountNumber = selectedAccount.getAccountNumber();
+        int total = 0;
+
+        for (ParseObject transaction : transactionList) {
+            if(transaction.getString("ingoingAccount").equals(seller)){
+                String valueAsString = transaction.getString("value");
+                total += Integer.parseInt(valueAsString.substring(1));
+
+            }
+        };
+
+        return Integer.toString(total);
     }
 
+
+    // creates a List of Account objects generated from all accounts of the current user
     private List<Account> populateAccountList(){
         // queries database for all accounts from current user and adds them to a list as "Account" objects
         List<Account> accountList = new ArrayList<>();
-        List<ParseObject> accounts = getAllAccounts();
+        List<ParseObject> accounts = databaseMethods.getAllAccountsofOneUser();
         for (ParseObject account: accounts) {
             accountList.add(new Account(
                     account.getString("objectId"),
@@ -120,22 +128,7 @@ public class GraphActivity extends AppCompatActivity {
 
     //TODO need to actually generate a graph, just a placeholder method for now
     public void displayGraph(){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
-        query.whereEqualTo("outgoingAccount", "00001111");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> transactions, ParseException e) {
-                if (e == null){
-                    String value = transactions.get(0).getString("value");
-                    Log.d("transactions", value);
-                }
-                else{
-                    Log.d("transactions","Error", e);
-                }
-
-            }
-        });
-
+        String x = "";
     }
 
 

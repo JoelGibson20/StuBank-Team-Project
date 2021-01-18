@@ -1,10 +1,15 @@
 package com.back4app.java.example.ui;
 
+import android.util.Log;
+
+import com.back4app.java.example.ui.graph.Account;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class databaseMethods {
 
@@ -69,6 +74,31 @@ public class databaseMethods {
 
     public static ParseObject getCurrentUser(){
        return(ParseUser.getCurrentUser());
+    }
+
+    public static List<ParseObject> getAllAccountsofOneUser() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+
+        query.whereEqualTo("accountOwner", databaseMethods.getCurrentUser().getObjectId());
+        try {
+            return (query.find());
+        }
+        catch (ParseException e){
+            Log.d("DatabaseMethods", e.toString());
+            return null;
+        }
+    }
+    public static List<ParseObject> getAllTransactionsFromOneAccount(Account selectedAcount) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
+
+        query.whereEqualTo("outgoingAccount", selectedAcount.getAccountNumber());
+        try {
+            return (query.find());
+        }
+        catch (ParseException e){
+            Log.d("DatabaseMethods", e.toString());
+            return null;
+        }
     }
 }
 
