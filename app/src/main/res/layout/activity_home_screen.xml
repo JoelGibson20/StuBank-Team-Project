@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="530dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="30dp"
         android:fillViewport="false"
@@ -25,9 +25,63 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/currentAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="true"
+                android:minHeight="60dp"
+                android:paddingTop="80dp"
+                android:paddingBottom="80dp"
+                app:cardBackgroundColor="@color/teal_700"
+                app:cardCornerRadius="20px"
+                app:cardElevation="20dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="false">
+
+                <TextView
+                    android:id="@+id/currentAccountName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10px"
+                    android:paddingTop="10px"
+                    android:text="Current Account"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/currentAccountNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10px"
+                    android:paddingTop="70px"
+                    android:text="00001111"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/currentAccountSortCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10px"
+                    android:paddingTop="130px"
+                    android:paddingBottom="10px"
+                    android:text="00-11-22"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/currentAccountBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="700px"
+                    android:paddingTop="70px"
+                    android:paddingEnd="10px"
+                    android:text="Balance"
+                    android:textSize="16sp" />
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
     </ScrollView>
 
     <TextView
@@ -131,6 +185,7 @@
         app:srcCompat="@drawable/icons8_automation_48" />
 
     <FrameLayout
+        android:id="@+id/yourAccountBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
