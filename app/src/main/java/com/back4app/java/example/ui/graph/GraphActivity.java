@@ -33,6 +33,7 @@ import java.util.List;
 public class GraphActivity extends AppCompatActivity {
     private Spinner spinner;
     private Account selectedAccount;
+    private final String TAG = "GraphActivity";
 
     //ImageButton calendarButton;
 
@@ -51,43 +52,21 @@ public class GraphActivity extends AppCompatActivity {
 
         spinner = findViewById(R.id.accountSpinner);
 
-        // queries database for all accounts from current user and adds them to a list as "Account" objects
-        List<Account> accountList = new ArrayList<>();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
-        String userId = databaseMethods.getCurrentUser().getObjectId();
-        Log.d("user",userId);
-        query.whereEqualTo("accountOwner", userId);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> accounts, ParseException e) {
-                if (e==null){
-                    for (ParseObject account: accounts) {
-                        accountList.add(new Account(
-                                account.getString("objectId"),
-                                account.getString("accountOwner"),
-                                account.getString("sortCode"),
-                                account.getString("accountNumber"),
-                                account.getString("accountName"),
-                                account.getDate("createdAt"),
-                                account.getString("balance")
-                                ));
-                    }
-                }
-            }
-        });
-
         // creates a dropdown menu to select account
+        List<Account> accountList = populateAccountList();
         ArrayAdapter<Account> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, accountList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+
 
         //displays the graph of the account is selected
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedAccount = (Account) parent.getSelectedItem();
-                Log.d("account", selectedAccount.getAccountName());
-                //displayGraph();
+                Account account = (Account) parent.getSelectedItem();
+                String accountName = account.getAccountName();
+                Toast.makeText(getApplicationContext(), accountName, Toast.LENGTH_SHORT).show();
 
             }
 
@@ -97,15 +76,46 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
+
         //calendarButton = findViewById(R.id.calendarImageButton);
 
         //calendarButton.setOnClickListener(v -> {
             //Intent intent = new Intent(GraphActivity.this, CalendarActivity.class);
             //startActivity(intent);
         //});
-        //displayGraph();
 
 
+
+    }
+
+    private List<ParseObject> getAllAccounts() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+        query.whereEqualTo("accountOwner", databaseMethods.getCurrentUser().getObjectId());
+        try {
+            return (query.find());
+        }
+        catch (ParseException e){
+            Log.d(TAG, e.toString());
+            return null;
+        }
+    }
+
+    private List<Account> populateAccountList(){
+        // queries database for all accounts from current user and adds them to a list as "Account" objects
+        List<Account> accountList = new ArrayList<>();
+        List<ParseObject> accounts = getAllAccounts();
+        for (ParseObject account: accounts) {
+            accountList.add(new Account(
+                    account.getString("objectId"),
+                    account.getString("accountOwner"),
+                    account.getString("sortCode"),
+                    account.getString("accountNumber"),
+                    account.getString("accountName"),
+                    account.getDate("createdAt"),
+                    account.getString("balance")
+            ));
+        }
+        return accountList;
     }
 
     //TODO need to actually generate a graph, just a placeholder method for now
@@ -126,9 +136,9 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
+
+
 
     public void openCalendar(){
         Intent intent = new Intent(GraphActivity.this, CalendarActivity.class);
