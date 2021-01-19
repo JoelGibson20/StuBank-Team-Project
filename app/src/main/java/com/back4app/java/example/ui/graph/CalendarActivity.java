@@ -36,8 +36,11 @@ public class CalendarActivity extends GraphActivity {
         calendarview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "/" + (month + 1) + "/" + year;
-                Log.d(TAG, "DateSelected: " + date);
+                //String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                //Log.d(TAG, "DateSelected: " + date);
+                String month2 = getmonth(month + 1);
+                String date = dayOfMonth + " " + (month2) + " " + year;
+
                 myDate.setText(date);
             }
         });
@@ -52,6 +55,51 @@ public class CalendarActivity extends GraphActivity {
 
 
     }
+
+    public String getmonth(int month){
+        String month2 = null;
+
+        if (month == 1){
+            month2 = ("Jan");
+        }
+        if (month == 2){
+            month2 = ("Feb");
+        }
+        if (month == 3){
+            month2 = ("Mar");
+        }
+        if (month == 4){
+            month2 = ("Apr");
+        }
+        if (month == 5){
+            month2 = ("May");
+        }
+        if (month == 6){
+            month2 = ("Jun");
+        }
+        if (month == 7){
+            month2 = ("Jul");
+        }
+        if (month == 8){
+            month2 = ("Aug");
+        }
+        if (month == 9){
+            month2 = ("Sep");
+        }
+        if (month == 10){
+            month2 = ("Oct");
+        }
+        if (month == 11){
+            month2 = ("Nov");
+        }
+        if (month == 12){
+            month2 = ("Dec");
+        }
+        return month2;
+
+    }
+
+
     public void homeButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
         startActivity(intent);

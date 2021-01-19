@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/myDate"
-        android:layout_width="84dp"
-        android:layout_height="35dp"
+        android:layout_width="247dp"
+        android:layout_height="47dp"
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

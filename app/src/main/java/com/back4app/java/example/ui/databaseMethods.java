@@ -100,6 +100,21 @@ public class databaseMethods {
             return null;
         }
     }
+
+    public static List<ParseObject> getTransaction(String Object_ID){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
+        query.whereEqualTo("objectId", Object_ID);
+        try{
+            return (query.find());
+
+        }
+        catch (ParseException e){
+            Log.d("DatabaseMethods", e.toString());
+            return null;
+        }
+
+    }
+
 }
 
 
