@@ -107,7 +107,11 @@ public class databaseMethods {
         accountNumberQuery.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> accountsList, ParseException e) {
                 if (e == null) {
-                    createAccount(accountsList, accountType, accountName);
+                    try {
+                        createAccount(accountsList, accountType, accountName);
+                    } catch (ParseException parseException) {
+                        parseException.printStackTrace();
+                    }
                 } else {
 
                 }
@@ -116,7 +120,7 @@ public class databaseMethods {
 
 
     }
-    public static void createAccount(List<ParseObject> accountsList, String accountType, String accountName){
+    public static void createAccount(List<ParseObject> accountsList, String accountType, String accountName) throws ParseException {
         //Create account ParseObject
         ParseObject account = new ParseObject("Accounts");
         //Assign attributes we set
@@ -165,7 +169,9 @@ public class databaseMethods {
             System.out.println("SORTCODE: " + sortCode);
         }
 
-
+        account.put("accountNumber", accountNumber);
+        account.put("sortCode",sortCode);
+        account.save();
 
     }
 
