@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Back4AppExample">
-        <activity android:name=".TransferComplete"></activity>
+        <activity android:name=".TransferToOthers"></activity>
+        <activity android:name=".TransferBetweenOwnAccounts" />
+        <activity android:name=".TransferComplete" />
         <activity android:name=".NewRecipient" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.pound.PoundActivity" />

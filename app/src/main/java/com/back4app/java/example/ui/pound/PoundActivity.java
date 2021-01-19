@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.NewRecipient;
 import com.back4app.java.example.R;
+import com.back4app.java.example.TransferBetweenOwnAccounts;
+import com.back4app.java.example.TransferToOthers;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.graph.GraphActivity;
@@ -32,6 +35,7 @@ public class PoundActivity extends AppCompatActivity {
     String selectedAccount1 = "";
     //Selected incoming account
     String selectedAccount2 = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
@@ -43,8 +47,6 @@ public class PoundActivity extends AppCompatActivity {
         }
 
 
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pound);
 
@@ -53,39 +55,62 @@ public class PoundActivity extends AppCompatActivity {
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
         final ImageButton cardImageButton = findViewById(R.id.cardImageButton);
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
-
-        final FloatingActionButton addButton = findViewById(R.id.add);
-        populateSpinner(accountsList, "outgoing_spinner");
-        populateSpinner(accountsList, "incoming_spinner");
+        Button ownAccount = findViewById(R.id.ownAccountButton);
+        Button otherAccount = findViewById(R.id.otherAccountButton);
 
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-        public void onClick(View view) { Intent intent = new Intent(getApplicationContext(), NewRecipient.class);
-            System.out.println(selectedAccount1);
-            System.out.println(selectedAccount2);
+        ownAccount.setOnClickListener(new View.OnClickListener() {
+            public void onClick (View view){
+                Intent intent = new Intent(getApplicationContext(), TransferBetweenOwnAccounts.class);
+
+                startActivity(intent);
+
+
+            }
+        });
+          otherAccount.setOnClickListener(new View.OnClickListener() {
+        public void onClick (View view) {
+            Intent intent = new Intent(getApplicationContext(), TransferToOthers.class);
+
+            startActivity(intent);
+        }});}
+    public void homeButtonOnClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
         startActivity(intent);
-        }
-    });}
-        public void homeButtonOnClick (View v){
-            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-            startActivity(intent);
-        }
-        public void graphButtonOnClick (View v){
-            Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-            startActivity(intent);
-        }
-        public void poundButtonOnClick (View v){
+    }
+
+    public void graphButtonOnClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+        startActivity(intent);
+    }
+
+    public void poundButtonOnClick(View v) {
 /*        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
         startActivity(intent);*/
-        }
-        public void cardButtonOnClick (View v){
-            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-            startActivity(intent);
-        }
-        public void gearsButtonOnClick (View v){
-            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(intent);
-        }
+    }
+
+    public void cardButtonOnClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+        startActivity(intent);
+    }
+
+    public void gearsButtonOnClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void ownAccountOnClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), TransferBetweenOwnAccounts.class);
+        startActivity(intent);
+
+    }
+
+    public void otherAccountOnClick(View v) {
+        Intent intent = new Intent(getApplicationContext(), TransferToOthers.class);
+        startActivity(intent);
+    }
+
+
 
     public String populateSpinner(List<ParseObject> accountsList, String spinnerToUse) {
         ArrayList<String> accountsNameList = new ArrayList<String>();

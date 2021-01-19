@@ -32,6 +32,7 @@
     <string name="or_transfer_between_your_own_accounts">Or, transfer between your own accounts:</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="Transfer_between_your_own_accounts" />
 
 
 </resources>
