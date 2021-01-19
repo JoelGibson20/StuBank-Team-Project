@@ -26,7 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PoundActivity extends AppCompatActivity {
+    //Variable returned after Spinner method called
     String selectedAccount = "";
+    //Selected outgoing account
+    String selectedAccount1 = "";
+    //Selected incoming account
+    String selectedAccount2 = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
@@ -52,8 +57,12 @@ public class PoundActivity extends AppCompatActivity {
         final FloatingActionButton addButton = findViewById(R.id.add);
         populateSpinner(accountsList, "outgoing_spinner");
         populateSpinner(accountsList, "incoming_spinner");
+
+
         addButton.setOnClickListener(new View.OnClickListener() {
         public void onClick(View view) { Intent intent = new Intent(getApplicationContext(), NewRecipient.class);
+            System.out.println(selectedAccount1);
+            System.out.println(selectedAccount2);
         startActivity(intent);
         }
     });}
@@ -83,21 +92,21 @@ public class PoundActivity extends AppCompatActivity {
         for (int i = 0; i < accountsList.size(); i++) {
             accountsNameList.add(accountsList.get(i).getString("accountName"));
         }
-        //String currentSpinner = "R.id." + spinnerToUse;
+        final String chosenSpinner = spinnerToUse;
         Integer id = getResources().getIdentifier(spinnerToUse, "id", getPackageName());
         Spinner spinner = (Spinner) findViewById(id);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {;
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedAccount = adapterView.getItemAtPosition(i).toString();
-
-       /*     try {
-                databaseMethods.currentAccount(outgoingAccount);
-            } catch (ParseException e) {
-                e.printStackTrace();
+                //If the method is being called for outgoing account
+                if (chosenSpinner.equals("outgoing_spinner")) {
+                selectedAccount1 = adapterView.getItemAtPosition(i).toString();
             }
-     */   }
+                else {
+                    selectedAccount2 = adapterView.getItemAtPosition(i).toString();
+                }
+  }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -109,7 +118,16 @@ public class PoundActivity extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
         // String selectedAccount = spinner.getSelectedItem().toString();
-
+        //Outgoing account has not been changed meaning this spinner will be incoming account
+        //Set returned value depending on which spinner is being called
+        if (selectedAccount1.equals("")){
+            selectedAccount = selectedAccount2;
+        }
+        //
+        else {
+            selectedAccount = selectedAccount1;
+        }
+        //Return corresponding account
         return selectedAccount;}
 
 
