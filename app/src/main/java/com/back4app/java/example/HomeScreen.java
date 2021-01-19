@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -36,11 +37,6 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        try {
-            databaseMethods.retrieveAccountsBeforeCreation("b","e");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         //Load all the clickable buttons on the page
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
@@ -111,6 +107,7 @@ public class HomeScreen extends AppCompatActivity {
         //Load the buttons on the popup window
         Button backButton = popupView.findViewById(R.id.backButton);
         Button createButton = popupView.findViewById(R.id.createButton);
+        EditText accountNameInput = popupView.findViewById(R.id.accountNameInput);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,9 +118,16 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         createButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View v) {
                 System.out.println("CREATE BUTTON CLICKED");
+                try {
+                    databaseMethods.retrieveAccountsBeforeCreation("vault", accountNameInput.getText().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                popupWindow.dismiss(); //Close popup window after account creation
             }
         });
 
