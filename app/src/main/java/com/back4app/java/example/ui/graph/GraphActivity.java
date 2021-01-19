@@ -1,6 +1,8 @@
 package com.back4app.java.example.ui.graph;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.back4app.java.example.ui.databaseMethods;
 
@@ -33,9 +35,17 @@ import java.util.List;
 import java.util.Map;
 
 public class GraphActivity extends AppCompatActivity {
+    private final String TAG = "GraphActivityTag";
+
     private Spinner spinner;
     private Account selectedAccount;
-    private final String TAG = "GraphActivityTag";
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+
+
 
 
 
@@ -44,6 +54,7 @@ public class GraphActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
+        //creates buttons for bottom navigation bar
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
@@ -51,29 +62,48 @@ public class GraphActivity extends AppCompatActivity {
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
         final ImageButton calendarImageButton = findViewById(R.id.calendarImageButton);
 
-        spinner = findViewById(R.id.accountSpinner);
+
+        ArrayList<ExampleItem> exampleItems = new ArrayList<>();
+        exampleItems.add(new ExampleItem(R.drawable.ic_android, "Line 1", "Line 2"));
+        exampleItems.add(new ExampleItem(R.drawable.ic_left_arrow, "Line 3", "Line 4"));
+        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 5", "Line 6"));
+        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 7", "Line 8"));
+        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 9", "Line 10"));
+        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 11", "Line 12"));
+        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 13", "Line 14"));
+        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 15", "Line 16"));
+        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 17", "Line 18"));
+
+
+
+
+        mRecyclerView = findViewById(R.id.analyticsRecycler);
+        //mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new ExampleAdapter(exampleItems);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter );
+
 
         // creates a dropdown menu to select account
+        spinner = findViewById(R.id.accountSpinner);
         List<Account> accountList = populateAccountList();
         ArrayAdapter<Account> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, accountList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-
-
-        //displays the graph of the account is selected
+        //defines what happens when item in dropdown menu is selected
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                selectedAccount = (Account) parent.getSelectedItem();
                Map<String,String> allTotals = totalTransactionsFromAllSellers();
                Log.d(TAG, allTotals.toString());
-
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 Toast.makeText(getApplicationContext(), "Please open an account", Toast.LENGTH_SHORT).show();
-
             }
         });
 

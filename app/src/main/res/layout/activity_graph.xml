@@ -127,4 +127,29 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="411dp"
+        android:layout_height="195dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/homeBottomAppBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/analyticsRecycler"
+            android:layout_width="411dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="60dp"
+            android:background="@android:color/darker_gray"
+            android:padding="4dp"
+            android:scrollbars="vertical"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
