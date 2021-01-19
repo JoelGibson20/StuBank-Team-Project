@@ -2,6 +2,7 @@ package com.back4app.java.example.ui.card;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -10,20 +11,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
-
 import com.back4app.java.example.ui.settings.SettingsActivity;
 import com.back4app.java.example.ui.databaseMethods;
+
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -31,12 +35,16 @@ import com.parse.ParseQuery;
 
 
 public class CardActivity extends AppCompatActivity {
-    final String[] cardDetails = new String[4];
-    private String username = "";
-    private String userInputPassword = "";
-    private String userInputOldPIN = "";
-    private String userInputNewPIN = "";
-    private String userInputNewPINReenter = "";
+    private String cardNumber;
+    private String PIN;
+    private String cvv;
+    private String expiryDate;
+    private boolean isFrozen;
+    private String username;
+    private String userInputPassword;
+    private String userInputOldPIN;
+    private String userInputNewPIN;
+    private String userInputNewPINReenter;
     private final String userObjectId = databaseMethods.getCurrentUser().getObjectId();
     private String accountNumber;
     private String sortCode;
@@ -52,9 +60,6 @@ public class CardActivity extends AppCompatActivity {
         getAccountDetails();
         getUsername();
 
-
-
-
     }
     public void getUsername(){
         ParseQuery<ParseObject> query1 = ParseQuery.getQuery("_User");
@@ -66,6 +71,7 @@ public class CardActivity extends AppCompatActivity {
             }
         });
     }
+
     public void removeCardFromDB() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
         // Retrieve the object by id
@@ -77,6 +83,37 @@ public class CardActivity extends AppCompatActivity {
                 }
         });
     }
+
+    public void updateIsFrozenInDB(boolean issFrozen){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
+        // Retrieve the object by id
+        query.getInBackground(cardID, new GetCallback<ParseObject>() {
+            public void done(ParseObject entity, ParseException e) {
+                if (e == null) {
+                    // Update the fields we want to
+                    entity.put("Frozen", issFrozen);
+                    // All other fields will remain the same
+                    entity.saveInBackground();
+                }
+            }
+        });
+
+    }
+
+    public void freezeCardOnClick(View v){
+        ToggleButton toggle = (ToggleButton) findViewById(R.id.freezeCard);
+        Button cardDetailsButton1 = findViewById(R.id.removeCard);
+        Button cardDetailsButton = findViewById(R.id.cardDetails);
+        Button cardDetailsButton2 = findViewById(R.id.changePIN);
+        Button cardDetailsButton3 = findViewById(R.id.viewPIN);
+        cardDetailsButton.setClickable(!toggle.isChecked());
+        cardDetailsButton1.setClickable(!toggle.isChecked());
+        cardDetailsButton2.setClickable(!toggle.isChecked());
+        cardDetailsButton3.setClickable(!toggle.isChecked());
+        updateIsFrozenInDB(toggle.isChecked());
+    }
+
+    //remember to put this into homescreen oncreate, change the var and method to static and run carddeets in this oncreate and the text views in a separate method on top !!!!!!!!!!!!!!!!!!!!!!
     public void getAccountDetails(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", userObjectId);
@@ -95,6 +132,20 @@ public class CardActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void setFreezeChecked(){
+        ToggleButton toggle = (ToggleButton) findViewById(R.id.freezeCard);
+        toggle.setChecked(isFrozen);
+        Button cardDetailsButton1 = findViewById(R.id.removeCard);
+        Button cardDetailsButton = findViewById(R.id.cardDetails);
+        Button cardDetailsButton2 = findViewById(R.id.changePIN);
+        Button cardDetailsButton3 = findViewById(R.id.viewPIN);
+        cardDetailsButton.setClickable(!toggle.isChecked());
+        cardDetailsButton1.setClickable(!toggle.isChecked());
+        cardDetailsButton2.setClickable(!toggle.isChecked());
+        cardDetailsButton3.setClickable(!toggle.isChecked());
+    }
+
     public void getCardDetails(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
         // The query will search for a ParseObject, given its objectId.
@@ -104,41 +155,45 @@ public class CardActivity extends AppCompatActivity {
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             public void done(ParseObject result, ParseException e) {
                 if (e == null) {
-                    cardDetails[0] = result.getString("cardNumber");
-                    cardDetails[1] = result.getString("cvv");
-                    cardDetails[2] = String.valueOf(result.getString("expiryDate"));
-                    cardDetails[3] = result.getString("PIN");
+                    cardNumber = result.getString("cardNumber");
+                    cvv = result.getString("cvv");
+                    expiryDate = String.valueOf(result.getString("expiryDate"));
+                    PIN = result.getString("PIN");
                     cardID = result.getObjectId();
+                    isFrozen = result.getBoolean("Frozen");
+                    setFreezeChecked();
                 }
             }
         });
     }
+
     public void homeButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
         startActivity(intent);
     }
+
     public void graphButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
         startActivity(intent);
     }
+
     public void poundButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
         startActivity(intent);
     }
+
     public void cardButtonOnClick(View v){
 //        Intent intent = new Intent(getApplicationContext(), createCard.class);
 //        startActivity(intent);
     }
-    public void addCardButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), createCard.class);
-        startActivity(intent);
-    }
+
     public void gearsButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);
     }
+
     public void showCardDetailsOnClick(View v){
-        getCardDetails();
+//        getCardDetails();
         Button cardDetailsButton = findViewById(R.id.cardDetails);
         cardDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,12 +201,12 @@ public class CardActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
                 builder.setCancelable(true);
                 builder.setTitle("These are your card details:");
-                builder.setMessage("Card Number: " + cardDetails[0] + "\n" +"CVV: " + cardDetails[1] + "\n" +"Expiry Date: "+ cardDetails[2]);
+                builder.setMessage("Card Number: " + cardNumber + "\n" +"CVV: " + cvv + "\n" +"Expiry Date: "+ expiryDate);
                 builder.setPositiveButton("Copy Card Number to Clipboard", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("card number", cardDetails[0]);
+                        ClipData clip = ClipData.newPlainText("card number", cardNumber);
                         clipboard.setPrimaryClip(clip);
                     }
                 });
@@ -159,6 +214,7 @@ public class CardActivity extends AppCompatActivity {
             }
         });
     }
+
     public void viewPINOnClick(View v){
         getCardDetails();
         Button viewPINButton = findViewById(R.id.viewPIN);
@@ -182,7 +238,7 @@ public class CardActivity extends AppCompatActivity {
                             AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
                             builder.setCancelable(true);
                             if (checkPassword){
-                                builder.setMessage("PIN: " + cardDetails[3]);
+                                builder.setMessage("PIN: " + PIN);
                             }
                             else {
                                 builder.setMessage("Incorrect password!");
@@ -200,6 +256,7 @@ public class CardActivity extends AppCompatActivity {
             }
         });
     }
+
     public void updatePINInDB(String newPIN){
 //        getCardDetails();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
@@ -215,6 +272,7 @@ public class CardActivity extends AppCompatActivity {
             }
         });
     }
+
     public void removeCardOnClick(View v){
         getCardDetails();
         Button removeCardButton = findViewById(R.id.removeCard);
@@ -235,7 +293,7 @@ public class CardActivity extends AppCompatActivity {
                         userInputPIN = input.getText().toString();
                         AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
                         builder.setCancelable(true);
-                        if (userInputPIN.equals(cardDetails[3])){
+                        if (userInputPIN.equals(PIN)){
                             removeCardFromDB();
                             builder.setMessage("Card successfully removed!");
                             Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
@@ -251,15 +309,14 @@ public class CardActivity extends AppCompatActivity {
                     }
                 });
                 builder.show();
-
             }
         });
     }
 
     public void changePINOnClick(View v){
         getCardDetails();
-        Button changePINbutton = findViewById(R.id.changePIN);
-        changePINbutton.setOnClickListener(new View.OnClickListener() {
+        Button changePINButton = findViewById(R.id.changePIN);
+        changePINButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
@@ -276,7 +333,7 @@ public class CardActivity extends AppCompatActivity {
                         userInputOldPIN = input.getText().toString();
                         AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
                         builder.setCancelable(true);
-                        if(userInputOldPIN.equals(cardDetails[3])){
+                        if(userInputOldPIN.equals(PIN)){
                             builder.setTitle("Please choose a new 4-digit PIN");
                             // Set up the input
                             final EditText input1 = new EditText(CardActivity.this);
