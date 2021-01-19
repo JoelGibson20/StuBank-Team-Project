@@ -36,7 +36,11 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-
+        try {
+            databaseMethods.retrieveAccountsBeforeCreation("b","e");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         //Load all the clickable buttons on the page
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
@@ -65,9 +69,8 @@ public class HomeScreen extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void homeButtonOnClick(View v) throws ParseException {
+    public void homeButtonOnClick(View v){
         //Disabled for home screen as unnecessary when already on home screen
-        databaseMethods.createAccount("b","e");
     }
     public void graphButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);

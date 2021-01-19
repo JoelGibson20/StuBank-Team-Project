@@ -1,13 +1,13 @@
 package com.back4app.java.example.ui;
 
-import android.os.Parcelable;
-
+import com.parse.FindCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -100,7 +100,23 @@ public class databaseMethods {
         return(accountParseObject);
     }
 
-    public static void createAccount(String accountType, String accountName) throws ParseException {
+    public static void retrieveAccountsBeforeCreation(String accountType, String accountName) throws ParseException {
+
+        ParseQuery<ParseObject> accountNumberQuery = ParseQuery.getQuery("Accounts");
+
+        accountNumberQuery.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> accountsList, ParseException e) {
+                if (e == null) {
+                    createAccount(accountsList, accountType, accountName);
+                } else {
+
+                }
+            }
+        });
+
+
+    }
+    public static void createAccount(List<ParseObject> accountsList, String accountType, String accountName){
         //Create account ParseObject
         ParseObject account = new ParseObject("Accounts");
         //Assign attributes we set
@@ -110,35 +126,44 @@ public class databaseMethods {
         account.put("balance", "£0");
         account.put("locked", false);
 
+        //Initialise lists which will hold all pre-existing account numbers and sort codes
+        ArrayList<String> existingAccountNumbers = new ArrayList<>();
+        ArrayList<String> existingSortCodes = new ArrayList<>();
+
+        for(int x = 0; x < accountsList.size();x++){
+            //Saves all existing account numbers and sort codes to the lists
+            existingAccountNumbers.add(accountsList.get(x).getString("accountNumber"));
+            existingSortCodes.add(accountsList.get(x).getString("sortCode"));
+        }
 
 
         String accountNumber = "";
-        ParseQuery<ParseObject> accountNumberQuery = ParseQuery.getQuery("Accounts");
-        accountNumberQuery.whereEqualTo("accountNumber", accountNumber);
 
         //Will generate account number until it creates one which doesn't already exist
-        while (!(accountNumberQuery.find().isEmpty() && (accountNumber != ""))){
+        while ((existingAccountNumbers.contains(accountNumber)) || (accountNumber.equals(""))){
             accountNumber = "";
             Random rd = new Random();
 
             for(int x = 0; x < 8; x++){
                 accountNumber += rd.nextInt(10);
             }
-            System.out.println(accountNumber);
-            //Changes accountNumber in query to the newly generated number to check if it exists
-            accountNumberQuery.whereEqualTo("accountNumber", accountNumber);
+            System.out.println("ACCOUNT NUMBER: " + accountNumber);
         }
 
 
         String sortCode = "";
-        ParseQuery<ParseObject> sortCodeQuery = ParseQuery.getQuery("Accounts");
-        sortCodeQuery.whereEqualTo("sortCode", sortCode);
 
         //Will generate sort code until it creates one which doesn't already exist
-        while (!(sortCodeQuery.find().isEmpty() && (sortCode != ""))){
-            System.out.println("WORKS 2");
-        }
+        while ((existingSortCodes.contains(sortCode)) || (sortCode.equals(""))){
+            sortCode = "";
+            Random rd = new Random();
 
+            for (int y = 0; y < 6; y++){
+                sortCode += rd.nextInt(10);
+            }
+            sortCode = sortCode.substring(0,2) + "-" + sortCode.substring(2,4) + "-" + sortCode.substring(4,6);
+            System.out.println("SORTCODE: " + sortCode);
+        }
 
 
 
