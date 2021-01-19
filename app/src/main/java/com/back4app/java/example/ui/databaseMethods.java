@@ -84,6 +84,33 @@ public class databaseMethods {
         accountParseObject.put("accountName", newName);
         accountParseObject.save();
     }
+    public static List<ParseObject> currentAccount(String outgoingAccount) throws ParseException {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+        query.whereEqualTo("accountOwner", getCurrentUser().getObjectId());
+        query.whereEqualTo("accountName", outgoingAccount);
+        String fromAccount = query.find().toString();
+        return(query.find());
+    }
+    //Creates parse object from selected outgoing account
+    public static List<ParseObject> outgoingAccount(String outgoingAccount) throws ParseException {
+        ParseObject account = null;
+        List <ParseObject> accounts = null;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+        query.whereEqualTo("accountName", outgoingAccount);
+        query.find();
+        accounts = query.find();
+        return (accounts);
+    }
+    //Using account parse object to change corresponding balance after transfer
+    public static void updateBalance(List<ParseObject> account, String newBalance) {
+       ParseObject balance = account.get(0);
+        //String name = (String) account.get("accountName");
+        //ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+        //query.whereEqualTo("accountName", name);
+        balance.put("balance", newBalance);
+    }
+
+
 }
 
 

@@ -64,7 +64,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText2"
+            android:id="@+id/sort"
             android:layout_width="338dp"
             android:layout_height="48dp"
             android:layout_marginTop="10dp"
@@ -76,7 +76,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText3"
+            android:id="@+id/account"
             android:layout_width="336dp"
             android:layout_height="44dp"
             android:layout_marginTop="10dp"
@@ -89,6 +89,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/payee"
                 android:layout_width="340dp"
                 android:layout_height="46dp"
                 android:layout_marginTop="10dp"
@@ -100,7 +101,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="329dp"
+                android:id="@+id/reference"
+                android:layout_width="329dp"
             android:layout_height="44dp"
             android:layout_marginTop="100dp"
             android:hint="reference"
@@ -126,7 +128,8 @@
                 android:layout_gravity="center_horizontal"/>
 
             <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="85dp"
+            android:id="@+id/amount"
+                android:layout_width="85dp"
             android:layout_height="49dp"
             android:layout_marginTop="20dp"
             android:hint="amount"

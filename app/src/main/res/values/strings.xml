@@ -29,6 +29,9 @@
     <string name="statementButton">Statement</string>
     <string name="lockButton">Lock</string>
     <string name="renameButton">Rename</string>
+    <string name="or_transfer_between_your_own_accounts">Or, transfer between your own accounts:</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
 
 
 </resources>
