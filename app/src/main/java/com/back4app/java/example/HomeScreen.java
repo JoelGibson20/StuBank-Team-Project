@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,6 +128,15 @@ public class HomeScreen extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                /*This forces the program to wait 1 seconds (1000ms) before refreshing the page
+                as it would refresh too quick prior, and the new vault object wouldn't be retrieved
+                and displayed */
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        onRestart();
+                    }
+                }, 1000);
                 popupWindow.dismiss(); //Close popup window after account creation
             }
         });
@@ -142,6 +152,8 @@ public class HomeScreen extends AppCompatActivity {
 
 
         LinearLayout scrollViewLinearLayout = findViewById(R.id.scrollViewLinearLayout);
+        scrollViewLinearLayout.removeAllViews();
+        //Wipes any content in the linearlayout (allows refreshing)
         //Layout params which will be applied to the cardView
         LinearLayout.LayoutParams layoutparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
