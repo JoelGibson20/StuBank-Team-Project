@@ -122,7 +122,7 @@ public class HomeScreen extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View v) {
-                System.out.println("CREATE BUTTON CLICKED");
+                //Creates vault using the name provided
                 try {
                     databaseMethods.retrieveAccountsBeforeCreation("vault", accountNameInput.getText().toString());
                 } catch (ParseException e) {

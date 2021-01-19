@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -134,9 +135,25 @@ public class SignUpActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                //Directs to home page
-                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                startActivity(intent);
+
+                //Creates a current account for the user on sign-up
+                try {
+                    databaseMethods.retrieveAccountsBeforeCreation("currentAccount", "Current Account");
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                               /*This forces the program to wait 1 seconds (1000ms) before loading
+                the homepage, delaying enough time for the current account to be saved so it can
+                 be properly displayed on the homescreen */
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        //Directs to home page
+                        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                        startActivity(intent);
+                    }
+                }, 1000);
+
             }
         });
     }
