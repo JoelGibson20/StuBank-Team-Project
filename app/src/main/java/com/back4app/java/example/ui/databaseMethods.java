@@ -89,11 +89,9 @@ public class databaseMethods {
 
     public static ParseObject toggleAccountLock(ParseObject accountParseObject) throws ParseException {
         if(accountParseObject.getBoolean("locked")){
-            System.out.println("ACCOUNT NOW UNLOCKED");
             accountParseObject.put("locked", false);
         }
         else{
-            System.out.println("ACCOUNT NOW LOCKED");
             accountParseObject.put("locked", true);
         }
         accountParseObject.save();
@@ -151,7 +149,6 @@ public class databaseMethods {
             for(int x = 0; x < 8; x++){
                 accountNumber += rd.nextInt(10);
             }
-            System.out.println("ACCOUNT NUMBER: " + accountNumber);
         }
 
 
@@ -166,7 +163,6 @@ public class databaseMethods {
                 sortCode += rd.nextInt(10);
             }
             sortCode = sortCode.substring(0,2) + "-" + sortCode.substring(2,4) + "-" + sortCode.substring(4,6);
-            System.out.println("SORTCODE: " + sortCode);
         }
 
         account.put("accountNumber", accountNumber);
