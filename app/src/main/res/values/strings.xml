@@ -7,7 +7,6 @@
     <string name="back4app_app_id" translatable="false">WqPh0y3MH8HaVKj0vfb71xAefv1u3mAkyjD1ypcx</string>
     <string name="back4app_client_key" translatable="false">xbVNeAwgFAV6fkeQmyVAkW0R6jQpFJUAXWhUPm62</string>
 
-
     <string name="title_activity_sign_up">SignUp</string>
     <string name="prompt_firstName">First Name</string>
     <string name="prompt_surname">Surname</string>
@@ -26,6 +25,20 @@
     <string name="account1Number">00001111</string>
     <string name="account1SortCode">06-07-08</string>
     <string name="account1Balance">£4300</string>
+    <string name="shareDetailsButton">Share Details</string>
+    <string name="statementButton">Statement</string>
+    <string name="lockButton">Lock</string>
+    <string name="renameButton">Rename</string>
+    <string name="renamePopUp">Change Account Name:</string>
+    <string name="icons8Credits">Taskbar icons from ICONS8: https://icons8.com</string>
+    <string name="flaticonCredits">Lock icons made by Those Icons from www.flaticon.com</string>
+    <string name="yourAccounts">Your Account:</string>
+    <string name="newAccountButton">+New Vault</string>
+    <string name="newAccountPopup">Name your new account:</string>
+    <string name="prompt_accountName">Account Name</string>
+    <string name="backButton">Back</string>
+    <string name="createButton">Create Account</string>
+    <string name="transactions">Transactions</string>
 
 
 
