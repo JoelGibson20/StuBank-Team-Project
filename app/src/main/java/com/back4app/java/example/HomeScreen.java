@@ -25,6 +25,7 @@ import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
+import com.back4app.java.example.ui.vaultPage.VaultPage;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
@@ -86,9 +87,20 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
     public void accountClicked(ParseObject accountParseObject){
-        Intent intent = new Intent(getApplicationContext(), AccountPage.class);
-        intent.putExtra("accountParseObject", accountParseObject);
-        startActivity(intent);
+        //If the account clicked is a current account redirect to current account page
+        if(accountParseObject.getString("accountType").equals("currentAccount")){
+            Intent intent = new Intent(getApplicationContext(), AccountPage.class);
+            intent.putExtra("accountParseObject", accountParseObject);
+            startActivity(intent);
+        }
+        //If account clicked is a vault redirect to vault page
+        else if(accountParseObject.getString("accountType").equals("vault")){
+            Intent intent = new Intent(getApplicationContext(), VaultPage.class);
+            intent.putExtra("accountParseObject", accountParseObject);
+            startActivity(intent);
+        }
+
+
     }
     public void newVaultButtonOnClick(View v){
         //Inflate the layout of the popup window

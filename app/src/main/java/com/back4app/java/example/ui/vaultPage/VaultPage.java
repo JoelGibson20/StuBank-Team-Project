@@ -1,4 +1,4 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui.vaultPage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -38,8 +39,6 @@ public class VaultPage extends AppCompatActivity {
         ParseObject accountParseObject = (ParseObject) getIntent().getExtras().get("accountParseObject");
 
         accountName.setText(accountParseObject.getString("accountName"));
-        accountNumber.setText(String.format("Account Number: %s",accountParseObject.getString("accountNumber")));
-        sortCode.setText(String.format("Sort Code: %s",accountParseObject.getString("sortCode")));
         balance.setText(accountParseObject.getString("balance"));
 
         //Call method to set the button text based on whether the account is locked or not

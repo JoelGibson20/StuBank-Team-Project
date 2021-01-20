@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VaultPage">
+    tools:context=".ui.vaultPage.VaultPage">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,49 +56,28 @@
         </FrameLayout>
 
         <TextView
-            android:id="@+id/accountNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:text="Account Number"
-            android:textSize="16sp" />
-
-        <TextView
             android:id="@+id/balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
             android:background="@color/teal_200"
             android:text="Balance"
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/sortCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="0dp"
-            android:text="Sort Code"
-            android:textSize="16sp" />
-
         <LinearLayout
             android:id="@+id/buttonBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/renameButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_weight="0.33"
                 android:backgroundTint="@color/teal_200"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -111,7 +90,7 @@
                 android:id="@+id/lockButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
+                android:layout_weight="0.33"
                 android:backgroundTint="@color/teal_200"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -123,7 +102,7 @@
                 android:id="@+id/shareDetailsButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.33"
                 android:backgroundTint="@color/teal_200"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
