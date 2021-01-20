@@ -26,6 +26,7 @@ public class CalendarActivity extends GraphActivity {
     TextView myDate;
 
     String selectedAccount;
+    String accountnumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class CalendarActivity extends GraphActivity {
 
         Intent intent = getIntent();
         selectedAccount = intent.getStringExtra("selectedAccount");
+        accountnumber = intent.getStringExtra("accountname");
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, selectedAccount);
@@ -141,6 +143,7 @@ public class CalendarActivity extends GraphActivity {
     public void okbuttonOnClick(View V){
         Intent intent = new Intent(getApplicationContext(), DateTransferActivity.class);
         intent.putExtra("selectedAccount", selectedAccount);
+        intent.putExtra("accountnumber", accountnumber);
         startActivity(intent);
     }
 
