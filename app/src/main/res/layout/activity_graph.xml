@@ -134,8 +134,7 @@
 
         app:layout_constraintBottom_toTopOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -150,6 +149,15 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="227dp"
+        android:layout_height="27dp"
+        android:text="Transactions Totals: "
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

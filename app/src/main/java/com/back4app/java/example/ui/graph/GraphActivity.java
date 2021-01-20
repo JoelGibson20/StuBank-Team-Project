@@ -66,31 +66,7 @@ public class GraphActivity extends AppCompatActivity {
         final ImageButton calendarImageButton = findViewById(R.id.calendarImageButton);
 
 
-        /*ArrayList<ExampleItem> exampleItems = new ArrayList<>();
-        exampleItems.add(new ExampleItem(R.drawable.ic_android, "Line 1", "Line 2"));
-        exampleItems.add(new ExampleItem(R.drawable.ic_left_arrow, "Line 3", "Line 4"));
-        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 5", "Line 6"));
-        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 7", "Line 8"));
-        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 9", "Line 10"));
-        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 11", "Line 12"));
-        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 13", "Line 14"));
-        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 15", "Line 16"));
-        exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 17", "Line 18"));
 
-         */
-
-
-
-
-
-
-        mRecyclerView = findViewById(R.id.analyticsRecycler);
-        //mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(exampleItems);
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter );
 
 
         // creates a dropdown menu to select account
@@ -106,6 +82,7 @@ public class GraphActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                selectedAccount = (Account) parent.getSelectedItem();
                fillTransactionRecycler(totalTransactionsFromAllSellers());
+               buildTransactionsRecycler();
 
             }
             @Override
@@ -116,16 +93,24 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+
+    private void buildTransactionsRecycler(){
+        mRecyclerView = findViewById(R.id.analyticsRecycler);
+        //mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new ExampleAdapter(exampleItems);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter );
+
+    }
+
     //TODO need to add method to remove all old items from spinner
     private void fillTransactionRecycler(Map<String, String> items){
+        exampleItems = new ArrayList<>();
         Set<String> keys = items.keySet();
         for(String key:keys){
             exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow,key,"£"+items.get(key)));
         }
-        mAdapter = new ExampleAdapter(exampleItems);
-
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter );
     }
 
 
@@ -151,7 +136,7 @@ public class GraphActivity extends AppCompatActivity {
         Map<String, String> allTotals = new HashMap<>();
 
 
-        List<ParseObject> transactionList = databaseMethods.getAllTransactionsFromOneAccount(selectedAccount.getAccountNumber());
+        List<ParseObject> transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
         for(ParseObject transaction:transactionList){
             String seller = transaction.getString("ingoingAccount");
             if(!allTotals.containsKey(seller)){
