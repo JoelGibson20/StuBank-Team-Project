@@ -127,6 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Listens for clicking the register button
+                loadingProgressBar.setVisibility(View.VISIBLE);
                 try {
                     //New account added to database
                     databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
