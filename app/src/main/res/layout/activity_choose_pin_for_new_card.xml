@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.card.CardActivity">
+    tools:context=".ui.card.ChoosePinForNewCard">
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
@@ -22,27 +22,27 @@
 
     <ImageButton
         android:id="@+id/homeImageButton"
+        android:onClick="homeButtonOnClick"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
-        android:contentDescription="TODO"
-        android:onClick="homeButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/graphImageButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_home_page_48" />
+        app:srcCompat="@drawable/icons8_home_page_48"
+        android:contentDescription="TODO" />
 
     <ImageButton
         android:id="@+id/graphImageButton"
+        android:onClick="graphButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
-        android:onClick="graphButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/poundImageButton"
         app:layout_constraintStart_toEndOf="@+id/homeImageButton"
@@ -51,13 +51,13 @@
 
     <ImageButton
         android:id="@+id/poundImageButton"
+        android:onClick="poundButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
-        android:onClick="poundButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/cardImageButton"
         app:layout_constraintStart_toEndOf="@+id/graphImageButton"
@@ -66,11 +66,11 @@
 
     <ImageButton
         android:id="@+id/cardImageButton"
+        android:onClick="cardButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
-        android:onClick="cardButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
         app:layout_constraintStart_toEndOf="@+id/poundImageButton"
@@ -79,121 +79,67 @@
 
     <ImageButton
         android:id="@+id/gearsImageButton"
+        android:onClick="gearsButtonOnClick"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
-        android:onClick="gearsButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toEndOf="@+id/homeBottomAppBar"
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
         app:srcCompat="@drawable/icons8_automation_48" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="252dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-4dp" />
-
-    <Button
-        android:id="@+id/viewPIN"
-        android:layout_width="382dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="4dp"
-        android:onClick="viewPINOnClick"
-        android:text="View PIN"
+    <EditText
+        android:id="@+id/editTextNumberPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:gravity="center"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardDetails" />
-
-    <Button
-        android:id="@+id/cardDetails"
-        android:layout_width="382dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="264dp"
-        android:onClick="showCardDetailsOnClick"
-        android:text="Show Card Details"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/changePIN"
-        android:layout_width="382dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="4dp"
-        android:onClick="changePINOnClick"
-        android:text="Change PIN"
+    <EditText
+        android:id="@+id/editTextNumberPassword2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="5"
+        android:gravity="center"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPIN" />
-
-    <Button
-        android:id="@+id/removeCard"
-        android:layout_width="382dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:onClick="removeCardOnClick"
-        android:text="Remove Card"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freezeCard" />
-
-    <ToggleButton
-        android:id="@+id/freezeCard"
-        android:layout_width="382dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="8dp"
-        android:background="#FF6200EE"
-        android:fontFamily="sans-serif-medium"
-        android:onClick="freezeCardOnClick"
-        android:text="freezeCard"
-        android:textColor="#FFFFFF"
-        android:textOff="Freeze Card"
-        android:textOn="Unfreeze Card"
-        android:textSize="14sp"
-        android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/changePIN" />
-
-    <ImageView
-        android:id="@+id/card"
-        android:layout_width="262dp"
-        android:layout_height="185dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="40dp"
-        android:clickable="false"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.421"
-        app:srcCompat="@drawable/bank_card" />
+        app:layout_constraintVertical_bias="0.352" />
 
-    <TextView
-        android:id="@+id/accountNumber"
-        android:layout_width="64dp"
-        android:layout_height="17dp"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="168dp"
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberPassword"
+        app:layout_constraintVertical_bias="0.255" />
 
     <TextView
-        android:id="@+id/sortCode"
-        android:layout_width="64dp"
-        android:layout_height="17dp"
-        android:layout_marginStart="252dp"
-        android:layout_marginTop="168dp"
+        android:id="@+id/textView3"
+        android:layout_width="370dp"
+        android:layout_height="62dp"
+        android:text="Please choose a 4-digit PIN"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

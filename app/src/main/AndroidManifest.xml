@@ -13,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Back4AppExample">
+        <activity android:name=".ui.card.ChoosePinForNewCard"></activity>
+        <activity android:name=".ui.card.CreateCard" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.pound.PoundActivity" />
         <activity android:name=".ui.graph.GraphActivity" />

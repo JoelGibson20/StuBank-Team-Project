@@ -1,33 +1,29 @@
 package com.back4app.java.example.ui.card;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.InputType;
-import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
+import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
-import com.back4app.java.example.ui.databaseMethods;
-
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -128,7 +124,6 @@ public class CardActivity extends AppCompatActivity {
                     ((TextView)findViewById(R.id.sortCode)).setText(sortCode);
                     getCardDetails();
                 }
-
             }
         });
     }
@@ -228,6 +223,7 @@ public class CardActivity extends AppCompatActivity {
                 final EditText input = new EditText(CardActivity.this);
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                input.setGravity(Gravity.CENTER);
                 builder.setView(input);
                 builder.setPositiveButton("View PIN", new DialogInterface.OnClickListener() {
                     @Override
@@ -281,11 +277,13 @@ public class CardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
                 builder.setCancelable(true);
-                builder.setTitle("Please enter your PIN to remove the card");
+                builder.setTitle("Please enter your 4-digit PIN to remove the card");
                 // Set up the input
                 final EditText input = new EditText(CardActivity.this);
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+                input.setGravity(Gravity.CENTER);
                 builder.setView(input);
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
@@ -321,11 +319,13 @@ public class CardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
                 builder.setCancelable(true);
-                builder.setTitle("Please enter your current PIN");
+                builder.setTitle("Please enter your current 4-digit PIN");
                 // Set up the input
                 final EditText input = new EditText(CardActivity.this);
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+                input.setGravity(Gravity.CENTER);
                 builder.setView(input);
                 builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
                     @Override
@@ -338,7 +338,9 @@ public class CardActivity extends AppCompatActivity {
                             // Set up the input
                             final EditText input1 = new EditText(CardActivity.this);
                             // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                            input1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+                            input1.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                            input1.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+                            input1.setGravity(Gravity.CENTER);
                             builder.setView(input1);
                             builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
                                 @Override
@@ -350,7 +352,9 @@ public class CardActivity extends AppCompatActivity {
                                     // Set up the input
                                     final EditText input2 = new EditText(CardActivity.this);
                                     // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                                    input2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+                                    input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                                    input2.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+                                    input2.setGravity(Gravity.CENTER);
                                     builder.setView(input2);
                                     builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
                                         @Override
