@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.back4app.java.example.ui.accountPage.AccountPage;
@@ -103,6 +104,8 @@ public class HomeScreen extends AppCompatActivity {
 
     }
     public void newVaultButtonOnClick(View v){
+        //Load progress bar (loading circle)
+        final ProgressBar loading = findViewById(R.id.vaultsLoading);
         //Inflate the layout of the popup window
         LayoutInflater inflater = (LayoutInflater)
                 getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -140,6 +143,9 @@ public class HomeScreen extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                popupWindow.dismiss(); //Close popup window after account creation
+                loading.setVisibility(View.VISIBLE);
+
                 /*This forces the program to wait 1 seconds (1000ms) before refreshing the page
                 as it would refresh too quick prior, and the new vault object wouldn't be retrieved
                 and displayed */
@@ -149,7 +155,7 @@ public class HomeScreen extends AppCompatActivity {
                         onRestart();
                     }
                 }, 1000);
-                popupWindow.dismiss(); //Close popup window after account creation
+
             }
         });
 
@@ -244,6 +250,10 @@ public class HomeScreen extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+        //Load progress bar
+        final ProgressBar loading = findViewById(R.id.vaultsLoading);
+        loading.setVisibility(View.INVISIBLE);
+        //Hide the loading circle again
         //Create cards for the user's accounts
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
         try {
