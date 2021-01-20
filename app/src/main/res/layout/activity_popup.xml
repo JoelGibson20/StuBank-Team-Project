@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="#A18A8A"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:background="@drawable/popup_rounded_rectangle"
     android:orientation="vertical">
 
     <TextView
@@ -41,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_gravity="start"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="8dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="#B10B0B"
             android:text="@string/backButton" />
@@ -51,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="5dp"
             android:backgroundTint="#4CAF50"
             android:text="@string/createButton" />
