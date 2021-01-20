@@ -81,7 +81,7 @@ public class DateTransferActivity extends CalendarActivity {
         //});
 
 
-        readObject(SelectedAccount.getAccountNumber());
+        //readObject(SelectedAccount.getAccountNumber());
 
     }
 
