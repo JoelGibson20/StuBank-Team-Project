@@ -76,7 +76,7 @@ public class databaseMethods {
        return(ParseUser.getCurrentUser());
     }
 
-    public static List<ParseObject> getAllAccountsofOneUser() {
+    public static List<ParseObject> getAllAccountsOfOneUser() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
 
         query.whereEqualTo("accountOwner", databaseMethods.getCurrentUser().getObjectId());
@@ -88,10 +88,10 @@ public class databaseMethods {
             return null;
         }
     }
-    public static List<ParseObject> getAllTransactionsFromOneAccount(Account selectedAcount) {
+    public static List<ParseObject> getAllTransactionsFromOneAccount(String outgoingAccountNumber) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
 
-        query.whereEqualTo("outgoingAccount", selectedAcount.getAccountNumber());
+        query.whereEqualTo("outgoingAccount", outgoingAccountNumber);
         try {
             return (query.find());
         }
