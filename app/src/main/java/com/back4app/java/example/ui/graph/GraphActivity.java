@@ -9,6 +9,7 @@ import com.back4app.java.example.ui.databaseMethods;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -199,7 +200,9 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void calendarButtonOnClick(View v) {
+
         Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
+        intent.putExtra("selectedAccount", selectedAccount.toString());
         startActivity(intent);
     }
 

@@ -35,15 +35,27 @@ public class DateTransferActivity extends CalendarActivity {
     TextView transactionvalue;
     TextView transactionreference;
 
+    String SelectedAccount;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_datetransfer);
 
+
+        Intent intent=getIntent();
+        SelectedAccount = intent.getStringExtra("selectedAccount");
+
         //listView=(ListView)findViewById(R.id.listview);
         transactionreference=(TextView)findViewById(R.id.transactionreference);
         transactionvalue=(TextView)findViewById(R.id.transactionreference);
+
+        Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, SelectedAccount);
+        Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, "------------------------------------------------------------------");
 
 
         final Button backbutton = findViewById(R.id.backbutton);
@@ -65,7 +77,7 @@ public class DateTransferActivity extends CalendarActivity {
         //});
 
 
-        readObject("RdTPBzuFrs");
+        readObject("DHQsURCj27");
 
 
     }
@@ -80,7 +92,7 @@ public class DateTransferActivity extends CalendarActivity {
         for(ParseObject transaction:datetransactionList){
             String reference = transaction.getString("reference");
             String value = transaction.getString("value");
-            transactionreference.setText(reference);
+            //transactionreference.setText(selectedAccount);
             transactionvalue.setText(value);
             System.out.println("TEST");
 

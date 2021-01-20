@@ -2,6 +2,7 @@ package com.back4app.java.example.ui.graph;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +25,23 @@ public class CalendarActivity extends GraphActivity {
     private CalendarView calendarview;
     TextView myDate;
 
+    String selectedAccount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         calendarview = (CalendarView) findViewById(R.id.calendarView);
         myDate  = (TextView) findViewById(R.id.myDate);
+
+        Intent intent = getIntent();
+        selectedAccount = intent.getStringExtra("selectedAccount");
+        Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, selectedAccount);
+        Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, "------------------------------------------------------------------");
+
 
 
         //changes the date depending on which date is clicked on the calendar.
@@ -128,6 +140,7 @@ public class CalendarActivity extends GraphActivity {
 
     public void okbuttonOnClick(View V){
         Intent intent = new Intent(getApplicationContext(), DateTransferActivity.class);
+        intent.putExtra("selectedAccount", selectedAccount);
         startActivity(intent);
     }
 
