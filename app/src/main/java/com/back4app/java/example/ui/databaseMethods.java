@@ -88,7 +88,7 @@ public class databaseMethods {
             return null;
         }
     }
-    public static List<ParseObject> getAllTransactionsFromOneAccount(String outgoingAccountNumber) {
+    public static List<ParseObject> getAllOutgoingTransactionsFromOneAccount(String outgoingAccountNumber) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
 
         query.whereEqualTo("outgoingAccount", outgoingAccountNumber);
