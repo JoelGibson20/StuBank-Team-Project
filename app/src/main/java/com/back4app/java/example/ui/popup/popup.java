@@ -1,4 +1,4 @@
-package com.back4app.java.example.ui;
+package com.back4app.java.example.ui.popup;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Back4AppExample">
         <activity android:name=".ui.vaultPage.VaultPage"></activity>
-        <activity android:name=".ui.popup" />
+        <activity android:name=".ui.popup.popup" />
         <activity android:name=".ui.CreditsPage" />
         <activity android:name=".ui.accountPage.AccountPage" />
         <activity android:name=".ui.settings.SettingsActivity" />
