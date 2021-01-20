@@ -26,14 +26,7 @@
     <string name="account1Number">00001111</string>
     <string name="account1SortCode">06-07-08</string>
     <string name="account1Balance">£4300</string>
-    <string-array name="accounts">
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
 
-    </string-array>
 
 
 </resources>
