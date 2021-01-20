@@ -79,6 +79,7 @@ public class databaseMethods {
         ParseObject currentUser = getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", currentUser.getObjectId());
+        query.orderByAscending("accountName");
         return(query.find());
     }
 
@@ -99,9 +100,7 @@ public class databaseMethods {
     }
 
     public static void retrieveAccountsBeforeCreation(String accountType, String accountName) throws ParseException {
-
         ParseQuery<ParseObject> accountNumberQuery = ParseQuery.getQuery("Accounts");
-
         accountNumberQuery.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> accountsList, ParseException e) {
                 if (e == null) {
