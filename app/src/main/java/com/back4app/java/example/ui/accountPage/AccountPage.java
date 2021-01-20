@@ -45,7 +45,6 @@ public class AccountPage extends AppCompatActivity {
         final TextView balance = findViewById(R.id.balance);
 
         //Load buttons to set onclick listeners for them
-        final Button renameButton = findViewById(R.id.renameButton);
         final Button lockButton = findViewById(R.id.lockButton);
         final Button shareDetailsButton = findViewById(R.id.shareDetailsButton);
 
@@ -59,36 +58,6 @@ public class AccountPage extends AppCompatActivity {
 
         //Call method to set the button text based on whether the account is locked or not
         setLockButtonText(accountParseObject,lockButton);
-
-        renameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { //After rename button is clicked
-                accountName.setFocusableInTouchMode(true); //Allows account name text to be edited
-                accountName.requestFocus(); //Account name EditText gets focus
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(accountName, InputMethodManager.SHOW_IMPLICIT);
-                //On-screen keyboard shown
-                accountName.setSelection(accountName.getText().length());
-                //Sets position in EditText to the end
-
-                accountName.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                                actionId == EditorInfo.IME_ACTION_DONE ||
-                                event != null &&
-                                        event.getAction() == KeyEvent.ACTION_DOWN &&
-                                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                            if (event == null || !event.isShiftPressed()) {
-                                // The user exits the edit text
-                                changeAccountName(); //Change account name in database
-                            }
-                        }
-                        return false; // pass on to other listeners.
-                    }
-                });
-            }
-        });
 
         lockButton.setOnClickListener(new View.OnClickListener() {
             @Override

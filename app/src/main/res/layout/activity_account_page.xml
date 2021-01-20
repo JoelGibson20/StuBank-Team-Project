@@ -19,7 +19,7 @@
             android:id="@+id/accountTopBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/teal_200">
+            android:background="@color/teal_700">
 
             <EditText
                 android:id="@+id/accountName"
@@ -71,8 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="20dp"
-            android:background="@color/teal_200"
+            android:layout_marginEnd="40dp"
+            android:background="@color/teal_700"
             android:text="Balance"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -95,24 +95,13 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/renameButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:backgroundTint="@color/teal_200"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="@string/renameButton"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                app:cornerRadius="10dp" />
-
-            <Button
                 android:id="@+id/lockButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.8"
-                android:backgroundTint="@color/teal_200"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="0.5"
+                android:backgroundTint="@color/teal_700"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:textSize="11sp"
@@ -123,8 +112,10 @@
                 android:id="@+id/shareDetailsButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/teal_200"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="0.5"
+                android:backgroundTint="@color/teal_700"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:text="@string/shareDetailsButton"
