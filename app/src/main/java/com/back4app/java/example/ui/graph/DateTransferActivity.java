@@ -36,6 +36,9 @@ public class DateTransferActivity extends CalendarActivity {
     TextView transactionreference;
 
     String SelectedAccount;
+    String AccountNumber;
+
+
 
 
     @Override
@@ -46,6 +49,7 @@ public class DateTransferActivity extends CalendarActivity {
 
         Intent intent=getIntent();
         SelectedAccount = intent.getStringExtra("selectedAccount");
+        SelectedAccount = intent.getStringExtra("accountnumber");
 
         //listView=(ListView)findViewById(R.id.listview);
         transactionreference=(TextView)findViewById(R.id.transactionreference);
@@ -77,17 +81,13 @@ public class DateTransferActivity extends CalendarActivity {
         //});
 
 
-        readObject("DHQsURCj27");
-
+        readObject(SelectedAccount.getAccountNumber());
 
     }
 
+    public void readObject(String Accountnum){
 
-    public void readObject(String Object_ID){
-
-        List<ParseObject> datetransactionList = databaseMethods.getTransaction(Object_ID);
-
-
+        List<ParseObject> datetransactionList = databaseMethods.getTransaction(Accountnum);
 
         for(ParseObject transaction:datetransactionList){
             String reference = transaction.getString("reference");
@@ -96,10 +96,7 @@ public class DateTransferActivity extends CalendarActivity {
             transactionvalue.setText(value);
             System.out.println("TEST");
 
-
         }
-
-
 
     }
 
@@ -110,11 +107,7 @@ public class DateTransferActivity extends CalendarActivity {
         startActivity(intent);
 
     }
-
-
-
-
-    }
+}
 
 
 
