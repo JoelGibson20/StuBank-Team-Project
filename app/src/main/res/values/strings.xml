@@ -38,6 +38,7 @@
     <string name="prompt_accountName">Account Name</string>
     <string name="backButton">Back</string>
     <string name="createButton">Create Account</string>
+    <string name="transactions">Transactions</string>
 
 
 </resources>
