@@ -47,7 +47,6 @@ public class AccountPage extends AppCompatActivity {
         //Load buttons to set onclick listeners for them
         final Button renameButton = findViewById(R.id.renameButton);
         final Button lockButton = findViewById(R.id.lockButton);
-        final Button statementButton = findViewById(R.id.statementButton);
         final Button shareDetailsButton = findViewById(R.id.shareDetailsButton);
 
         //Retrieve the account in question from the intent
@@ -104,13 +103,6 @@ public class AccountPage extends AppCompatActivity {
                 account details are stored) to match this change */
                 setLockButtonText((ParseObject) getIntent().getExtras().get("accountParseObject"),lockButton);
                 //Change lock button text
-            }
-        });
-
-        statementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("Statement button clicked");
             }
         });
 

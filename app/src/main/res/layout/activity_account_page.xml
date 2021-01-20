@@ -157,21 +157,6 @@
             app:cornerRadius="10dp" />
 
         <Button
-            android:id="@+id/statementButton"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:backgroundTint="@color/teal_200"
-            android:fontFamily="sans-serif-condensed"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:text="@string/statementButton"
-            android:textSize="11sp"
-            android:textStyle="bold"
-            app:cornerRadius="10dp" />
-
-        <Button
             android:id="@+id/shareDetailsButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

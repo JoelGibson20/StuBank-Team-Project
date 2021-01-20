@@ -208,24 +208,6 @@ public class HomeScreen extends AppCompatActivity {
                 accountNameText.setTextSize(16);
                 accountNameText.setTypeface(accountNameText.getTypeface(), Typeface.BOLD);
 
-               /* //Create a TextView for the account number
-                TextView accountNumberText = new TextView(getApplicationContext());
-                accountNumberText.setPadding(10,70,0,0);
-                accountNumberText.setLayoutParams(layoutparams);
-                accountNumberText.setText(accountsList.get(i).getString("accountNumber"));
-                accountNumberText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
-                accountNumberText.setTextColor(Color.WHITE);
-                accountNumberText.setTextSize(16);
-
-                //Create a TextView for the sort code
-                TextView sortCodeText = new TextView(getApplicationContext());
-                sortCodeText.setPadding(10,130,0,10);
-                sortCodeText.setLayoutParams(layoutparams);
-                sortCodeText.setText(accountsList.get(i).getString("sortCode"));
-                sortCodeText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
-                sortCodeText.setTextColor(Color.WHITE);
-                sortCodeText.setTextSize(16);*/
-
                 //Create a TextView for the account balance
                 TextView balanceText = new TextView(getApplicationContext());
                 balanceText.setPadding(700,30,10,30);
@@ -238,8 +220,6 @@ public class HomeScreen extends AppCompatActivity {
 
                 //Add the TextViews to the CardView
                 cardview.addView(accountNameText);
-               /* cardview.addView(accountNumberText);
-                cardview.addView(sortCodeText);*/
                 cardview.addView(balanceText);
 
 
