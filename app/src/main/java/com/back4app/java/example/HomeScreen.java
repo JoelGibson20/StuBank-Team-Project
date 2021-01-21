@@ -144,7 +144,7 @@ public class HomeScreen extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 popupWindow.dismiss(); //Close popup window after account creation
-                loading.setVisibility(View.VISIBLE);
+                loading.setVisibility(View.VISIBLE); //Show loading circle
 
                 /*This forces the program to wait 1 seconds (1000ms) before refreshing the page
                 as it would refresh too quick prior, and the new vault object wouldn't be retrieved
