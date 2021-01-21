@@ -72,7 +72,7 @@
             android:layout_height="56dp"
             android:ems="10"
             android:hint="amount"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
             android:layout_marginTop="40dp"/>

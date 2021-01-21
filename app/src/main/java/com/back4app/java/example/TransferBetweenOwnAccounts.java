@@ -62,7 +62,7 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
                     ParseObject incomingAccountObject = databaseMethods.outgoingAccount(selectedAccount2);
                     String outgoingBalance = outgoingAccountObject.getString("balance");
                     String incomingBalance = incomingAccountObject.getString("balance");
-                    //Remove currency symbol from account balance to allow to be compared against
+                    //Remove currency symbol from account balance to allow balance to be compared against
                     //amount being transferred
                     //Save currency symbol to be added back on after operations carried out
                      String currencySymbol = outgoingBalance.substring(0,1);
