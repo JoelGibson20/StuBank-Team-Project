@@ -143,6 +143,7 @@ public class AccountPage extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
+        ParseObject accountParseObject = (ParseObject) getIntent().getExtras().get("accountParseObject");
 
         for(int i = 0; i < transactionsList.size(); i++){
             // Initialise the CardView
@@ -192,7 +193,18 @@ public class AccountPage extends AppCompatActivity {
             valueText.setPadding(0,60,80,0);
             valueText.setGravity(Gravity.END);
             valueText.setLayoutParams(layoutparams);
+            //Set text here without + or - in case the if conditions somehow fail
             valueText.setText(transactionsList.get(i).getString("value"));
+
+            if(transactionsList.get(i).getString("outgoingAccount").equals(accountParseObject.getString("accountNumber"))){
+                //If the user's account is the outgoing account for the transaction money is being taken out
+                valueText.setText("-" + transactionsList.get(i).getString("value"));
+            }
+            else if (transactionsList.get(i).getString("ingoingAccount").equals(accountParseObject.getString("accountNumber"))){
+                //If the user's account is the ingoing account for the transaction money is being put into the account
+                valueText.setText("+" + transactionsList.get(i).getString("value"));
+            }
+
             valueText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
             valueText.setTextColor(Color.WHITE);
             valueText.setTextSize(20);
