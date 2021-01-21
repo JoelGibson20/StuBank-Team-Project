@@ -214,9 +214,11 @@ public class databaseMethods {
     public static List<ParseObject> getTransactionsForAccount(String accountID) throws ParseException {
         ParseQuery<ParseObject> outgoingTransactions = ParseQuery.getQuery("Transactions");
         outgoingTransactions.whereEqualTo("outgoingAccount", accountID);
+        //Get outgoing transactions
 
         ParseQuery<ParseObject> ingoingTransactions = ParseQuery.getQuery("Transactions");
         ingoingTransactions.whereEqualTo("ingoingAccount", accountID);
+        //Get ingoing transactions
 
         List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
         queries.add(outgoingTransactions);
@@ -224,7 +226,8 @@ public class databaseMethods {
 
 
         ParseQuery<ParseObject> query = ParseQuery.or(queries);
-        query.setLimit(20);
+        query.setLimit(20); //Get only the last 20 transactions to show
+        query.orderByDescending("transactionDate"); //Order by most recent
         List<ParseObject> transactionsList = new ArrayList<>(query.find());
 
         return(transactionsList);

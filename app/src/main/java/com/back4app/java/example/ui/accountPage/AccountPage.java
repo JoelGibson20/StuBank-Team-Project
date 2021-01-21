@@ -1,10 +1,15 @@
 package com.back4app.java.example.ui.accountPage;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -32,8 +37,11 @@ import com.parse.ParseObject;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 public class AccountPage extends AppCompatActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,12 @@ public class AccountPage extends AppCompatActivity {
 
         //Call method to set the button text based on whether the account is locked or not
         setLockButtonText(accountParseObject,lockButton);
+
+        try {
+            createMyCardView(databaseMethods.getTransactionsForAccount(accountParseObject.getString("accountNumber")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         lockButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +122,6 @@ public class AccountPage extends AppCompatActivity {
         ImageView unlocked = findViewById(R.id.unlockedImage);
         //Correct text set for lock button based on whether or not the account is locked
         if(accountParseObject.getBoolean("locked")) {
-            System.out.println("TRIGGERED 1");
             unlocked.setVisibility(View.INVISIBLE);
             locked.setVisibility(View.VISIBLE);
             lockButton.setText("Unlock");
@@ -117,8 +130,83 @@ public class AccountPage extends AppCompatActivity {
             lockButton.setText("Lock");
             locked.setVisibility(View.INVISIBLE);
             unlocked.setVisibility(View.VISIBLE);
-            System.out.println("TRIGGERED 2");
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void createMyCardView(List<ParseObject> transactionsList){
+        LinearLayout scrollViewLinearLayout = findViewById(R.id.accountTransactionsLayout);
+        scrollViewLinearLayout.removeAllViews();
+        //Wipes any content in the linearlayout (allows refreshing)
+        //Layout params which will be applied to the cardView
+        LinearLayout.LayoutParams layoutparams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        for(int i = 0; i < transactionsList.size(); i++){
+            // Initialise the CardView
+            CardView cardview = new CardView(getApplicationContext());
+
+            //Set params for CardView
+            cardview.setUseCompatPadding(true);
+            cardview.setLayoutParams(layoutparams);
+            cardview.setPreventCornerOverlap(true);
+            cardview.setPadding(0,0,0,80);
+            cardview.setCardBackgroundColor(Color.parseColor("#FF018786"));
+            cardview.setRadius(50);
+            cardview.setMaxCardElevation(20);
+            cardview.setPadding(0,100,0,20);
+            cardview.setClipToPadding(true);
+
+            //Create a TextView for the transaction date
+            TextView dateText = new TextView(getApplicationContext());
+            dateText.setPadding(15,120,0,15);
+            dateText.setGravity(Gravity.START);
+            dateText.setLayoutParams(layoutparams);
+            String dateString = transactionsList.get(i).getDate("transactionDate").toString();
+            //Get date the transaction was made
+            String[] dateStringArray = dateString.split(" ");
+            //Split so can extract just the date and time (remove unnecessary detail like day)
+            dateString = dateStringArray[1] + " " + dateStringArray[2] + " " + dateStringArray[5] + " " + dateStringArray[3];
+            //Extract date, time, and year only
+            dateText.setText(dateString);
+            dateText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+            dateText.setTextColor(Color.WHITE);
+            dateText.setTextSize(13);
+
+            //Create a TextView for the transaction reference
+            TextView referenceText = new TextView(getApplicationContext());
+            referenceText.setPadding(15,15,0,0);
+            referenceText.setGravity(Gravity.START);
+            referenceText.setLayoutParams(layoutparams);
+            referenceText.setText(transactionsList.get(i).getString("reference"));
+            referenceText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+            referenceText.setTextColor(Color.WHITE);
+            referenceText.setTextSize(20);
+            referenceText.setTypeface(dateText.getTypeface(), Typeface.BOLD);
+
+
+            //Create a TextView for the transaction value
+            TextView valueText = new TextView(getApplicationContext());
+            valueText.setPadding(0,60,80,0);
+            valueText.setGravity(Gravity.END);
+            valueText.setLayoutParams(layoutparams);
+            valueText.setText(transactionsList.get(i).getString("value"));
+            valueText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
+            valueText.setTextColor(Color.WHITE);
+            valueText.setTextSize(20);
+            valueText.setTypeface(dateText.getTypeface(), Typeface.BOLD);
+
+            //Add the TextViews to the CardView
+            cardview.addView(dateText);
+            cardview.addView(referenceText);
+            cardview.addView(valueText);
+
+
+            //Add the CardView to the linear layout in the ScrollView
+            scrollViewLinearLayout.addView(cardview);}
+
+        }
 }
+
