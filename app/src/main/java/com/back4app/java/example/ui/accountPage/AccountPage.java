@@ -67,7 +67,7 @@ public class AccountPage extends AppCompatActivity {
         //Call method to set the button text based on whether the account is locked or not
         setLockButtonText(accountParseObject,lockButton);
 
-        try {
+        try { //Create the cards for the transactions list
             createMyCardView(databaseMethods.getTransactionsForAccount(accountParseObject.getString("accountNumber")));
         } catch (ParseException e) {
             e.printStackTrace();
