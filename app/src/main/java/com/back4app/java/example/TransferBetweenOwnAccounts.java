@@ -42,9 +42,6 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
         }
 
 
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_between_own_accounts);
 
@@ -57,71 +54,78 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
             public void onClick(View view) {
                 String outgoingAccount = selectedAccount1;
                 String incomingAccount = selectedAccount2;
-                try {
-                    ParseObject outgoingAccountObject = databaseMethods.outgoingAccount(selectedAccount1);
-                    ParseObject incomingAccountObject = databaseMethods.outgoingAccount(selectedAccount2);
-                    String outgoingBalance = outgoingAccountObject.getString("balance");
-                    String incomingBalance = incomingAccountObject.getString("balance");
-                    //Remove currency symbol from account balance to allow balance to be compared against
-                    //amount being transferred
-                    //Save currency symbol to be added back on after operations carried out
-                     String currencySymbol = outgoingBalance.substring(0,1);
-                   outgoingBalance = outgoingBalance.substring(1);
-                   incomingBalance = incomingBalance.substring(1);
-                   Double outgoingBalanceDob = Double.parseDouble(outgoingBalance);
-                    Double incomingBalanceDob = Double.parseDouble(incomingBalance);
-                    EditText et = (EditText) findViewById(R.id.amountToOwnAcc);
-                    String amount = et.getText().toString();
-                    Double amountDob = Double.parseDouble(amount);
-                    if (amountDob<=outgoingBalanceDob) {
-                        Double newOutgoingBalance = (outgoingBalanceDob-amountDob);
-                        Double newIncomingBalance = (incomingBalanceDob+amountDob);
+                System.out.println(selectedAccount1 + selectedAccount2);
+                //Prevents outgoing and incoming accounts being the same
+                if (selectedAccount1.equals(selectedAccount2)) {
+                    AlertDialog ad1 = new AlertDialog.Builder(getApplicationContext()).create();
+                    ad1.setTitle("Outgoing and Incoming Accounts are the same");
+                    ad1.setMessage("Please select a different account to transfer from or to");
+                    ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    ad1.show();
+                } else {
+                    try {
+                        ParseObject outgoingAccountObject = databaseMethods.outgoingAccount(selectedAccount1);
+                        ParseObject incomingAccountObject = databaseMethods.outgoingAccount(selectedAccount2);
+                        String outgoingBalance = outgoingAccountObject.getString("balance");
+                        String incomingBalance = incomingAccountObject.getString("balance");
+                        //Remove currency symbol from account balance to allow balance to be compared against
+                        //amount being transferred
+                        //Save currency symbol to be added back on after operations carried out
+                        String currencySymbol = outgoingBalance.substring(0, 1);
+                        outgoingBalance = outgoingBalance.substring(1);
+                        incomingBalance = incomingBalance.substring(1);
+                        Double outgoingBalanceDob = Double.parseDouble(outgoingBalance);
+                        Double incomingBalanceDob = Double.parseDouble(incomingBalance);
+                        EditText et = (EditText) findViewById(R.id.amountToOwnAcc);
+                        String amount = et.getText().toString();
+                        Double amountDob = Double.parseDouble(amount);
+                        if (amountDob <= outgoingBalanceDob) {
+                            Double newOutgoingBalance = (outgoingBalanceDob - amountDob);
+                            Double newIncomingBalance = (incomingBalanceDob + amountDob);
 
-                        DecimalFormat df = new DecimalFormat("#.00");
-                        String newOutgoingBalanceStr = currencySymbol + " " + (df.format(newOutgoingBalance).toString());
-                        String newIncomingBalanceStr = currencySymbol + " " + (df.format(newIncomingBalance).toString());
+                            DecimalFormat df = new DecimalFormat("#.00");
+                            String newOutgoingBalanceStr = currencySymbol + " " + (df.format(newOutgoingBalance).toString());
+                            String newIncomingBalanceStr = currencySymbol + " " + (df.format(newIncomingBalance).toString());
 
-                        outgoingAccountObject.put("balance", newOutgoingBalanceStr);
-                        incomingAccountObject.put("balance", newIncomingBalanceStr);
-                        outgoingAccountObject.saveInBackground();
-                        incomingAccountObject.saveInBackground();
+                            outgoingAccountObject.put("balance", newOutgoingBalanceStr);
+                            incomingAccountObject.put("balance", newIncomingBalanceStr);
+                            outgoingAccountObject.saveInBackground();
+                            incomingAccountObject.saveInBackground();
 
-                        Intent intent = new Intent(getApplicationContext(), TransferComplete.class);
-                        startActivity(intent);
+                            Intent intent = new Intent(getApplicationContext(), TransferComplete.class);
+                            startActivity(intent);
+                        } else {
+
+                            //Create dialogue which is presented to user if the outgoing account has a
+                            //balance less than the amount they wish to transfer
+                            AlertDialog ad = new AlertDialog.Builder(getApplicationContext()).create();
+                            ad.setTitle("Insufficient Funds");
+                            ad.setMessage("Please add funds or transfer from a different account");
+                            ad.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                            ad.show();
+                        }
+
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                    else {
-
-                        //Create dialogue which is presented to user if the outgoing account has a
-                        //balance less than the amount they wish to transfer
-                        AlertDialog ad = new AlertDialog.Builder(getApplicationContext()).create();
-                        ad.setTitle("Insufficient Funds");
-                        ad.setMessage("Please add funds or transfer from a different account");
-                        ad.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        ad.show();
-                    }
 
 
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
-
-
-
-
             }
-
-
-
-        }
-        );
+        });
 
     }
-
 
     public String populateSpinner(List<ParseObject> accountsList, String spinnerToUse) {
         ArrayList<String> accountsNameList = new ArrayList<String>();
