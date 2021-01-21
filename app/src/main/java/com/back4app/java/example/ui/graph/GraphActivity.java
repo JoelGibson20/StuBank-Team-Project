@@ -8,6 +8,7 @@ import com.back4app.java.example.ui.databaseMethods;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -24,6 +25,11 @@ import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -46,6 +52,8 @@ public class GraphActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ExampleItem> exampleItems = new ArrayList<>();
+
+    private ArrayList<PieEntry> pieEntries;
 
 
 
@@ -83,6 +91,7 @@ public class GraphActivity extends AppCompatActivity {
                selectedAccount = (Account) parent.getSelectedItem();
                fillTransactionRecycler(totalTransactionsFromAllSellers());
                buildTransactionsRecycler();
+               buildPieChart();
 
             }
             @Override
@@ -93,6 +102,31 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+
+    private void buildPieChart(){
+        pieEntries = new ArrayList<>();
+        PieChart pieChart = findViewById(R.id.analyticsPieChart);
+        Map<String, String> transactionTotals = totalTransactionsFromAllSellers();
+        Set<String> keys = transactionTotals.keySet();
+        for(String key: keys){
+            Float value = Float.parseFloat(transactionTotals.get(key));
+            pieEntries.add( new PieEntry(value, key));
+        }
+
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "Transaction Totals");
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(16f);
+        pieDataSet.setDrawValues(true);
+
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setCenterText("Transaction Totals");
+        pieChart.setDrawEntryLabels(false);
+        //pieChart.animate();
+        pieChart.invalidate();
+    }
 
     private void buildTransactionsRecycler(){
         mRecyclerView = findViewById(R.id.analyticsRecycler);

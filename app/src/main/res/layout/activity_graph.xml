@@ -7,17 +7,6 @@
     android:visibility="visible"
     tools:context=".ui.graph.GraphActivity">
 
-    <TextView
-        android:id="@+id/myDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Graph page"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.443" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
@@ -150,13 +139,24 @@
 
     </LinearLayout>
 
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/analyticsPieChart"
+        android:layout_width="412dp"
+        android:layout_height="188dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+    </com.github.mikephil.charting.charts.PieChart>
+
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="227dp"
+        android:layout_width="414dp"
         android:layout_height="27dp"
-        android:text="Transactions Totals: "
+        android:text="Transactions Totals by Seller: "
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/analyticsPieChart"
         app:layout_constraintStart_toStartOf="parent" />
 
 
