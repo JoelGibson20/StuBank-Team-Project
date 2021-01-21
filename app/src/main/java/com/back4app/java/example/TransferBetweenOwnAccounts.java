@@ -1,19 +1,29 @@
 package com.back4app.java.example;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class TransferBetweenOwnAccounts extends AppCompatActivity {
     //Variable returned after Spinner method called
@@ -42,8 +52,63 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
         populateSpinner(accountsList, "outgoing_spinner");
         populateSpinner(accountsList, "incoming_spinner");
 
+        Button send = (Button) findViewById(R.id.buttonSendOwnAccount);
+        send.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String outgoingAccount = selectedAccount1;
+                String incomingAccount = selectedAccount2;
+                try {
+                    ParseObject outgoingAccountObject = databaseMethods.outgoingAccount(selectedAccount1);
+                    ParseObject incomingAccountObject = databaseMethods.outgoingAccount(selectedAccount2);
+                    String outgoingBalance = outgoingAccountObject.getString("balance");
+                    String incomingBalance = incomingAccountObject.getString("balance");
+                    //Remove currency symbol from account balance to allow to be compared against
+                    //amount being transferred
+
+                   outgoingBalance = outgoingBalance.substring(1);
+                    Double outgoingBalanceDob = Double.parseDouble(outgoingBalance);
+
+                    EditText et = (EditText) findViewById(R.id.amountToOwnAcc);
+                    String amount = et.getText().toString();
+                    Double amountDob = Double.parseDouble(amount);
+                    if (amountDob<=outgoingBalanceDob) {
+                        Intent intent = new Intent(getApplicationContext(), TransferComplete.class);
+                        startActivity(intent);
+                    }
+                    else {
+
+                        //Create dialogue which is presented to user if the outgoing account has a
+                        //balance less than the amount they wish to transfer
+                        AlertDialog ad = new AlertDialog.Builder(getApplicationContext()).create();
+                        ad.setTitle("Insufficient Funds");
+                        ad.setMessage("Please add funds or transfer from a different account");
+                        ad.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        ad.show();
+                    }
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+            }
+
+
+
+        }
+        );
 
     }
+
 
     public String populateSpinner(List<ParseObject> accountsList, String spinnerToUse) {
         ArrayList<String> accountsNameList = new ArrayList<String>();

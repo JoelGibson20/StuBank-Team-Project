@@ -56,7 +56,7 @@ String selectedAccount = "";
               // String oldBalance = finalAccountsList.get("aass").getString("balance");
               //  Double newBalance =
                 try {
-                    List <ParseObject> outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
+                    ParseObject outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
                     databaseMethods.updateBalance(outgoingAccount, "400");
                     System.out.println("balance updated");
                 }
