@@ -17,7 +17,6 @@ import android.widget.Spinner;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
@@ -65,14 +64,28 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
                     String incomingBalance = incomingAccountObject.getString("balance");
                     //Remove currency symbol from account balance to allow to be compared against
                     //amount being transferred
-
+                    //Save currency symbol to be added back on after operations carried out
+                     String currencySymbol = outgoingBalance.substring(0,1);
                    outgoingBalance = outgoingBalance.substring(1);
-                    Double outgoingBalanceDob = Double.parseDouble(outgoingBalance);
-
+                   incomingBalance = incomingBalance.substring(1);
+                   Double outgoingBalanceDob = Double.parseDouble(outgoingBalance);
+                    Double incomingBalanceDob = Double.parseDouble(incomingBalance);
                     EditText et = (EditText) findViewById(R.id.amountToOwnAcc);
                     String amount = et.getText().toString();
                     Double amountDob = Double.parseDouble(amount);
                     if (amountDob<=outgoingBalanceDob) {
+                        Double newOutgoingBalance = (outgoingBalanceDob-amountDob);
+                        Double newIncomingBalance = (incomingBalanceDob+amountDob);
+
+                        DecimalFormat df = new DecimalFormat("#.00");
+                        String newOutgoingBalanceStr = currencySymbol + " " + (df.format(newOutgoingBalance).toString());
+                        String newIncomingBalanceStr = currencySymbol + " " + (df.format(newIncomingBalance).toString());
+
+                        outgoingAccountObject.put("balance", newOutgoingBalanceStr);
+                        incomingAccountObject.put("balance", newIncomingBalanceStr);
+                        outgoingAccountObject.saveInBackground();
+                        incomingAccountObject.saveInBackground();
+
                         Intent intent = new Intent(getApplicationContext(), TransferComplete.class);
                         startActivity(intent);
                     }
