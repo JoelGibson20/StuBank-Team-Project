@@ -98,19 +98,6 @@
                 android:textStyle="bold"
                 app:cornerRadius="10dp" />
 
-            <Button
-                android:id="@+id/shareDetailsButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.33"
-                android:backgroundTint="@color/teal_200"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="@string/shareDetailsButton"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                app:cornerRadius="10dp" />
-
         </LinearLayout>
 
         <TextView
