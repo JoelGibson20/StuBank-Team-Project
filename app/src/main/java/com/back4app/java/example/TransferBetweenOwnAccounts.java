@@ -3,6 +3,7 @@ package com.back4app.java.example;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import java.util.List;
 
 
 public class TransferBetweenOwnAccounts extends AppCompatActivity {
+    final Context context = this;
     //Variable returned after Spinner method called
     String selectedAccount = "";
     //Selected outgoing account
@@ -52,12 +54,13 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
         send.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String outgoingAccount = selectedAccount1;
                 String incomingAccount = selectedAccount2;
                 System.out.println(selectedAccount1 + selectedAccount2);
                 //Prevents outgoing and incoming accounts being the same
                 if (selectedAccount1.equals(selectedAccount2)) {
-                    AlertDialog ad1 = new AlertDialog.Builder(getApplicationContext()).create();
+                    AlertDialog ad1 = new AlertDialog.Builder(context).create();
                     ad1.setTitle("Outgoing and Incoming Accounts are the same");
                     ad1.setMessage("Please select a different account to transfer from or to");
                     ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -103,16 +106,16 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
 
                             //Create dialogue which is presented to user if the outgoing account has a
                             //balance less than the amount they wish to transfer
-                            AlertDialog ad = new AlertDialog.Builder(getApplicationContext()).create();
-                            ad.setTitle("Insufficient Funds");
-                            ad.setMessage("Please add funds or transfer from a different account");
-                            ad.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            AlertDialog ad1 = new AlertDialog.Builder(context).create();
+                            ad1.setTitle("Insufficient Funds");
+                            ad1.setMessage("Please add funds or transfer from a different account");
+                            ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
                                         }
                                     });
-                            ad.show();
+                            ad1.show();
                         }
 
 
