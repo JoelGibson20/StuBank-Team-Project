@@ -9,6 +9,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -209,6 +210,24 @@ public class databaseMethods {
             return null;
         }
 
+    }
+    public static List<ParseObject> getTransactionsForAccount(String accountID) throws ParseException {
+        ParseQuery<ParseObject> outgoingTransactions = ParseQuery.getQuery("Transactions");
+        outgoingTransactions.whereEqualTo("outgoingAccount", accountID);
+
+        ParseQuery<ParseObject> ingoingTransactions = ParseQuery.getQuery("Transactions");
+        ingoingTransactions.whereEqualTo("ingoingAccount", accountID);
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+        queries.add(outgoingTransactions);
+        queries.add(ingoingTransactions);
+
+
+        ParseQuery<ParseObject> query = ParseQuery.or(queries);
+        query.setLimit(20);
+        List<ParseObject> transactionsList = new ArrayList<>(query.find());
+
+        return(transactionsList);
     }
 
 }
