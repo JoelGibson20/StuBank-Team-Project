@@ -218,7 +218,8 @@ public class HomeScreen extends AppCompatActivity {
 
                 //Create a TextView for the account name
                 TextView accountNameText = new TextView(getApplicationContext());
-                accountNameText.setPadding(10,30,0,30);
+                accountNameText.setPadding(15,30,0,30);
+                accountNameText.setGravity(Gravity.START);
                 accountNameText.setLayoutParams(layoutparams);
                 accountNameText.setText(accountsList.get(i).getString("accountName"));
                 accountNameText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
@@ -228,7 +229,8 @@ public class HomeScreen extends AppCompatActivity {
 
                 //Create a TextView for the account balance
                 TextView balanceText = new TextView(getApplicationContext());
-                balanceText.setPadding(700,30,10,30);
+                balanceText.setPadding(0,30,15,30);
+                balanceText.setGravity(Gravity.END);
                 balanceText.setLayoutParams(layoutparams);
                 balanceText.setText(accountsList.get(i).getString("balance"));
                 balanceText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
