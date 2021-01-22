@@ -1,9 +1,11 @@
 package com.back4app.java.example;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -106,44 +108,39 @@ public class HomeScreen extends AppCompatActivity {
     public void newVaultButtonOnClick(View v){
         //Load progress bar (loading circle)
         final ProgressBar loading = findViewById(R.id.vaultsLoading);
-        //Inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.activity_popup, null);
 
-        //Set the properties for the popup window
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        //Define a builder to create an AlertDialog (popup window)
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeScreen.this);
+        builder.setCancelable(true);
+        builder.setTitle(getString(R.string.newAccountPopup));
 
-        //Show the popup window
-        popupWindow.showAtLocation(findViewById(R.id.greeting), Gravity.CENTER, 0, 0);
+        //Create the EditText to accept user input for new vault name
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        //Load the buttons on the popup window
-        Button backButton = popupView.findViewById(R.id.backButton);
-        Button createButton = popupView.findViewById(R.id.createButton);
-        EditText accountNameInput = popupView.findViewById(R.id.accountNameInput);
+        input.setLayoutParams(layoutParams);
+        builder.setView(input); //Add EditText to the AlertDialog window
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.backButton), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                //If the back button is clicked close the popup
+            public void onClick(DialogInterface dialog, int which) {
+                //If back is click, close the AlertDialog
+                dialog.cancel();
             }
         });
 
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.Q)
+        builder.setPositiveButton(getString(R.string.createButton), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //Creates vault using the name provided
+            public void onClick(DialogInterface dialog, int which) {
+                //If create is clicked, attempt to create vault with that name
                 try {
-                    databaseMethods.retrieveAccountsBeforeCreation("vault", accountNameInput.getText().toString());
+                    databaseMethods.retrieveAccountsBeforeCreation("vault", input.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                popupWindow.dismiss(); //Close popup window after account creation
+                dialog.dismiss(); //Close AlertDialog window after account creation
                 loading.setVisibility(View.VISIBLE); //Show loading circle
 
                 /*This forces the program to wait 1 seconds (1000ms) before refreshing the page
@@ -151,14 +148,16 @@ public class HomeScreen extends AppCompatActivity {
                 and displayed */
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
+                    @RequiresApi(api = Build.VERSION_CODES.Q)
                     public void run() {
                         onRestart();
                     }
                 }, 1000);
-
             }
         });
 
+        AlertDialog alert = builder.create(); //Creates AlertDialog with specified properties
+        alert.show(); //Shows AlertDialog
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
