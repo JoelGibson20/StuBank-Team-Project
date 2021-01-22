@@ -40,6 +40,7 @@ public class DateTransferActivity extends CalendarActivity {
 
     String SelectedAccount;
     String AccountNumber;
+    String transferdate;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -58,6 +59,7 @@ public class DateTransferActivity extends CalendarActivity {
         Intent intent=getIntent();
         //SelectedAccount = intent.getStringExtra("selectedAccount");
         //SelectedAccount = intent.getStringExtra("accountnumber");
+        transferdate = intent.getStringExtra("TransferDate");
 
         //listView=(ListView)findViewById(R.id.listview);
 
@@ -67,6 +69,7 @@ public class DateTransferActivity extends CalendarActivity {
         Log.d(TAG, selectedAccount);
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, accountnumber);
 
 
 
@@ -90,7 +93,7 @@ public class DateTransferActivity extends CalendarActivity {
         //});
 
 
-        readObject(accountnumber, myDate.toString());
+        readObject(accountnumber, transferdate);
 
 
         ArrayList<ExampleItem> exampleList = new ArrayList<>();
@@ -112,7 +115,7 @@ public class DateTransferActivity extends CalendarActivity {
     }
 
     public void readObject(String Accountnum, String date) {
-
+        Log.d(TAG, transferdate);
         Log.d(TAG, "================");
         Log.d(TAG, "INSIDE READ OBJECT");
 
@@ -120,6 +123,7 @@ public class DateTransferActivity extends CalendarActivity {
 
         for (ParseObject transaction : datetransactionList) {
             String reference = transaction.getString("reference");
+            Log.d(TAG, transferdate);
             Log.d(TAG, "================");
             Log.d(TAG, reference);
             String value = transaction.getString("value");

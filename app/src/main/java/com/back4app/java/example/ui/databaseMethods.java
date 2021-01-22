@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -200,22 +201,31 @@ public class databaseMethods {
     }
 
     public static List<ParseObject> getTransaction(String Accountnum, String date){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
+        ParseQuery<ParseObject> accountquery = ParseQuery.getQuery("Transactions");
 
         Log.d(TAG, "================");
         Log.d(TAG, "INSIDE GET TRANSACTIONS");
 
-        //ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
+        accountquery.whereEqualTo("outgoingAccount", Accountnum);
 
-        query.whereEqualTo("outgoingAccount", Accountnum);
-        query.whereEqualTo("transactionDate", date);
+        ParseQuery<ParseObject> datequery = ParseQuery.getQuery("Transactions");
+
+
+        datequery.whereEqualTo("transactionDate", date);
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+
+        queries.add(accountquery);
+        queries.add(datequery);
+
+        ParseQuery<ParseObject> mainquery = ParseQuery.or(queries);
 
         //List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
         //queries.add(query);
         //ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
 
         try{
-            return (query.find());
+            return (mainquery.find());
 
         }
         catch (ParseException e){

@@ -28,6 +28,8 @@ public class CalendarActivity extends GraphActivity {
     String selectedAccount;
     String accountnumber;
 
+    String TransferDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +39,13 @@ public class CalendarActivity extends GraphActivity {
 
         Intent intent = getIntent();
         selectedAccount = intent.getStringExtra("selectedAccount");
-        accountnumber = intent.getStringExtra("accountname");
+        accountnumber = intent.getStringExtra("accountnumber");
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, selectedAccount);
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, accountnumber);
 
 
 
@@ -53,9 +56,9 @@ public class CalendarActivity extends GraphActivity {
                 //String date = dayOfMonth + "/" + (month + 1) + "/" + year;
                 //Log.d(TAG, "DateSelected: " + date);
                 String month2 = getmonth(month + 1);
-                String date = dayOfMonth + " " + (month2) + " " + year;
+                TransferDate = dayOfMonth + " " + (month2) + " " + year;
 
-                myDate.setText(date);
+                myDate.setText(TransferDate);
             }
         });
 
@@ -146,6 +149,8 @@ public class CalendarActivity extends GraphActivity {
         Intent intent = new Intent(getApplicationContext(), DateTransferActivity.class);
         intent.putExtra("selectedAccount", selectedAccount);
         intent.putExtra("accountnumber", accountnumber);
+        intent.putExtra("TransferDate", TransferDate);
+
         startActivity(intent);
     }
 
