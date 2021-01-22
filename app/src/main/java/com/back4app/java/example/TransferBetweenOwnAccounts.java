@@ -92,8 +92,8 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
                             Double newIncomingBalance = (incomingBalanceDob + amountDob);
 
                             DecimalFormat df = new DecimalFormat("#.00");
-                            String newOutgoingBalanceStr = currencySymbol + " " + (df.format(newOutgoingBalance).toString());
-                            String newIncomingBalanceStr = currencySymbol + " " + (df.format(newIncomingBalance).toString());
+                            String newOutgoingBalanceStr = currencySymbol + (df.format(newOutgoingBalance).toString());
+                            String newIncomingBalanceStr = currencySymbol + (df.format(newIncomingBalance).toString());
 
                             outgoingAccountObject.put("balance", newOutgoingBalanceStr);
                             incomingAccountObject.put("balance", newIncomingBalanceStr);
