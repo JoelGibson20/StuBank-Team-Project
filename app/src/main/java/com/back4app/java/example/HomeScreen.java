@@ -12,9 +12,12 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -110,9 +113,15 @@ public class HomeScreen extends AppCompatActivity {
         final ProgressBar loading = findViewById(R.id.vaultsLoading);
 
         //Define a builder to create an AlertDialog (popup window)
-        AlertDialog.Builder builder = new AlertDialog.Builder(HomeScreen.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
         builder.setCancelable(true);
-        builder.setTitle(getString(R.string.newAccountPopup));
+        //Create a TextView for the title and set its attributes
+        TextView titleText = new TextView(this);
+        titleText.setText(getString(R.string.newAccountPopup));
+        titleText.setGravity(Gravity.CENTER_HORIZONTAL);
+        titleText.setPadding(10,10,10,10);
+        titleText.setTextSize(20);
+        builder.setCustomTitle(titleText); //Set the title for the AlertDialog
 
         //Create the EditText to accept user input for new vault name
         final EditText input = new EditText(this);
@@ -120,7 +129,7 @@ public class HomeScreen extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        input.setLayoutParams(layoutParams);
+        input.setLayoutParams(layoutParams); //Apply layout params to EditText
         builder.setView(input); //Add EditText to the AlertDialog window
 
         builder.setNegativeButton(getString(R.string.backButton), new DialogInterface.OnClickListener() {
@@ -157,6 +166,7 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         AlertDialog alert = builder.create(); //Creates AlertDialog with specified properties
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
         alert.show(); //Shows AlertDialog
     }
 
