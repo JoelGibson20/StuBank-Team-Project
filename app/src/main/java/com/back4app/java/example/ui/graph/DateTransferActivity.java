@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardActivity;
@@ -26,17 +29,22 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.sql.Ref;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DateTransferActivity extends CalendarActivity {
     private static final String TAG = "DateTransferActivity";
 
     //ListView listView;
-    TextView transactionvalue;
-    TextView transactionreference;
+
 
     String SelectedAccount;
     String AccountNumber;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
 
 
 
@@ -48,18 +56,19 @@ public class DateTransferActivity extends CalendarActivity {
 
 
         Intent intent=getIntent();
-        SelectedAccount = intent.getStringExtra("selectedAccount");
-        SelectedAccount = intent.getStringExtra("accountnumber");
+        //SelectedAccount = intent.getStringExtra("selectedAccount");
+        //SelectedAccount = intent.getStringExtra("accountnumber");
 
         //listView=(ListView)findViewById(R.id.listview);
-        transactionreference=(TextView)findViewById(R.id.transactionreference);
-        transactionvalue=(TextView)findViewById(R.id.transactionreference);
+
 
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, SelectedAccount);
+        Log.d(TAG, selectedAccount);
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, "------------------------------------------------------------------");
+
+
 
 
         final Button backbutton = findViewById(R.id.backbutton);
@@ -81,19 +90,41 @@ public class DateTransferActivity extends CalendarActivity {
         //});
 
 
-        //readObject(SelectedAccount.getAccountNumber());
+        readObject(accountnumber, myDate.toString());
+
+
+        ArrayList<ExampleItem> exampleList = new ArrayList<>();
+        exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 1", "Line 2"));
+        exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 3", "Line 4"));
+        exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 5", "Line 6"));
+
+
+        recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new ExampleAdapter(exampleList);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+
+
 
     }
 
-    public void readObject(String Accountnum){
+    public void readObject(String Accountnum, String date) {
 
-        List<ParseObject> datetransactionList = databaseMethods.getTransaction(Accountnum);
+        Log.d(TAG, "================");
+        Log.d(TAG, "INSIDE READ OBJECT");
 
-        for(ParseObject transaction:datetransactionList){
+        List<ParseObject> datetransactionList = databaseMethods.getTransaction(Accountnum, date);
+
+        for (ParseObject transaction : datetransactionList) {
             String reference = transaction.getString("reference");
+            Log.d(TAG, "================");
+            Log.d(TAG, reference);
             String value = transaction.getString("value");
-            //transactionreference.setText(selectedAccount);
-            transactionvalue.setText(value);
+            Log.d(TAG, "================");
+            Log.d(TAG, value);
             System.out.println("TEST");
 
         }

@@ -59,6 +59,8 @@ public class CalendarActivity extends GraphActivity {
             }
         });
 
+
+
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);

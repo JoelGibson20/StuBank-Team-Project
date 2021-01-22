@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static android.content.ContentValues.TAG;
+
 public class databaseMethods {
     public static void addToDatabase(String firstName, String surname, String phoneNo, String email, String password) throws ParseException {
         //Might add a return type to return correct error message to display on screen?
@@ -197,9 +199,21 @@ public class databaseMethods {
         }
     }
 
-    public static List<ParseObject> getTransaction(String Object_ID){
+    public static List<ParseObject> getTransaction(String Accountnum, String date){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
-        query.whereEqualTo("objectId", Object_ID);
+
+        Log.d(TAG, "================");
+        Log.d(TAG, "INSIDE GET TRANSACTIONS");
+
+        //ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
+
+        query.whereEqualTo("outgoingAccount", Accountnum);
+        query.whereEqualTo("transactionDate", date);
+
+        //List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+        //queries.add(query);
+        //ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
+
         try{
             return (query.find());
 
