@@ -96,18 +96,18 @@ public class DateTransferActivity extends CalendarActivity {
         readObject(accountnumber, transferdate);
 
 
-        ArrayList<ExampleItem> exampleList = new ArrayList<>();
-        exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 1", "Line 2"));
-        exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 3", "Line 4"));
-        exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 5", "Line 6"));
+        //ArrayList<ExampleItem> exampleList = new ArrayList<>();
+        //exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 1", "Line 2"));
+        //exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 3", "Line 4"));
+        //exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 5", "Line 6"));
 
 
-        recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView = findViewById(R.id.recyclerView);
         //recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        adapter = new ExampleAdapter(exampleList);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        //layoutManager = new LinearLayoutManager(this);
+        //adapter = new ExampleAdapter(exampleList);
+        //recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setAdapter(adapter);
 
 
 
@@ -118,6 +118,7 @@ public class DateTransferActivity extends CalendarActivity {
         Log.d(TAG, transferdate);
         Log.d(TAG, "================");
         Log.d(TAG, "INSIDE READ OBJECT");
+        ArrayList<ExampleItem> exampleList = new ArrayList<>();
 
         List<ParseObject> datetransactionList = databaseMethods.getTransaction(Accountnum, date);
 
@@ -130,10 +131,21 @@ public class DateTransferActivity extends CalendarActivity {
             Log.d(TAG, "================");
             Log.d(TAG, value);
             System.out.println("TEST");
+            exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, reference, value));
 
         }
 
+        recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new ExampleAdapter(exampleList);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
     }
+
+
+
 
 
 
