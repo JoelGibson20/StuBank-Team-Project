@@ -94,11 +94,7 @@ public class GraphActivity extends AppCompatActivity {
                fillTransactionRecycler(totalTransactionsFromAllSellers());
                buildTransactionsRecycler();
                buildPieChart();
-                try {
-                    totalsByMonth();
-                } catch (ParseException e) {
-                    Log.d(TAG, e.toString());
-                }
+               calculateSpendingPrediction(totalsByMonth());
 
             }
             @Override
@@ -109,7 +105,7 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
-    private HashMap<String, Float> totalsByMonth() throws ParseException {
+    private HashMap<String, Float> totalsByMonth(){
         List<ParseObject> transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
         HashMap<String,Float> monthlyTotals = new HashMap<>();
         for (ParseObject transaction: transactionList){
@@ -133,12 +129,22 @@ public class GraphActivity extends AppCompatActivity {
         return monthlyTotals;
     }
 
+    private float calculateSpendingPrediction(HashMap<String, Float> monthlyTotals){
+        float total = 0f;
+        for(String key: monthlyTotals.keySet()){
+            total += monthlyTotals.get(key);
+        }
+
+        Log.d(TAG, Float.toString(total/monthlyTotals.keySet().size()));
+        return total/monthlyTotals.keySet().size();
+
+    }
+
     private void buildPieChart(){
         pieEntries = new ArrayList<>();
         PieChart pieChart = findViewById(R.id.analyticsPieChart);
         Map<String, String> transactionTotals = totalTransactionsFromAllSellers();
-        Set<String> keys = transactionTotals.keySet();
-        for(String key: keys){
+        for(String key: transactionTotals.keySet()){
             Float value = Float.parseFloat(transactionTotals.get(key));
             pieEntries.add( new PieEntry(value, key));
         }
@@ -213,8 +219,7 @@ public class GraphActivity extends AppCompatActivity {
     private List<Account> populateAccountList(){
         // queries database for all accounts from current user and adds them to a list as "Account" objects
         List<Account> accountList = new ArrayList<>();
-        List<ParseObject> accounts = databaseMethods.getAllAccountsOfOneUser();
-        for (ParseObject account: accounts) {
+        for (ParseObject account: databaseMethods.getAllAccountsOfOneUser()) {
             accountList.add(new Account(
                     account.getString("objectId"),
                     account.getString("accountOwner"),
