@@ -239,6 +239,8 @@ public class GraphActivity extends AppCompatActivity {
     public void calendarButtonOnClick(View v) {
 
         String accnum = selectedAccount.getAccountNumber();
+        Log.d(TAG, "8888888888888888888888888888888888");
+        Log.d(TAG, accnum);
 
         Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
         intent.putExtra("selectedAccount", selectedAccount.toString());

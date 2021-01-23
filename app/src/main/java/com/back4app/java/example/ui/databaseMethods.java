@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -12,6 +13,8 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static android.content.ContentValues.TAG;
 
 public class databaseMethods {
     public static void addToDatabase(String firstName, String surname, String phoneNo, String email, String password) throws ParseException {
@@ -197,11 +200,32 @@ public class databaseMethods {
         }
     }
 
-    public static List<ParseObject> getTransaction(String Object_ID){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
-        query.whereEqualTo("objectId", Object_ID);
+    public static List<ParseObject> getTransaction(String Accountnum, String date){
+        ParseQuery<ParseObject> accountquery = ParseQuery.getQuery("Transactions");
+
+        Log.d(TAG, "================");
+        Log.d(TAG, "INSIDE GET TRANSACTIONS");
+
+        accountquery.whereEqualTo("outgoingAccount", Accountnum);
+
+        ParseQuery<ParseObject> datequery = ParseQuery.getQuery("Transactions");
+
+
+        datequery.whereEqualTo("transactionDate", date);
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+
+        queries.add(accountquery);
+        queries.add(datequery);
+
+        ParseQuery<ParseObject> mainquery = ParseQuery.or(queries);
+
+        //List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+        //queries.add(query);
+        //ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
+
         try{
-            return (query.find());
+            return (mainquery.find());
 
         }
         catch (ParseException e){

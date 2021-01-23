@@ -12,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardActivity;
@@ -26,17 +29,24 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.sql.Ref;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DateTransferActivity extends CalendarActivity {
     private static final String TAG = "DateTransferActivity";
 
     //ListView listView;
-    TextView transactionvalue;
-    TextView transactionreference;
+
 
     String SelectedAccount;
     String AccountNumber;
+    String transferdate;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
 
 
 
@@ -48,18 +58,21 @@ public class DateTransferActivity extends CalendarActivity {
 
 
         Intent intent=getIntent();
-        SelectedAccount = intent.getStringExtra("selectedAccount");
-        SelectedAccount = intent.getStringExtra("accountnumber");
+        //SelectedAccount = intent.getStringExtra("selectedAccount");
+        //SelectedAccount = intent.getStringExtra("accountnumber");
+        transferdate = intent.getStringExtra("TransferDate");
 
         //listView=(ListView)findViewById(R.id.listview);
-        transactionreference=(TextView)findViewById(R.id.transactionreference);
-        transactionvalue=(TextView)findViewById(R.id.transactionreference);
+
 
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, SelectedAccount);
+        Log.d(TAG, selectedAccount);
         Log.d(TAG, "------------------------------------------------------------------");
         Log.d(TAG, "------------------------------------------------------------------");
+        Log.d(TAG, accountnumber);
+
+
 
 
         final Button backbutton = findViewById(R.id.backbutton);
@@ -81,24 +94,74 @@ public class DateTransferActivity extends CalendarActivity {
         //});
 
 
-        //readObject(SelectedAccount.getAccountNumber());
+        readObject(accountnumber, transferdate);
+
+
+        //ArrayList<ExampleItem> exampleList = new ArrayList<>();
+        //exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 1", "Line 2"));
+        //exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 3", "Line 4"));
+        //exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, "Line 5", "Line 6"));
+
+
+        //recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setHasFixedSize(true);
+        //layoutManager = new LinearLayoutManager(this);
+        //adapter = new ExampleAdapter(exampleList);
+        //recyclerView.setLayoutManager(layoutManager);
+        //recyclerView.setAdapter(adapter);
+
+
+
 
     }
 
-    public void readObject(String Accountnum){
+    public void readObject(String Accountnum, String date) {
+        Log.d(TAG, transferdate);
+        Log.d(TAG, "================");
+        Log.d(TAG, "INSIDE READ OBJECT");
+        ArrayList<ExampleItem> exampleList = new ArrayList<>();
 
-        List<ParseObject> datetransactionList = databaseMethods.getTransaction(Accountnum);
+        List<ParseObject> datetransactionList = databaseMethods.getTransaction(Accountnum, date);
 
-        for(ParseObject transaction:datetransactionList){
+        for (ParseObject transaction : datetransactionList) {
             String reference = transaction.getString("reference");
+            Log.d(TAG, transferdate);
+            Log.d(TAG, "================");
+            Log.d(TAG, reference);
             String value = transaction.getString("value");
-            //transactionreference.setText(selectedAccount);
-            transactionvalue.setText(value);
-            System.out.println("TEST");
+            Log.d(TAG, "================");
+            Log.d(TAG, value);
+            String transactionDate = transaction.getDate("transactionDate").toString();
+            String[] separatedDate = transactionDate.split(" ");
+            String justDate = separatedDate[2] + " " + separatedDate[1] + " " + separatedDate[5];
+            Log.d(TAG, "after parse");
+            Log.d(TAG,transferdate);
+            Log.d(TAG, justDate);
+            if (justDate.equals(transferdate)) {
+                exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, reference, value));
+            }
+
+
 
         }
 
+        boolean listcheck = exampleList.isEmpty();
+
+        if (listcheck){
+            exampleList.add(new ExampleItem(R.drawable.ic_android,"No Transfers on this day", ""));
+        }
+
+        recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        adapter = new ExampleAdapter(exampleList);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
     }
+
+
+
 
 
 
