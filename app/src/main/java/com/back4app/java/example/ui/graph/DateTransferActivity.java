@@ -30,6 +30,7 @@ import com.parse.ParseQuery;
 
 import java.sql.Ref;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DateTransferActivity extends CalendarActivity {
@@ -130,9 +131,24 @@ public class DateTransferActivity extends CalendarActivity {
             String value = transaction.getString("value");
             Log.d(TAG, "================");
             Log.d(TAG, value);
-            System.out.println("TEST");
-            exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, reference, value));
+            String transactionDate = transaction.getDate("transactionDate").toString();
+            String[] separatedDate = transactionDate.split(" ");
+            String justDate = separatedDate[2] + " " + separatedDate[1] + " " + separatedDate[5];
+            Log.d(TAG, "after parse");
+            Log.d(TAG,transferdate);
+            Log.d(TAG, justDate);
+            if (justDate.equals(transferdate)) {
+                exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, reference, value));
+            }
 
+
+
+        }
+
+        boolean listcheck = exampleList.isEmpty();
+
+        if (listcheck){
+            exampleList.add(new ExampleItem(R.drawable.ic_android,"No Transfers on this day", ""));
         }
 
         recyclerView = findViewById(R.id.recyclerView);
