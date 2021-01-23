@@ -31,12 +31,14 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +94,11 @@ public class GraphActivity extends AppCompatActivity {
                fillTransactionRecycler(totalTransactionsFromAllSellers());
                buildTransactionsRecycler();
                buildPieChart();
+                try {
+                    totalsByMonth();
+                } catch (ParseException e) {
+                    Log.d(TAG, e.toString());
+                }
 
             }
             @Override
@@ -102,6 +109,29 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+    private HashMap<String, Float> totalsByMonth() throws ParseException {
+        List<ParseObject> transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
+        HashMap<String,Float> monthlyTotals = new HashMap<>();
+        for (ParseObject transaction: transactionList){
+            String date = transaction.getDate("transactionDate").toString();
+            String day = date.substring(8,10);
+            String month = date.substring(4,7);
+            String year = date.substring(24);
+            String key = month + year;
+            float currentValue = Float.parseFloat(transaction.getString("value").substring(1));
+
+            if(!monthlyTotals.containsKey(month+year)){
+                monthlyTotals.put(key, currentValue);
+            }
+            else{
+                float totalValue = monthlyTotals.get(key);
+                monthlyTotals.put(key, totalValue + currentValue);
+            }
+            //Log.d(TAG, day + " " + month + " " + year);
+        }
+        Log.d(TAG, monthlyTotals.toString());
+        return monthlyTotals;
+    }
 
     private void buildPieChart(){
         pieEntries = new ArrayList<>();
@@ -138,7 +168,6 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
-    //TODO need to add method to remove all old items from spinner
     private void fillTransactionRecycler(Map<String, String> items){
         exampleItems = new ArrayList<>();
         Set<String> keys = items.keySet();
@@ -199,10 +228,6 @@ public class GraphActivity extends AppCompatActivity {
         return accountList;
     }
 
-    //TODO need to actually generate a graph, just a placeholder method for now
-    public void displayGraph(){
-        String x = "";
-    }
 
 
 
