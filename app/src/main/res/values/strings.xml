@@ -39,7 +39,21 @@
     <string name="backButton">Back</string>
     <string name="createButton">Create Account</string>
     <string name="transactions">Transactions</string>
-
+    <string name="current_account_default">Current Account</string>
+    <string name="account_number_default">00001111</string>
+    <string name="sortcode_default">00-11-22</string>
+    <string name="balance">Balance</string>
+    <string name="vaults">Vaults:</string>
+    <string name="home_button">Home</string>
+    <string name="analytics_button">Analytics</string>
+    <string name="transfers_button">Transfers</string>
+    <string name="digital_cards_button">Digital Cards</string>
+    <string name="settings_button">Settings</string>
+    <string name="account_name_default">Account Name</string>
+    <string name="rename_account_hint">Rename Account</string>
+    <string name="lock_account_description">Lock Account</string>
+    <string name="account_unlocked_description">Account Unlocked</string>
+    <string name="account_locked_description">Account Locked</string>
 
 
 </resources>
