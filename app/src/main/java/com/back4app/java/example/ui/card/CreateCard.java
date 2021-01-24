@@ -1,9 +1,13 @@
 package com.back4app.java.example.ui.card;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -13,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.graph.GraphActivity;
+import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
 
 public class CreateCard extends AppCompatActivity {
@@ -27,15 +32,18 @@ public class CreateCard extends AppCompatActivity {
 //        animation.start();
         ImageView view = (ImageView) findViewById(R.id.testImage);
 
-        RotateAnimation anim = new RotateAnimation(0.0f, 360.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-//Setup anim with desired properties
-        anim.setInterpolator(new LinearInterpolator());
-        anim.setRepeatCount(Animation.INFINITE); //Repeat animation indefinitely
-        anim.setDuration(2000); //Put desired duration per anim cycle here, in milliseconds
+//        RotateAnimation anim = new RotateAnimation(0f, 10f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+//
+////Setup anim with desired properties
+//        anim.setInterpolator(new BounceInterpolator());
+//        anim.setRepeatCount(Animation.INFINITE); //Repeat animation indefinitely
+//        anim.setDuration(1000); //Put desired duration per anim cycle here, in milliseconds
+//        ObjectAnimator test = ObjectAnimator.ofObject(view, )
 
-//Start animation
-        view.startAnimation(anim);
+//
+////Start animation
+//        view.startAnimation(anim);
 
 
 // Start animating the image
@@ -57,12 +65,12 @@ public class CreateCard extends AppCompatActivity {
         startActivity(intent);
     }
     public void poundButtonOnClick(View v){
-/*        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
+        startActivity(intent);
     }
     public void cardButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(), CreateCard.class);
+//        startActivity(intent);
     }
     public void gearsButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);

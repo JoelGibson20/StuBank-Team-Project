@@ -1,11 +1,14 @@
 package com.back4app.java.example.ui.card;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Gravity;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,14 +53,228 @@ public class CardActivity extends AppCompatActivity {
     private String userInputPIN;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
         getAccountDetails();
+        getCardDetails();
         getUsername();
 
+
+        //show card details
+        Button cardDetailsButton = findViewById(R.id.cardDetails);
+        cardDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("These are your card details:");
+                builder.setMessage("Card Number: " + cardNumber + "\n" +"CVV: " + cvv + "\n" +"Expiry Date: "+ expiryDate);
+                builder.setPositiveButton("Copy Card Number to Clipboard", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("card number", cardNumber);
+                        clipboard.setPrimaryClip(clip);
+                    }
+                });
+                builder.show();
+            }
+        });
+
+
+        //view PIN
+        Button viewPINButton = findViewById(R.id.viewPIN);
+        viewPINButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("Please enter your password");
+                // Set up the input
+                final EditText input = new EditText(CardActivity.this);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                input.setGravity(Gravity.CENTER);
+                builder.setView(input);
+                builder.setPositiveButton("View PIN", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        userInputPassword = input.getText().toString();
+                        try {
+                            boolean checkPassword = databaseMethods.attemptLogin(username, userInputPassword);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                            builder.setCancelable(true);
+                            if (checkPassword){
+                                builder.setMessage("PIN: " + PIN);
+                            }
+                            else {
+                                builder.setMessage("Incorrect password!");
+                            }
+                            AlertDialog dialog2 = builder.show();
+                            TextView messageText = (TextView)dialog2.findViewById(android.R.id.message);
+                            assert messageText != null;
+                            messageText.setGravity(Gravity.CENTER);
+                            dialog2.show();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        //remove card
+        Button removeCardButton = findViewById(R.id.removeCard);
+        removeCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("Please enter your 4-digit PIN to remove the card");
+                // Set up the input
+                final EditText input = new EditText(CardActivity.this);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+                input.setGravity(Gravity.CENTER);
+                builder.setView(input);
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        userInputPIN = input.getText().toString();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                        builder.setCancelable(true);
+                        if (userInputPIN.equals(PIN)){
+                            removeCardFromDB();
+                            builder.setMessage("Card successfully removed!");
+                            Handler mHandler = new Handler();
+                            mHandler.postDelayed(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                                    startActivity(intent);
+                                }
+
+                            }, 1000L);
+                        }
+                        else {
+                            builder.setMessage("Incorrect PIN. Please try again.");
+                        }
+                        AlertDialog dialog5 = builder.show();
+                        TextView messageText = (TextView)dialog5.findViewById(android.R.id.message);
+                        assert messageText != null;
+                        messageText.setGravity(Gravity.CENTER);
+                        dialog5.show();
+                    }
+                });
+                builder.show();
+            }
+        });
+
+
+        //change PIN
+        Button changePINButton = findViewById(R.id.changePIN);
+        changePINButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                builder.setCancelable(true);
+                builder.setTitle("Please enter your current 4-digit PIN");
+                // Set up the input
+                final EditText input = new EditText(CardActivity.this);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+                input.setGravity(Gravity.CENTER);
+                builder.setView(input);
+                builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        userInputOldPIN = input.getText().toString();
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(CardActivity.this);
+                        builder1.setCancelable(true);
+                        if(userInputOldPIN.equals(PIN)){
+                            builder1.setTitle("Please choose a new 4-digit PIN");
+                            // Set up the input
+                            final EditText input1 = new EditText(CardActivity.this);
+                            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                            input1.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                            input1.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+                            input1.setGravity(Gravity.CENTER);
+                            builder1.setView(input1);
+                            builder1.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    userInputNewPIN = input1.getText().toString();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                                    builder.setCancelable(true);
+                                    if (userInputNewPIN.length() == 4) {
+                                        builder.setTitle("Please reenter your new 4-digit PIN");
+                                        // Set up the input
+                                        final EditText input2 = new EditText(CardActivity.this);
+                                        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                                        input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+                                        input2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+                                        input2.setGravity(Gravity.CENTER);
+                                        builder.setView(input2);
+                                        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                userInputNewPINReenter = input2.getText().toString();
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                                                builder.setCancelable(true);
+                                                if (userInputNewPIN.equals(userInputNewPINReenter)) {
+                                                    updatePINInDB(userInputNewPIN);
+                                                    PIN = userInputNewPIN;
+                                                    builder.setMessage("PIN has been successfully changed!");
+                                                } else {
+                                                    builder.setMessage("Your new PINs don't match! Please try again.");
+                                                }
+                                                AlertDialog dialog4 = builder.show();
+                                                TextView messageText = (TextView) dialog4.findViewById(android.R.id.message);
+                                                assert messageText != null;
+                                                messageText.setGravity(Gravity.CENTER);
+                                                dialog4.show();
+                                            }
+                                        });
+                                        builder.show();
+                                    }
+                                    else {
+                                        builder.setMessage("Your new PIN needs to have 4 digits!");
+                                        AlertDialog dialog4 = builder.show();
+                                        TextView messageText = (TextView) dialog4.findViewById(android.R.id.message);
+                                        assert messageText != null;
+                                        messageText.setGravity(Gravity.CENTER);
+                                        dialog4.show();
+                                    }
+                                }
+                            });
+                            builder1.show();
+                        }
+                        else {
+                            builder1.setMessage("Incorrect PIN");
+                            AlertDialog dialog3 = builder1.show();
+                            TextView messageText = (TextView)dialog3.findViewById(android.R.id.message);
+                            assert messageText != null;
+                            messageText.setGravity(Gravity.CENTER);
+                            dialog3.show();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
     }
+
+
+
+
+
     public void getUsername(){
         ParseQuery<ParseObject> query1 = ParseQuery.getQuery("_User");
         query1.getInBackground(userObjectId, new GetCallback<ParseObject>() {
@@ -80,23 +298,52 @@ public class CardActivity extends AppCompatActivity {
         });
     }
 
-    public void updateIsFrozenInDB(boolean issFrozen){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
-        // Retrieve the object by id
-        query.getInBackground(cardID, new GetCallback<ParseObject>() {
+    public void disconnectCardFromAccountOnFreeze(){
+        ParseQuery<ParseObject> query1 = ParseQuery.getQuery("Cards");
+        query1.getInBackground(cardID, new GetCallback<ParseObject>() {
             public void done(ParseObject entity, ParseException e) {
                 if (e == null) {
-                    // Update the fields we want to
-                    entity.put("Frozen", issFrozen);
-                    // All other fields will remain the same
+                    entity.remove("accountID");
                     entity.saveInBackground();
+                }
+                else {
+                    e.printStackTrace();
                 }
             }
         });
 
     }
 
-    public void freezeCardOnClick(View v){
+    public void connectCardToAccountOnUnfreeze(){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
+        query.getInBackground(cardID, new GetCallback<ParseObject>() {
+            public void done(ParseObject account, ParseException e) {
+                if (e == null) {
+                    account.put("accountID", accountID);
+                    account.saveInBackground();
+                }
+                else{
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateIsFrozenInDB(boolean issFrozen){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
+        // Retrieve the object by id
+        query.getInBackground(cardID, new GetCallback<ParseObject>() {
+            public void done(ParseObject entity, ParseException e) {
+                if (e == null) {
+                    entity.put("Frozen", issFrozen);
+                    // All other fields will remain the same
+                    entity.saveInBackground();
+                }
+            }
+        });
+    }
+
+    public void freezeCardOnClick(View v) {
         ToggleButton toggle = (ToggleButton) findViewById(R.id.freezeCard);
         Button cardDetailsButton1 = findViewById(R.id.removeCard);
         Button cardDetailsButton = findViewById(R.id.cardDetails);
@@ -107,6 +354,13 @@ public class CardActivity extends AppCompatActivity {
         cardDetailsButton2.setClickable(!toggle.isChecked());
         cardDetailsButton3.setClickable(!toggle.isChecked());
         updateIsFrozenInDB(toggle.isChecked());
+        if (toggle.isChecked()){
+            disconnectCardFromAccountOnFreeze();
+        }
+        else {
+            connectCardToAccountOnUnfreeze();
+        }
+
     }
 
     //remember to put this into homescreen oncreate, change the var and method to static and run carddeets in this oncreate and the text views in a separate method on top !!!!!!!!!!!!!!!!!!!!!!
@@ -115,14 +369,14 @@ public class CardActivity extends AppCompatActivity {
         query.whereEqualTo("accountOwner", userObjectId);
         query.whereEqualTo("accountType", "current");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @SuppressLint("SetTextI18n")
             public void done(ParseObject account, ParseException e) {
                 if (e == null) {
                     accountNumber = account.getString("accountNumber");
                     sortCode = account.getString("sortCode");
                     accountID = account.getObjectId();
-                    ((TextView)findViewById(R.id.accountNumber)).setText(accountNumber);
-                    ((TextView)findViewById(R.id.sortCode)).setText(sortCode);
-                    getCardDetails();
+                    ((TextView)findViewById(R.id.accountNumber)).setText("Account Number:" + " " + accountNumber);
+                    ((TextView)findViewById(R.id.sortCode)).setText("Sort Code:" + " " + sortCode);
                 }
             }
         });
@@ -146,7 +400,7 @@ public class CardActivity extends AppCompatActivity {
         // The query will search for a ParseObject, given its objectId.
         // When the query finishes running, it will invoke the GetCallback
         // with either the object, or the exception thrown
-        query.whereEqualTo("accountID", accountID);
+        query.whereEqualTo("cardOwner", userObjectId);
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             public void done(ParseObject result, ParseException e) {
                 if (e == null) {
@@ -187,74 +441,72 @@ public class CardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void showCardDetailsOnClick(View v){
-//        getCardDetails();
-        Button cardDetailsButton = findViewById(R.id.cardDetails);
-        cardDetailsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                builder.setCancelable(true);
-                builder.setTitle("These are your card details:");
-                builder.setMessage("Card Number: " + cardNumber + "\n" +"CVV: " + cvv + "\n" +"Expiry Date: "+ expiryDate);
-                builder.setPositiveButton("Copy Card Number to Clipboard", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("card number", cardNumber);
-                        clipboard.setPrimaryClip(clip);
-                    }
-                });
-                builder.show();
-            }
-        });
-    }
+//    public void showCardDetailsOnClick(View v){
+//        Button cardDetailsButton = findViewById(R.id.cardDetails);
+//        cardDetailsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+//                builder.setCancelable(true);
+//                builder.setTitle("These are your card details:");
+//                builder.setMessage("Card Number: " + cardNumber + "\n" +"CVV: " + cvv + "\n" +"Expiry Date: "+ expiryDate);
+//                builder.setPositiveButton("Copy Card Number to Clipboard", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//                        ClipData clip = ClipData.newPlainText("card number", cardNumber);
+//                        clipboard.setPrimaryClip(clip);
+//                    }
+//                });
+//                builder.show();
+//            }
+//        });
+//    }
 
-    public void viewPINOnClick(View v){
-        getCardDetails();
-        Button viewPINButton = findViewById(R.id.viewPIN);
-        viewPINButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                builder.setCancelable(true);
-                builder.setTitle("Please enter your password");
-                // Set up the input
-                final EditText input = new EditText(CardActivity.this);
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                input.setGravity(Gravity.CENTER);
-                builder.setView(input);
-                builder.setPositiveButton("View PIN", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        userInputPassword = input.getText().toString();
-                        try {
-                            boolean checkPassword = databaseMethods.attemptLogin(username, userInputPassword);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                            builder.setCancelable(true);
-                            if (checkPassword){
-                                builder.setMessage("PIN: " + PIN);
-                            }
-                            else {
-                                builder.setMessage("Incorrect password!");
-                            }
-                            AlertDialog dialog2 = builder.show();
-                            TextView messageText = (TextView)dialog2.findViewById(android.R.id.message);
-                            messageText.setGravity(Gravity.CENTER);
-                            dialog2.show();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                builder.show();
-            }
-        });
-    }
+//    public void viewPINOnClick(View v){
+//        Button viewPINButton = findViewById(R.id.viewPIN);
+//        viewPINButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+//                builder.setCancelable(true);
+//                builder.setTitle("Please enter your password");
+//                // Set up the input
+//                final EditText input = new EditText(CardActivity.this);
+//                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+//                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//                input.setGravity(Gravity.CENTER);
+//                builder.setView(input);
+//                builder.setPositiveButton("View PIN", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        userInputPassword = input.getText().toString();
+//                        try {
+//                            boolean checkPassword = databaseMethods.attemptLogin(username, userInputPassword);
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+//                            builder.setCancelable(true);
+//                            if (checkPassword){
+//                                builder.setMessage("PIN: " + PIN);
+//                            }
+//                            else {
+//                                builder.setMessage("Incorrect password!");
+//                            }
+//                            AlertDialog dialog2 = builder.show();
+//                            TextView messageText = (TextView)dialog2.findViewById(android.R.id.message);
+//                            assert messageText != null;
+//                            messageText.setGravity(Gravity.CENTER);
+//                            dialog2.show();
+//                        } catch (ParseException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//                builder.show();
+//            }
+//        });
+//    }
 
     public void updatePINInDB(String newPIN){
-//        getCardDetails();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
         // Retrieve the object by id
         query.getInBackground(cardID, new GetCallback<ParseObject>() {
@@ -269,128 +521,148 @@ public class CardActivity extends AppCompatActivity {
         });
     }
 
-    public void removeCardOnClick(View v){
-        getCardDetails();
-        Button removeCardButton = findViewById(R.id.removeCard);
-        removeCardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                builder.setCancelable(true);
-                builder.setTitle("Please enter your 4-digit PIN to remove the card");
-                // Set up the input
-                final EditText input = new EditText(CardActivity.this);
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
-                input.setGravity(Gravity.CENTER);
-                builder.setView(input);
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        userInputPIN = input.getText().toString();
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                        builder.setCancelable(true);
-                        if (userInputPIN.equals(PIN)){
-                            removeCardFromDB();
-                            builder.setMessage("Card successfully removed!");
-                            Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                            startActivity(intent);
-                        }
-                        else {
-                            builder.setMessage("Incorrect PIN. Please try again.");
-                        }
-                        AlertDialog dialog5 = builder.show();
-                        TextView messageText = (TextView)dialog5.findViewById(android.R.id.message);
-                        messageText.setGravity(Gravity.CENTER);
-                        dialog5.show();
-                    }
-                });
-                builder.show();
-            }
-        });
-    }
+//    public void removeCardOnClick(View v){
+//        Button removeCardButton = findViewById(R.id.removeCard);
+//        removeCardButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+//                builder.setCancelable(true);
+//                builder.setTitle("Please enter your 4-digit PIN to remove the card");
+//                // Set up the input
+//                final EditText input = new EditText(CardActivity.this);
+//                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+//                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+//                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+//                input.setGravity(Gravity.CENTER);
+//                builder.setView(input);
+//                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        userInputPIN = input.getText().toString();
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+//                        builder.setCancelable(true);
+//                        if (userInputPIN.equals(PIN)){
+//                            removeCardFromDB();
+//                            builder.setMessage("Card successfully removed!");
+//                            Handler mHandler = new Handler();
+//                            mHandler.postDelayed(new Runnable() {
+//
+//                                @Override
+//                                public void run() {
+//                                    Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+//                                    startActivity(intent);
+//                                }
+//
+//                            }, 1000L);
+//                        }
+//                        else {
+//                            builder.setMessage("Incorrect PIN. Please try again.");
+//                        }
+//                        AlertDialog dialog5 = builder.show();
+//                        TextView messageText = (TextView)dialog5.findViewById(android.R.id.message);
+//                        assert messageText != null;
+//                        messageText.setGravity(Gravity.CENTER);
+//                        dialog5.show();
+//                    }
+//                });
+//                builder.show();
+//            }
+//        });
+//    }
 
-    public void changePINOnClick(View v){
-        getCardDetails();
-        Button changePINButton = findViewById(R.id.changePIN);
-        changePINButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                builder.setCancelable(true);
-                builder.setTitle("Please enter your current 4-digit PIN");
-                // Set up the input
-                final EditText input = new EditText(CardActivity.this);
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
-                input.setGravity(Gravity.CENTER);
-                builder.setView(input);
-                builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        userInputOldPIN = input.getText().toString();
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                        builder.setCancelable(true);
-                        if(userInputOldPIN.equals(PIN)){
-                            builder.setTitle("Please choose a new 4-digit PIN");
-                            // Set up the input
-                            final EditText input1 = new EditText(CardActivity.this);
-                            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                            input1.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                            input1.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
-                            input1.setGravity(Gravity.CENTER);
-                            builder.setView(input1);
-                            builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    userInputNewPIN = input1.getText().toString();
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                                    builder.setCancelable(true);
-                                    builder.setTitle("Please reenter your new 4-digit PIN");
-                                    // Set up the input
-                                    final EditText input2 = new EditText(CardActivity.this);
-                                    // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                                    input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                                    input2.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
-                                    input2.setGravity(Gravity.CENTER);
-                                    builder.setView(input2);
-                                    builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            userInputNewPINReenter = input2.getText().toString();
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
-                                            builder.setCancelable(true);
-                                            if (userInputNewPIN.equals(userInputNewPINReenter)){
-                                                updatePINInDB(userInputNewPIN);
-                                                builder.setMessage("PIN has been successfully changed!");
-                                            }
-                                            else {
-                                                builder.setMessage("Your new PINs don't match! Please try again.");
-                                            }
-                                            AlertDialog dialog4 = builder.show();
-                                            TextView messageText = (TextView)dialog4.findViewById(android.R.id.message);
-                                            messageText.setGravity(Gravity.CENTER);
-                                            dialog4.show();
-                                        }
-                                    });
-                                    builder.show();
-                                }
-                            });
-                            builder.show();
-                        }
-                        else {
-                            builder.setMessage("Incorrect PIN");
-                            AlertDialog dialog3 = builder.show();
-                            TextView messageText = (TextView)dialog3.findViewById(android.R.id.message);
-                            messageText.setGravity(Gravity.CENTER);
-                            dialog3.show();
-                        }
-                    }
-                });
-                builder.show();
-            }
-        });
-    }
+//    public void changePINOnClick(View v){
+//        Button changePINButton = findViewById(R.id.changePIN);
+//        changePINButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+//                builder.setCancelable(true);
+//                builder.setTitle("Please enter your current 4-digit PIN");
+//                // Set up the input
+//                final EditText input = new EditText(CardActivity.this);
+//                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+//                input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+//                input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+//                input.setGravity(Gravity.CENTER);
+//                builder.setView(input);
+//                builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        userInputOldPIN = input.getText().toString();
+//                        AlertDialog.Builder builder1 = new AlertDialog.Builder(CardActivity.this);
+//                        builder1.setCancelable(true);
+//                        if(userInputOldPIN.equals(PIN)){
+//                            builder1.setTitle("Please choose a new 4-digit PIN");
+//                            // Set up the input
+//                            final EditText input1 = new EditText(CardActivity.this);
+//                            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+//                            input1.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+//                            input1.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
+//                            input1.setGravity(Gravity.CENTER);
+//                            builder1.setView(input1);
+//                            builder1.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    userInputNewPIN = input1.getText().toString();
+//                                    AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+//                                    builder.setCancelable(true);
+//                                    if (userInputNewPIN.length() == 4) {
+//                                        builder.setTitle("Please reenter your new 4-digit PIN");
+//                                        // Set up the input
+//                                        final EditText input2 = new EditText(CardActivity.this);
+//                                        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+//                                        input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+//                                        input2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+//                                        input2.setGravity(Gravity.CENTER);
+//                                        builder.setView(input2);
+//                                        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                userInputNewPINReenter = input2.getText().toString();
+//                                                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+//                                                builder.setCancelable(true);
+//                                                if (userInputNewPIN.equals(userInputNewPINReenter)) {
+//                                                    updatePINInDB(userInputNewPIN);
+//                                                    PIN = userInputNewPIN;
+//                                                    builder.setMessage("PIN has been successfully changed!");
+//                                                } else {
+//                                                    builder.setMessage("Your new PINs don't match! Please try again.");
+//                                                }
+//                                                AlertDialog dialog4 = builder.show();
+//                                                TextView messageText = (TextView) dialog4.findViewById(android.R.id.message);
+//                                                assert messageText != null;
+//                                                messageText.setGravity(Gravity.CENTER);
+//                                                dialog4.show();
+//                                            }
+//                                        });
+//                                        builder.show();
+//                                    }
+//                                    else {
+//                                        builder.setMessage("Your new PIN needs to have 4 digits!");
+//                                        AlertDialog dialog4 = builder.show();
+//                                        TextView messageText = (TextView) dialog4.findViewById(android.R.id.message);
+//                                        assert messageText != null;
+//                                        messageText.setGravity(Gravity.CENTER);
+//                                        dialog4.show();
+//                                    }
+//                                }
+//                            });
+//                            builder1.show();
+//                        }
+//                        else {
+//                            builder1.setMessage("Incorrect PIN");
+//                            AlertDialog dialog3 = builder1.show();
+//                            TextView messageText = (TextView)dialog3.findViewById(android.R.id.message);
+//                            assert messageText != null;
+//                            messageText.setGravity(Gravity.CENTER);
+//                            dialog3.show();
+//                        }
+//                    }
+//                });
+//                builder.show();
+//            }
+//        });
+//    }
 }
+

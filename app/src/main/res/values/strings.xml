@@ -4,8 +4,8 @@
 
     <string name="back4app_server_url" translatable="false">https://parseapi.back4app.com/</string>
 
-    <string name="back4app_app_id" translatable="false">vORa9F9cxvwynlXzi9sfziI0iPXz1EujQvwMSUr2</string>
-    <string name="back4app_client_key" translatable="false">5GDWuKhTZxJfdIKBTz9dq6iPf1JJgws7FMNDLvDb</string>
+    <string name="back4app_app_id" translatable="false">dcecVqioU3uiznGC4wDdWD4RJJUMiu7tbU6IIthx</string>
+    <string name="back4app_client_key" translatable="false">rCWclUEupADSAbbkgJHdRIgP8qpPUlmRpzQsd2g9</string>
 
     <string name="title_activity_sign_up">SignUp</string>
     <string name="prompt_firstName">First Name</string>
@@ -34,6 +34,20 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="remove_card">Remove Card</string>
+    <string name="change_pin">Change PIN</string>
+    <string name="view_pin">View PIN</string>
+    <string name="show_card_details">Show Card Details</string>
+    <string name="freezecard">freezeCard</string>
+    <string name="freeze_card">Freeze Card</string>
+    <string name="unfreeze_card">Unfreeze Card</string>
+    <string name="settings">settings</string>
+    <string name="todo">TODO</string>
+    <string name="cards">cards</string>
+    <string name="transfers">transfers</string>
+    <string name="homescreen">home_screen</string>
+    <string name="image_of_card" />
+    <string name="analytics" />
 
 
 </resources>

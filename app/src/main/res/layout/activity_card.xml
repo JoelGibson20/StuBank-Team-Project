@@ -12,13 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:backgroundTint="@color/teal_700"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/greeting"
-        app:layout_constraintVertical_bias="1.0" />
+        tools:ignore="BottomAppBar" />
 
     <ImageButton
         android:id="@+id/homeImageButton"
@@ -28,7 +27,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/homescreen"
         android:onClick="homeButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/graphImageButton"
@@ -47,7 +46,8 @@
         app:layout_constraintEnd_toStartOf="@+id/poundImageButton"
         app:layout_constraintStart_toEndOf="@+id/homeImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_combo_chart_48" />
+        app:srcCompat="@drawable/icons8_combo_chart_48"
+        android:contentDescription="@string/analytics" />
 
     <ImageButton
         android:id="@+id/poundImageButton"
@@ -62,7 +62,8 @@
         app:layout_constraintEnd_toStartOf="@+id/cardImageButton"
         app:layout_constraintStart_toEndOf="@+id/graphImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_money_pound_48" />
+        app:srcCompat="@drawable/icons8_money_pound_48"
+        android:contentDescription="@string/transfers" />
 
     <ImageButton
         android:id="@+id/cardImageButton"
@@ -75,7 +76,8 @@
         app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
         app:layout_constraintStart_toEndOf="@+id/poundImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_debit_card_48" />
+        app:srcCompat="@drawable/icons8_debit_card_48"
+        android:contentDescription="@string/cards" />
 
     <ImageButton
         android:id="@+id/gearsImageButton"
@@ -90,7 +92,8 @@
         app:layout_constraintEnd_toEndOf="@+id/homeBottomAppBar"
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_automation_48" />
+        app:srcCompat="@drawable/icons8_automation_48"
+        android:contentDescription="@string/settings" />
 
     <View
         android:id="@+id/divider"
@@ -103,22 +106,24 @@
 
     <Button
         android:id="@+id/viewPIN"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
         android:layout_width="382dp"
         android:layout_height="55dp"
         android:layout_marginTop="4dp"
-        android:onClick="viewPINOnClick"
-        android:text="View PIN"
+        android:text="@string/view_pin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardDetails" />
 
     <Button
         android:id="@+id/cardDetails"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
         android:layout_width="382dp"
         android:layout_height="55dp"
         android:layout_marginTop="264dp"
-        android:onClick="showCardDetailsOnClick"
-        android:text="Show Card Details"
+        android:text="@string/show_card_details"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
@@ -126,39 +131,48 @@
 
     <Button
         android:id="@+id/changePIN"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
         android:layout_width="382dp"
         android:layout_height="55dp"
         android:layout_marginTop="4dp"
-        android:onClick="changePINOnClick"
-        android:text="Change PIN"
+        android:text="@string/change_pin"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPIN" />
 
     <Button
         android:id="@+id/removeCard"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
         android:layout_width="382dp"
         android:layout_height="55dp"
         android:layout_marginTop="8dp"
-        android:onClick="removeCardOnClick"
-        android:text="Remove Card"
+        android:text="@string/remove_card"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/freezeCard" />
 
     <ToggleButton
         android:id="@+id/freezeCard"
-        android:layout_width="382dp"
-        android:layout_height="43dp"
+        android:layout_width="375dp"
+        android:layout_height="42dp"
         android:layout_marginTop="8dp"
-        android:background="#FF6200EE"
-        android:fontFamily="sans-serif-medium"
+        android:background="@color/purple_500"
+        android:fontFamily="sans-serif"
         android:onClick="freezeCardOnClick"
-        android:text="freezeCard"
+        android:text="@string/freezecard"
+        android:textAlignment="inherit"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
-        android:textOff="Freeze Card"
-        android:textOn="Unfreeze Card"
-        android:textSize="14sp"
+        android:textOff="@string/freeze_card"
+        android:textOn="@string/unfreeze_card"
+        android:textSize="18sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -177,23 +191,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.421"
-        app:srcCompat="@drawable/bank_card" />
+        app:srcCompat="@drawable/bank_card"
+        android:contentDescription="@string/image_of_card" />
 
     <TextView
         android:id="@+id/accountNumber"
-        android:layout_width="64dp"
+        android:layout_width="130dp"
         android:layout_height="17dp"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="144dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sortCode"
-        android:layout_width="64dp"
+        android:layout_width="130dp"
         android:layout_height="17dp"
-        android:layout_marginStart="252dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="160dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textAlignment="center"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
