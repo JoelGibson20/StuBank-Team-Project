@@ -54,15 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 //If data input in login form is valid enable button
                 loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    //Present error text for username
-                    emailEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    //Present error text for password
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                    //!!! This needs removed when logging in
-                }
             }
         });
 
