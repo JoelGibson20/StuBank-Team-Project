@@ -126,7 +126,13 @@ public class databaseMethods {
         //Assign attributes we set
         account.put("accountOwner",getCurrentUser().getObjectId());
         account.put("accountType", accountType);
-        account.put("accountName", accountName);
+        if(accountName.equals("")){
+            //If the user provides no name assign default name to prevent an error
+            account.put("accountName","New Vault");
+        }
+        else{
+            account.put("accountName", accountName);
+        }
         account.put("balance", "£0");
         account.put("locked", false);
 
