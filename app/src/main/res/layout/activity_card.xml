@@ -180,39 +180,41 @@
 
     <ImageView
         android:id="@+id/card"
-        android:layout_width="262dp"
-        android:layout_height="185dp"
+        android:layout_width="267dp"
+        android:layout_height="168dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="40dp"
         android:clickable="false"
+        android:contentDescription="@string/image_of_card"
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.421"
-        app:srcCompat="@drawable/bank_card"
-        android:contentDescription="@string/image_of_card" />
+        app:srcCompat="@drawable/blue_card" />
 
     <TextView
         android:id="@+id/accountNumber"
-        android:layout_width="130dp"
+        android:layout_width="189dp"
         android:layout_height="17dp"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="139dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:textAlignment="center"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sortCode"
-        android:layout_width="130dp"
+        android:layout_width="137dp"
         android:layout_height="17dp"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="156dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

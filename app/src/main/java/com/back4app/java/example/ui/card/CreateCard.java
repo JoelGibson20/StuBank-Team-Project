@@ -1,15 +1,8 @@
 package com.back4app.java.example.ui.card;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +23,7 @@ public class CreateCard extends AppCompatActivity {
 //        ObjectAnimator animation = ObjectAnimator.ofFloat(splash, "translationX", 100f);
 //        animation.setDuration(2000);
 //        animation.start();
-        ImageView view = (ImageView) findViewById(R.id.testImage);
+        ImageView view = (ImageView) findViewById(R.id.cardCreate);
 
 
 //        RotateAnimation anim = new RotateAnimation(0f, 10f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);

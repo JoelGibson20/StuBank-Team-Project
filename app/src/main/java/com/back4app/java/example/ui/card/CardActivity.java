@@ -15,12 +15,14 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
@@ -343,21 +345,23 @@ public class CardActivity extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void freezeCardOnClick(View v) {
         ToggleButton toggle = (ToggleButton) findViewById(R.id.freezeCard);
-        Button cardDetailsButton1 = findViewById(R.id.removeCard);
+        ImageView card = (ImageView) findViewById(R.id.card);
         Button cardDetailsButton = findViewById(R.id.cardDetails);
         Button cardDetailsButton2 = findViewById(R.id.changePIN);
         Button cardDetailsButton3 = findViewById(R.id.viewPIN);
-        cardDetailsButton.setClickable(!toggle.isChecked());
-        cardDetailsButton1.setClickable(!toggle.isChecked());
-        cardDetailsButton2.setClickable(!toggle.isChecked());
-        cardDetailsButton3.setClickable(!toggle.isChecked());
+        cardDetailsButton.setEnabled(!toggle.isChecked());
+        cardDetailsButton2.setEnabled(!toggle.isChecked());
+        cardDetailsButton3.setEnabled(!toggle.isChecked());
         updateIsFrozenInDB(toggle.isChecked());
         if (toggle.isChecked()){
+            card.setForeground(ResourcesCompat.getDrawable(getResources(), R.drawable.frosdt, null));
             disconnectCardFromAccountOnFreeze();
         }
         else {
+            card.setForeground(null);
             connectCardToAccountOnUnfreeze();
         }
 
@@ -382,17 +386,23 @@ public class CardActivity extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void setFreezeChecked(){
         ToggleButton toggle = (ToggleButton) findViewById(R.id.freezeCard);
+        ImageView card = (ImageView) findViewById(R.id.card);
         toggle.setChecked(isFrozen);
-        Button cardDetailsButton1 = findViewById(R.id.removeCard);
+        if (isFrozen) {
+            card.setForeground(ResourcesCompat.getDrawable(getResources(), R.drawable.frosdt, null));
+        }
+        else {
+            card.setForeground(null);
+        }
         Button cardDetailsButton = findViewById(R.id.cardDetails);
         Button cardDetailsButton2 = findViewById(R.id.changePIN);
         Button cardDetailsButton3 = findViewById(R.id.viewPIN);
-        cardDetailsButton.setClickable(!toggle.isChecked());
-        cardDetailsButton1.setClickable(!toggle.isChecked());
-        cardDetailsButton2.setClickable(!toggle.isChecked());
-        cardDetailsButton3.setClickable(!toggle.isChecked());
+        cardDetailsButton.setEnabled(!toggle.isChecked());
+        cardDetailsButton2.setEnabled(!toggle.isChecked());
+        cardDetailsButton3.setEnabled(!toggle.isChecked());
     }
 
     public void getCardDetails(){
@@ -402,6 +412,7 @@ public class CardActivity extends AppCompatActivity {
         // with either the object, or the exception thrown
         query.whereEqualTo("cardOwner", userObjectId);
         query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             public void done(ParseObject result, ParseException e) {
                 if (e == null) {
                     cardNumber = result.getString("cardNumber");

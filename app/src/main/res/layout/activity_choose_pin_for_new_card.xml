@@ -17,8 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/greeting"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="BottomAppBar" />
 
     <ImageButton
         android:id="@+id/homeImageButton"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
         app:srcCompat="@drawable/icons8_home_page_48"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/homescreen" />
 
     <ImageButton
         android:id="@+id/graphImageButton"
@@ -47,7 +47,8 @@
         app:layout_constraintEnd_toStartOf="@+id/poundImageButton"
         app:layout_constraintStart_toEndOf="@+id/homeImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_combo_chart_48" />
+        app:srcCompat="@drawable/icons8_combo_chart_48"
+        android:contentDescription="@string/analytics" />
 
     <ImageButton
         android:id="@+id/poundImageButton"
@@ -62,7 +63,8 @@
         app:layout_constraintEnd_toStartOf="@+id/cardImageButton"
         app:layout_constraintStart_toEndOf="@+id/graphImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_money_pound_48" />
+        app:srcCompat="@drawable/icons8_money_pound_48"
+        android:contentDescription="@string/transfers" />
 
     <ImageButton
         android:id="@+id/cardImageButton"
@@ -75,7 +77,8 @@
         app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
         app:layout_constraintStart_toEndOf="@+id/poundImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_debit_card_48" />
+        app:srcCompat="@drawable/icons8_debit_card_48"
+        android:contentDescription="@string/cards" />
 
     <ImageButton
         android:id="@+id/gearsImageButton"
@@ -90,7 +93,8 @@
         app:layout_constraintEnd_toEndOf="@+id/homeBottomAppBar"
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_automation_48" />
+        app:srcCompat="@drawable/icons8_automation_48"
+        android:contentDescription="@string/settings" />
 
     <EditText
         android:id="@+id/editTextNumberPassword"
@@ -125,7 +129,7 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm"
+        android:text="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +140,7 @@
         android:id="@+id/textView3"
         android:layout_width="370dp"
         android:layout_height="62dp"
-        android:text="Please choose a 4-digit PIN"
+        android:text="@string/please_choose_a_4_digit_pin"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword2"
         app:layout_constraintEnd_toEndOf="parent"
