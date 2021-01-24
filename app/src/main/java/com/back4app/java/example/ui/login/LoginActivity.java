@@ -2,9 +2,11 @@ package com.back4app.java.example.ui.login;
 
 import android.app.Activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,7 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -125,6 +130,30 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         //Directs to home page
                     }
+                    else{ //Login failed, so present error message
+                        //Define a builder to create an AlertDialog (popup window)
+                        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(LoginActivity.this, R.style.AlertDialogCustom));
+                        builder.setCancelable(true);
+                        //Create a TextView for the title and set its attributes
+                        TextView titleText = new TextView(LoginActivity.this);
+                        titleText.setText(getString(R.string.failed_login));
+                        titleText.setGravity(Gravity.CENTER);
+                        titleText.setPadding(10,10,10,10);
+                        titleText.setTextSize(20);
+                        builder.setCustomTitle(titleText); //Set the title for the AlertDialog
+
+                        builder.setNegativeButton(getString(R.string.backButton), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        AlertDialog alert = builder.create(); //Creates AlertDialog with specified properties
+                        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        alert.show(); //Shows AlertDialog
+
+                    }
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

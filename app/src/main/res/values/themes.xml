@@ -20,7 +20,7 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
-    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+    <style name="AlertDialogCustom" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
     </style>

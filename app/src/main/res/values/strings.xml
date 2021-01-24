@@ -54,6 +54,7 @@
     <string name="lock_account_description">Lock Account</string>
     <string name="account_unlocked_description">Account Unlocked</string>
     <string name="account_locked_description">Account Locked</string>
+    <string name="failed_login">Login failed. Email/password combination incorrect.</string>
 
 
 </resources>
