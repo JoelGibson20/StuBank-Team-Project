@@ -132,7 +132,7 @@ public class SignUpActivity extends AppCompatActivity {
                     //New account added to database
                     databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
                             surnameEditText.getText().toString(), phoneNoEditText.getText().toString(),
-                            emailEditText.getText().toString(), passwordEditText.getText().toString());
+                            emailEditText.getText().toString().toLowerCase(), passwordEditText.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

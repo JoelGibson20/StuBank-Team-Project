@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());*/
 
                  try {
-                    if(databaseMethods.attemptLogin(emailEditText.getText().toString(),passwordEditText.getText().toString())){
+                    if(databaseMethods.attemptLogin(emailEditText.getText().toString().toLowerCase(),passwordEditText.getText().toString())){
                         //If email and password match
                         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
                         startActivity(intent);
