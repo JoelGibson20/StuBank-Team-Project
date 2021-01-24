@@ -17,7 +17,7 @@
     <string name="action_sign_in">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid email</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_password">Password must be 8 or more characters including at least 1: Lowercase letter, uppercase letter, digit, and special character</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">Login</string>
     <string name="dont_have_account">Don\'t have an account? Click here to sign up</string>
