@@ -68,17 +68,17 @@
 
     <ImageButton
         android:id="@+id/cardImageButton"
-        android:onClick="cardButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
+        android:clickable="false"
+        android:contentDescription="@string/cards"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
         app:layout_constraintStart_toEndOf="@+id/poundImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_debit_card_48"
-        android:contentDescription="@string/cards" />
+        app:srcCompat="@drawable/icons8_debit_card_48" />
 
     <ImageButton
         android:id="@+id/gearsImageButton"
@@ -97,7 +97,7 @@
         android:contentDescription="@string/settings" />
 
     <EditText
-        android:id="@+id/editTextNumberPassword"
+        android:id="@+id/PINReenter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="5"
@@ -111,7 +111,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextNumberPassword2"
+        android:id="@+id/PIN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="5"
@@ -126,23 +126,23 @@
         app:layout_constraintVertical_bias="0.352" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/confirmNewCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumberPassword"
+        app:layout_constraintTop_toBottomOf="@+id/PINReenter"
         app:layout_constraintVertical_bias="0.255" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/choosePIN"
         android:layout_width="370dp"
         android:layout_height="62dp"
         android:text="@string/please_choose_a_4_digit_pin"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumberPassword2"
+        app:layout_constraintBottom_toTopOf="@+id/PIN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

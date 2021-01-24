@@ -61,10 +61,7 @@ public class CreateCard extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
         startActivity(intent);
     }
-    public void cardButtonOnClick(View v){
-//        Intent intent = new Intent(getApplicationContext(), CreateCard.class);
-//        startActivity(intent);
-    }
+
     public void gearsButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);

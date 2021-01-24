@@ -34,20 +34,22 @@ public class ChoosePinForNewCard extends AppCompatActivity {
     static final private String DIGITS = "0123456789";
     final private Random random = new SecureRandom();
     private final String userObjectId = databaseMethods.getCurrentUser().getObjectId();
-    String accountID;
+    private String accountID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_pin_for_new_card);
         getAccountID();
-        Button button = (Button) findViewById(R.id.button2);
+
+        //confirm to create new card on click
+        Button button = (Button) findViewById(R.id.confirmNewCard);
         button.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                EditText pin = (EditText) findViewById(R.id.editTextNumberPassword);
-                EditText pin2 = (EditText) findViewById(R.id.editTextNumberPassword2);
+                EditText pin = (EditText) findViewById(R.id.PINReenter);
+                EditText pin2 = (EditText) findViewById(R.id.PIN);
                 PIN = pin.getText().toString();
                 PINREENTER = pin2.getText().toString();
                 AlertDialog.Builder builder = new AlertDialog.Builder(ChoosePinForNewCard.this);
@@ -75,10 +77,12 @@ public class ChoosePinForNewCard extends AppCompatActivity {
         });
     }
 
+    //generates random digit
     public char randomDigit(){
         return DIGITS.charAt(random.nextInt(DIGITS.length()));
     }
 
+    //generates random three digit number to use as cvv
     public String randomCvv(){
         StringBuilder cvv = new StringBuilder();
         int length = 3;
@@ -89,6 +93,7 @@ public class ChoosePinForNewCard extends AppCompatActivity {
         return cvv.toString();
     }
 
+    //generates random 16 digit number to use as card number
     public String randomCardNumber(){
         StringBuilder cardNum = new StringBuilder();
         int length = 16;
@@ -107,6 +112,7 @@ public class ChoosePinForNewCard extends AppCompatActivity {
         return cardNum.toString();
     }
 
+    //enters generated card information and users details into DB
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void enterCardDetailsIntoDB(){
         ParseObject entity = new ParseObject("Cards");
@@ -120,6 +126,7 @@ public class ChoosePinForNewCard extends AppCompatActivity {
         entity.saveInBackground();
     }
 
+    //returns account ID
     public void getAccountID(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", userObjectId);
@@ -128,7 +135,6 @@ public class ChoosePinForNewCard extends AppCompatActivity {
             public void done(ParseObject account, ParseException e) {
                 if (e == null) {
                     accountID = account.getObjectId();
-                    System.out.println(accountID);
                 }
             }
         });
@@ -147,11 +153,6 @@ public class ChoosePinForNewCard extends AppCompatActivity {
     public void poundButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
         startActivity(intent);
-    }
-
-    public void cardButtonOnClick(View v){
-//        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
-//        startActivity(intent);
     }
 
     public void gearsButtonOnClick(View v){

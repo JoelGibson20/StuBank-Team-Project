@@ -71,13 +71,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
-        android:onClick="cardButtonOnClick"
+        android:clickable="false"
+        android:contentDescription="@string/cards"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
         app:layout_constraintStart_toEndOf="@+id/poundImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_debit_card_48"
-        android:contentDescription="@string/cards" />
+        app:srcCompat="@drawable/icons8_debit_card_48" />
 
     <ImageButton
         android:id="@+id/gearsImageButton"
