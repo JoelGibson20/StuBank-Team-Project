@@ -114,10 +114,31 @@ public class databaseMethods {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountNumber", accountNumber);
         query.whereEqualTo("sortCode", sortcode);
-        query.find();
         ParseObject account = query.getFirst();
         return account;
     }
+
+    public static String getUser(String email) throws ParseException {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("email", email);
+        query.find();
+        ParseObject userPO = query.getFirst();
+        String accountOwner = userPO.getObjectId();
+        System.out.println(accountOwner);
+        return accountOwner;
+    }
+        public static ParseObject getUserCurrentAccount(String accountOwner) throws ParseException {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+        query.whereEqualTo("accountOwner", accountOwner);
+        query.whereEqualTo("accountName", "Current Account");
+        query.find();
+        ParseObject account = query.getFirst();
+        return account;
+
+
+    }
+
+
 }
 
 

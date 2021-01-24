@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -52,46 +53,53 @@ final Context context = this;
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 System.out.println(selectedAccount);
-                String email = ((EditText) findViewById(R.id.emailInput)).getText().toString();
+                EditText emailET = (EditText) findViewById(R.id.emailInput);
+                String email = emailET.getText().toString();
                 EditText sortET = (EditText) findViewById(R.id.sort);
                 String sort = sortET.getText().toString();
-                sort = sort.substring(0,2) + "-" + sort.substring(2,4) + "-" + sort.substring(4,6);
+                System.out.println(sort);
+               // if (sort.equals()) {
+                    //sort = sort.substring(0, 2) + "-" + sort.substring(2, 4) + "-" + sort.substring(4, 6);
+               // }
                 EditText accountET = (EditText) findViewById(R.id.account);
                 String account = accountET.getText().toString();
-                String payee = ((EditText) findViewById(R.id.payee)).getText().toString();
-                String reference = ((EditText) findViewById(R.id.reference)).getText().toString();
+                EditText payeeET = (EditText) findViewById(R.id.payee);
+                String payee = payeeET.getText().toString();
+                EditText referenceET = (EditText) findViewById(R.id.reference);
+                referenceET.getText().toString();
                 EditText amountET = (EditText) findViewById(R.id.amount);
                 String amount = amountET.getText().toString();
                 Double amountDob = Double.parseDouble(amount);
-              //  Double newBalance =
+
                 try {
                     ParseObject outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
                     String originalBalance = outgoingAccount.get("balance").toString();
                     String currencySymbol = originalBalance.substring(0,1);
                     Double originalBalanceDob = Double.parseDouble(originalBalance.substring(1));
                     if (amountDob<=originalBalanceDob) {
-                        System.out.println(sort + account);
-                        ParseObject incomingAccount = databaseMethods.getAccount(sort, account);
-                        String oldIncomingBalance = incomingAccount.get("balance").toString();
-                        Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
 
-                        DecimalFormat df = new DecimalFormat("#.00");
+                        if (email.equals("")) {
+                            //If user chooses to use sort code and account number
+                            ParseObject incomingAccount = databaseMethods.getAccount(sort, account);
+                            String oldIncomingBalance = incomingAccount.get("balance").toString();
+                            Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
+                            updateBalance(oldIncomingBalanceDob, amountDob, currencySymbol,
+                                    incomingAccount, originalBalanceDob, outgoingAccount);
+                        }
+                        else {
+                            //If user chooses to use email address
+                            String currentAccount = databaseMethods.getUser(email);
+                            ParseObject incomingAccount = databaseMethods.getUserCurrentAccount(currentAccount);
+                            String oldIncomingBalance = incomingAccount.get("balance").toString();
+                            Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
 
 
-                        Double newIncomingBalance = (oldIncomingBalanceDob + amountDob);
-                        String newIncomingBalanceStr = newIncomingBalance.toString();
-                        newIncomingBalanceStr = df.format(newIncomingBalance);
-                        newIncomingBalanceStr = currencySymbol + newIncomingBalanceStr;
-                        incomingAccount.put("balance", newIncomingBalanceStr);
-                        incomingAccount.saveInBackground();
 
 
-                        Double newOutgoingBalance = (originalBalanceDob - amountDob);
-                        String newOutgoingBalanceStr = newOutgoingBalance.toString();
-                        newOutgoingBalanceStr = df.format(newOutgoingBalance);
-                        newOutgoingBalanceStr = currencySymbol + newOutgoingBalanceStr;
-                        outgoingAccount.put("balance", newOutgoingBalanceStr);
-                        outgoingAccount.saveInBackground();
+                            updateBalance(oldIncomingBalanceDob, amountDob, currencySymbol,
+                                    incomingAccount, originalBalanceDob, outgoingAccount);
+                        }
+
                     }
                     else {
 
@@ -157,6 +165,26 @@ final Context context = this;
 
     return selectedAccount;}
 
+    public void updateBalance(Double oldIncomingBalanceDob, Double amountDob, String currencySymbol,
+                              ParseObject incomingAccount, Double originalBalanceDob, ParseObject outgoingAccount) {
+        DecimalFormat df = new DecimalFormat("#.00");
+
+
+        Double newIncomingBalance = (oldIncomingBalanceDob + amountDob);
+        String newIncomingBalanceStr = newIncomingBalance.toString();
+        newIncomingBalanceStr = df.format(newIncomingBalance);
+        newIncomingBalanceStr = currencySymbol + newIncomingBalanceStr;
+        incomingAccount.put("balance", newIncomingBalanceStr);
+        incomingAccount.saveInBackground();
+
+
+        Double newOutgoingBalance = (originalBalanceDob - amountDob);
+        String newOutgoingBalanceStr = newOutgoingBalance.toString();
+        newOutgoingBalanceStr = df.format(newOutgoingBalance);
+        newOutgoingBalanceStr = currencySymbol + newOutgoingBalanceStr;
+        outgoingAccount.put("balance", newOutgoingBalanceStr);
+        outgoingAccount.saveInBackground();
+    }
 
 }
 
