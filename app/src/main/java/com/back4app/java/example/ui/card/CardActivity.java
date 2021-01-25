@@ -372,7 +372,7 @@ public class CardActivity extends AppCompatActivity {
     public void getAccountDetails(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", userObjectId);
-        query.whereEqualTo("accountType", "current");
+        query.whereEqualTo("accountType", "currentAccount");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             @SuppressLint("SetTextI18n")
             public void done(ParseObject account, ParseException e) {

@@ -130,11 +130,12 @@ public class ChoosePinForNewCard extends AppCompatActivity {
     public void getAccountID(){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", userObjectId);
-        query.whereEqualTo("accountType", "current");
+        query.whereEqualTo("accountType", "currentAccount");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
             public void done(ParseObject account, ParseException e) {
                 if (e == null) {
                     accountID = account.getObjectId();
+                    System.out.println(accountID);
                 }
             }
         });

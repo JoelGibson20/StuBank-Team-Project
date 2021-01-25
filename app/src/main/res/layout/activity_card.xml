@@ -161,7 +161,7 @@
         android:layout_width="375dp"
         android:layout_height="42dp"
         android:layout_marginTop="8dp"
-        android:background="@color/purple_500"
+        android:background="@color/teal_700"
         android:fontFamily="sans-serif"
         android:onClick="freezeCardOnClick"
         android:text="@string/freezecard"
