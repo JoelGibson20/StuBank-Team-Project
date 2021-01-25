@@ -93,7 +93,6 @@ public class VaultPage extends AppCompatActivity {
         lockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Lock button clicked");
                 try {
                     getIntent().putExtra("accountParseObject",databaseMethods.toggleAccountLock((ParseObject) getIntent().getExtras().get("accountParseObject")));
                 } catch (ParseException e) {
@@ -123,7 +122,6 @@ public class VaultPage extends AppCompatActivity {
         ImageView unlocked = findViewById(R.id.unlockedImage);
         //Correct text set for lock button based on whether or not the account is locked
         if(accountParseObject.getBoolean("locked")) {
-            System.out.println("TRIGGERED 1");
             unlocked.setVisibility(View.INVISIBLE);
             locked.setVisibility(View.VISIBLE);
             lockButton.setText("Unlock");
@@ -132,7 +130,6 @@ public class VaultPage extends AppCompatActivity {
             lockButton.setText("Lock");
             locked.setVisibility(View.INVISIBLE);
             unlocked.setVisibility(View.VISIBLE);
-            System.out.println("TRIGGERED 2");
         }
     }
 

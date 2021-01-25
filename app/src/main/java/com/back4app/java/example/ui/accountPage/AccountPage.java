@@ -76,7 +76,6 @@ public class AccountPage extends AppCompatActivity {
         lockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Lock button clicked");
                 try {
                     getIntent().putExtra("accountParseObject",databaseMethods.toggleAccountLock((ParseObject) getIntent().getExtras().get("accountParseObject")));
                 } catch (ParseException e) {
