@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -21,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.back4app.java.example.R;
-import com.back4app.java.example.data.databaseMethods;
+import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
