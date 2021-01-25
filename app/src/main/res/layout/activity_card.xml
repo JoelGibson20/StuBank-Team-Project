@@ -62,8 +62,7 @@
         app:layout_constraintEnd_toStartOf="@+id/cardImageButton"
         app:layout_constraintStart_toEndOf="@+id/graphImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_money_pound_48"
-        android:contentDescription="@string/transfers" />
+        app:srcCompat="@drawable/icons8_data_transfer_48" />
 
     <ImageButton
         android:id="@+id/cardImageButton"

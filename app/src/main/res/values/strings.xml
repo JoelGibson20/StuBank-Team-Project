@@ -4,8 +4,8 @@
 
     <string name="back4app_server_url" translatable="false">https://parseapi.back4app.com/</string>
 
-    <string name="back4app_app_id" translatable="false">dcecVqioU3uiznGC4wDdWD4RJJUMiu7tbU6IIthx</string>
-    <string name="back4app_client_key" translatable="false">rCWclUEupADSAbbkgJHdRIgP8qpPUlmRpzQsd2g9</string>
+    <string name="back4app_app_id" translatable="false">WqPh0y3MH8HaVKj0vfb71xAefv1u3mAkyjD1ypcx</string>
+    <string name="back4app_client_key" translatable="false">xbVNeAwgFAV6fkeQmyVAkW0R6jQpFJUAXWhUPm62</string>
 
     <string name="title_activity_sign_up">SignUp</string>
     <string name="prompt_firstName">First Name</string>
