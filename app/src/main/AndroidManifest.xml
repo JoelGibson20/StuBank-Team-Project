@@ -17,6 +17,8 @@
         <activity android:name=".ui.popup.popup" />
         <activity android:name=".ui.CreditsPage" />
         <activity android:name=".ui.accountPage.AccountPage" />
+        <activity android:name=".ui.card.ChoosePinForNewCard" />
+        <activity android:name=".ui.card.CreateCard" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.pound.PoundActivity" />
         <activity android:name=".ui.graph.CalendarActivity"/>
