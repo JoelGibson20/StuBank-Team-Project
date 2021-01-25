@@ -82,6 +82,25 @@
     <string name="confirm">Confirm</string>
     <string name="please_choose_a_4_digit_pin">Please choose a 4-digit PIN</string>
 
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="remove_card">Remove Card</string>
+    <string name="change_pin">Change PIN</string>
+    <string name="view_pin">View PIN</string>
+    <string name="show_card_details">Show Card Details</string>
+    <string name="freezecard">freezeCard</string>
+    <string name="freeze_card">Freeze Card</string>
+    <string name="unfreeze_card">Unfreeze Card</string>
+    <string name="settings">settings</string>
+    <string name="todo">TODO</string>
+    <string name="cards">cards</string>
+    <string name="transfers">transfers</string>
+    <string name="homescreen">home_screen</string>
+    <string name="image_of_card" />
+    <string name="analytics" />
+    <string name="add_card">Add Card</string>
+    <string name="confirm">Confirm</string>
+    <string name="please_choose_a_4_digit_pin">Please choose a 4-digit PIN</string>
 
 
 </resources>
