@@ -3,6 +3,7 @@ package com.back4app.java.example.ui;
 import android.util.Log;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 public class databaseMethods {
+    public static boolean hasCard;
     public static void addToDatabase(String firstName, String surname, String phoneNo, String email, String password) throws ParseException {
         //Might add a return type to return correct error message to display on screen?
         ParseUser user = new ParseUser();
@@ -238,6 +240,25 @@ public class databaseMethods {
 
         return(transactionsList);
     }
+    public static void checkIfHasCard() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
+        // The query will search for a ParseObject, given its objectId.
+        // When the query finishes running, it will invoke the GetCallback
+        // with either the object, or the exception thrown
+        query.whereEqualTo("cardOwner", getCurrentUser().getObjectId());
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            public void done(ParseObject result, ParseException e) {
+                if (e == null) {
+                    hasCard=true;
+                }
+                else {
+                    hasCard=false;
+                }
+            }
+        });
+    }
+
+
 
 }
 

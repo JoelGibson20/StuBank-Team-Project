@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.back4app.java.example.ui.accountPage.AccountPage;
 import com.back4app.java.example.ui.card.CardActivity;
+import com.back4app.java.example.ui.card.CreateCard;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
@@ -45,6 +46,7 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        databaseMethods.checkIfHasCard();
         //Load all the clickable buttons on the page
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
@@ -69,6 +71,7 @@ public class HomeScreen extends AppCompatActivity {
         }
         createMyCardView(accountsList);
 
+
     }
 
 
@@ -85,8 +88,15 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
     public void cardButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+        Intent intent;
+        if (databaseMethods.hasCard){
+            intent = new Intent(getApplicationContext(), CardActivity.class);
+        }
+        else {
+            intent = new Intent(getApplicationContext(), CreateCard.class);
+        }
         startActivity(intent);
+
     }
     public void gearsButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
