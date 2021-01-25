@@ -33,7 +33,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="411dp"
-            android:layout_height="650dp"
+            android:layout_height="578dp"
             android:background="@android:color/holo_blue_light"
             android:padding="4dp"
             android:scrollbars="vertical" />

@@ -203,13 +203,10 @@ public class databaseMethods {
     public static List<ParseObject> getTransaction(String Accountnum, String date){
         ParseQuery<ParseObject> accountquery = ParseQuery.getQuery("Transactions");
 
-        Log.d(TAG, "================");
-        Log.d(TAG, "INSIDE GET TRANSACTIONS");
 
         accountquery.whereEqualTo("outgoingAccount", Accountnum);
 
         ParseQuery<ParseObject> datequery = ParseQuery.getQuery("Transactions");
-
 
         datequery.whereEqualTo("transactionDate", date);
 
@@ -219,10 +216,6 @@ public class databaseMethods {
         queries.add(datequery);
 
         ParseQuery<ParseObject> mainquery = ParseQuery.or(queries);
-
-        //List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
-        //queries.add(query);
-        //ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
 
         try{
             return (mainquery.find());

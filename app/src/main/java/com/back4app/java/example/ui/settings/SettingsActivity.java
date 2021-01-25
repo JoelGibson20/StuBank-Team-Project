@@ -4,16 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
+import com.back4app.java.example.ui.CreditsPage;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements passwordDialog.passwordDialogListener{
+
+
+    private static final String TAG = "SettingsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,12 @@ public class SettingsActivity extends AppCompatActivity {
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
         final ImageButton cardImageButton = findViewById(R.id.cardImageButton);
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
+        final Button passwordbutton = findViewById(R.id.passwordbutton);
+        final Button creditsButton = findViewById(R.id.button_credits);
+
+
+
+
 
     }
     public void homeButtonOnClick(View v){
@@ -46,5 +58,28 @@ public class SettingsActivity extends AppCompatActivity {
     public void gearsButtonOnClick(View v){
 /*        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(intent);*/
+    }
+
+    public void creditsButtonOnClick(View v){
+        Intent intent = new Intent(getApplicationContext(), CreditsPage.class);
+    }
+
+    public void passwordButtonOnClick(View v){
+        openDialog();
+
+    }
+
+    public void openDialog(){
+        passwordDialog PasswordDialog = new passwordDialog();
+        PasswordDialog.show(getSupportFragmentManager(), "password dialog");
+    }
+
+    @Override
+    public void applyTexts(String password1, String password2) {
+        Log.d(TAG, "----------------");
+        Log.d(TAG, password1);
+        Log.d(TAG, password2);
+
+
     }
 }
