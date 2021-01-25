@@ -30,7 +30,7 @@ import android.widget.Toast;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
-import com.back4app.java.example.ui.databaseMethods;
+import com.back4app.java.example.data.databaseMethods;
 import com.back4app.java.example.ui.signup.SignUpActivity;
 import com.parse.ParseException;
 

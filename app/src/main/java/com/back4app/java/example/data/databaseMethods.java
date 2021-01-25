@@ -1,4 +1,4 @@
-package com.back4app.java.example.ui;
+package com.back4app.java.example.data;
 
 import android.util.Log;
 
@@ -9,7 +9,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

@@ -14,15 +14,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,7 +34,7 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.back4app.java.example.ui.databaseMethods;
+import com.back4app.java.example.data.databaseMethods;
 
 public class HomeScreen extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.Q)
