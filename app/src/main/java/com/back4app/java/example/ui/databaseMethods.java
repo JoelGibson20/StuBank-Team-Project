@@ -9,6 +9,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -227,6 +228,23 @@ public class databaseMethods {
         }
 
     }
+
+    public static void changePassword(String Password){
+        ParseObject currentUser = getCurrentUser();
+
+        currentUser.put("password", Password);
+
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+            }
+        });
+
+
+
+    }
+
 
 }
 

@@ -13,6 +13,7 @@ import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.CreditsPage;
 import com.back4app.java.example.ui.card.CardActivity;
+import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 
@@ -79,6 +80,11 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
         Log.d(TAG, "----------------");
         Log.d(TAG, password1);
         Log.d(TAG, password2);
+
+        databaseMethods.changePassword(password1);
+
+
+
 
 
     }
