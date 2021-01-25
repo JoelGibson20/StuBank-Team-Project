@@ -18,8 +18,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -103,60 +105,24 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.addTextChangedListener(afterTextChangedListener);
 
         //This section submits form when enter is clicked, but doesn't check if form is completed
-/*        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(emailEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                    if(loginButton.isEnabled()) {
+                        tryLogin();
+                    }
                 }
                 return false;
             }
-        });*/
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             //Listens for clicking the sign in button
             public void onClick(View v) {
-   /*             loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(emailEditText.getText().toString(),
-                        passwordEditText.getText().toString());*/
-
-                 try {
-                    if(databaseMethods.attemptLogin(emailEditText.getText().toString().toLowerCase(),passwordEditText.getText().toString())){
-                        //If email and password match
-                        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                        startActivity(intent);
-                        //Directs to home page
-                    }
-                    else{ //Login failed, so present error message
-                        //Define a builder to create an AlertDialog (popup window)
-                        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(LoginActivity.this, R.style.AlertDialogCustom));
-                        builder.setCancelable(true);
-                        //Create a TextView for the title and set its attributes
-                        TextView titleText = new TextView(LoginActivity.this);
-                        titleText.setText(getString(R.string.failed_login));
-                        titleText.setGravity(Gravity.CENTER);
-                        titleText.setPadding(10,10,10,10);
-                        titleText.setTextSize(20);
-                        builder.setCustomTitle(titleText); //Set the title for the AlertDialog
-
-                        builder.setNegativeButton(getString(R.string.backButton), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        AlertDialog alert = builder.create(); //Creates AlertDialog with specified properties
-                        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        alert.show(); //Shows AlertDialog
-
-                    }
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                tryLogin();
 
             }
         });
@@ -179,5 +145,44 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private void tryLogin(){
+        final EditText emailEditText = findViewById(R.id.username);
+        final EditText passwordEditText = findViewById(R.id.password);
+        try {
+            if(databaseMethods.attemptLogin(emailEditText.getText().toString().toLowerCase(),passwordEditText.getText().toString())){
+                //If email and password match
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                startActivity(intent);
+                //Directs to home page
+            }
+            else{ //Login failed, so present error message
+                //Define a builder to create an AlertDialog (popup window)
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(LoginActivity.this, R.style.AlertDialogCustom));
+                builder.setCancelable(true);
+                //Create a TextView for the title and set its attributes
+                TextView titleText = new TextView(LoginActivity.this);
+                titleText.setText(getString(R.string.failed_login));
+                titleText.setGravity(Gravity.CENTER);
+                titleText.setPadding(10,10,10,10);
+                titleText.setTextSize(20);
+                builder.setCustomTitle(titleText); //Set the title for the AlertDialog
+
+                builder.setNegativeButton(getString(R.string.backButton), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create(); //Creates AlertDialog with specified properties
+                alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                alert.show(); //Shows AlertDialog
+
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
