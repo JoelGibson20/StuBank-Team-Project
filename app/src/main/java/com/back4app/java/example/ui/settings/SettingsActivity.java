@@ -34,6 +34,7 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
         final ImageButton gearsImageButton = findViewById(R.id.gearsImageButton);
         final Button passwordbutton = findViewById(R.id.passwordbutton);
         final Button creditsButton = findViewById(R.id.button_credits);
+        final Button closeAccountButton = findViewById(R.id.closeAccountButton);
 
 
 
@@ -61,8 +62,14 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
         startActivity(intent);*/
     }
 
+    public void closeAccountButtonOnClick(View v){
+        Intent intent = new Intent(getApplicationContext(), CloseAccountActivity.class);
+        startActivity(intent);
+    }
+
     public void creditsButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), CreditsPage.class);
+        startActivity(intent);
     }
 
     public void passwordButtonOnClick(View v){

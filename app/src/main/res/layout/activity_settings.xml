@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/closeaccountbutton"
+        app:layout_constraintTop_toBottomOf="@+id/closeAccountButton"
         app:layout_constraintVertical_bias="0.07" />
 
     <TextView
@@ -125,7 +125,7 @@
         android:layout_marginBottom="12dp"
         android:text="Change Password"
         android:onClick="passwordButtonOnClick"
-        app:layout_constraintBottom_toTopOf="@+id/closeaccountbutton"
+        app:layout_constraintBottom_toTopOf="@+id/closeAccountButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,16 +133,18 @@
         app:layout_constraintVertical_bias="0.929" />
 
     <Button
-        android:id="@+id/closeaccountbutton"
+        android:id="@+id/closeAccountButton"
         android:layout_width="328dp"
         android:layout_height="48dp"
         android:text="Close Account"
+        android:onClick="closeAccountButtonOnClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387" />
+        app:layout_constraintVertical_bias="0.387"
+        />
 
     <Button
         android:id="@+id/button_credits"
