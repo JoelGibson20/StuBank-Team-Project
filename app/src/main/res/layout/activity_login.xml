@@ -23,7 +23,8 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="email" />
 
     <EditText
         android:id="@+id/password"
@@ -39,7 +40,8 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        android:autofillHints="password"/>
 
     <Button
         android:id="@+id/register"
@@ -79,7 +81,7 @@
         android:backgroundTint="#00FFFFFF"
         android:text="@string/dont_have_account"
         android:textColor="@color/teal_700"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

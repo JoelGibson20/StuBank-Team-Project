@@ -9,6 +9,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -125,7 +126,13 @@ public class databaseMethods {
         //Assign attributes we set
         account.put("accountOwner",getCurrentUser().getObjectId());
         account.put("accountType", accountType);
-        account.put("accountName", accountName);
+        if(accountName.equals("")){
+            //If the user provides no name assign default name to prevent an error
+            account.put("accountName","New Vault");
+        }
+        else{
+            account.put("accountName", accountName);
+        }
         account.put("balance", "£0");
         account.put("locked", false);
 
@@ -209,6 +216,27 @@ public class databaseMethods {
             return null;
         }
 
+    }
+    public static List<ParseObject> getTransactionsForAccount(String accountID) throws ParseException {
+        ParseQuery<ParseObject> outgoingTransactions = ParseQuery.getQuery("Transactions");
+        outgoingTransactions.whereEqualTo("outgoingAccount", accountID);
+        //Get outgoing transactions
+
+        ParseQuery<ParseObject> ingoingTransactions = ParseQuery.getQuery("Transactions");
+        ingoingTransactions.whereEqualTo("ingoingAccount", accountID);
+        //Get ingoing transactions
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+        queries.add(outgoingTransactions);
+        queries.add(ingoingTransactions);
+
+
+        ParseQuery<ParseObject> query = ParseQuery.or(queries);
+        query.setLimit(20); //Get only the last 20 transactions to show
+        query.orderByDescending("transactionDate"); //Order by most recent
+        List<ParseObject> transactionsList = new ArrayList<>(query.find());
+
+        return(transactionsList);
     }
 
 }

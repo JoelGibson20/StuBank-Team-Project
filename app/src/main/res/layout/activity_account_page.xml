@@ -27,12 +27,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:focusable="false"
+                android:inputType="text"
                 android:lines="1"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="Account Name"
+                android:text="@string/account_name_default"
                 android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:autofillHints="@string/account_name_default"
+                android:hint="@string/account_name_default"/>
 
             <ImageView
                 android:id="@+id/unlockedImage"
@@ -42,7 +45,8 @@
                 android:layout_marginEnd="5dp"
                 android:adjustViewBounds="false"
                 android:visibility="invisible"
-                app:srcCompat="@drawable/unlocked" />
+                app:srcCompat="@drawable/unlocked"
+                android:contentDescription="@string/account_unlocked_description" />
 
             <ImageView
                 android:id="@+id/lockedImage"
@@ -52,7 +56,8 @@
                 android:layout_marginEnd="5dp"
                 android:adjustViewBounds="false"
                 android:visibility="invisible"
-                app:srcCompat="@drawable/locked" />
+                app:srcCompat="@drawable/locked"
+                android:contentDescription="@string/account_locked_description" />
         </FrameLayout>
 
         <TextView
@@ -62,7 +67,7 @@
             android:layout_gravity="start"
             android:layout_marginStart="10dp"
             android:layout_marginTop="16dp"
-            android:text="Account Number"
+            android:text="@string/account_number_default"
             android:textSize="16sp" />
 
         <TextView
@@ -73,7 +78,7 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="40dp"
             android:background="@color/teal_700"
-            android:text="Balance"
+            android:text="@string/balance"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -83,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="10dp"
-            android:text="Sort Code"
+            android:text="@string/sortcode_default"
             android:textSize="16sp" />
 
         <LinearLayout
@@ -95,6 +100,7 @@
 
             <Button
                 android:id="@+id/lockButton"
+                style="android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -103,12 +109,13 @@
                 android:backgroundTint="@color/teal_700"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:textSize="11sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 app:cornerRadius="10dp" />
 
             <Button
                 android:id="@+id/shareDetailsButton"
+                style="android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -118,7 +125,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:text="@string/shareDetailsButton"
-                android:textSize="11sp"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 app:cornerRadius="10dp" />
 
@@ -149,6 +156,7 @@
             android:layout_marginTop="5dp">
 
             <LinearLayout
+                android:id="@+id/accountTransactionsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
