@@ -26,7 +26,7 @@ import android.widget.Toast;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
-import com.back4app.java.example.data.databaseMethods;
+import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 
 
@@ -171,7 +171,9 @@ public class SignUpActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+                               /*This forces the program to wait 1 seconds (1000ms) before loading
+                the homepage, delaying enough time for the current account to be saved so it can
+                 be properly displayed on the homescreen */
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -180,8 +182,5 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }, 1000);
-        /*This forces the program to wait 1 seconds (1000ms) before loading
-        the homepage, delaying enough time for the current account to be saved so it can
-        be properly displayed on the homescreen */
     }
 }
