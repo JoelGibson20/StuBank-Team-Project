@@ -19,7 +19,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/greeting"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
@@ -118,7 +117,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="195dp"
 
         app:layout_constraintBottom_toTopOf="@+id/homeBottomAppBar"
@@ -128,7 +127,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/analyticsRecycler"
-            android:layout_width="411dp"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginBottom="60dp"
             android:background="@android:color/darker_gray"
@@ -141,23 +140,47 @@
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/analyticsPieChart"
-        android:layout_width="412dp"
+        android:layout_width="match_parent"
         android:layout_height="188dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
-
     </com.github.mikephil.charting.charts.PieChart>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/analyticsBarChart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
+        app:layout_constraintVertical_bias="1.0">
+
+
+    </com.github.mikephil.charting.charts.BarChart>
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="414dp"
+        android:layout_width="match_parent"
         android:layout_height="27dp"
-        android:text="Transactions Totals by Seller: "
-        android:textSize="20dp"
+        android:text=" Transactions Totals by Seller: "
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/analyticsPieChart"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:text=" Monthly Spending Totals"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarImageButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
