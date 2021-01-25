@@ -1,5 +1,6 @@
 package com.back4app.java.example.ui.card;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,44 +20,31 @@ public class CreateCard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_card);
-//        final ImageView splash = (ImageView) findViewById(R.id.testImage);
-//        ObjectAnimator animation = ObjectAnimator.ofFloat(splash, "translationX", 100f);
-//        animation.setDuration(2000);
-//        animation.start();
+
+        //animates the card image
         ImageView view = (ImageView) findViewById(R.id.cardCreate);
-
-
-//        RotateAnimation anim = new RotateAnimation(0f, 10f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-//
-////Setup anim with desired properties
-//        anim.setInterpolator(new BounceInterpolator());
-//        anim.setRepeatCount(Animation.INFINITE); //Repeat animation indefinitely
-//        anim.setDuration(1000); //Put desired duration per anim cycle here, in milliseconds
-//        ObjectAnimator test = ObjectAnimator.ofObject(view, )
-
-//
-////Start animation
-//        view.startAnimation(anim);
-
-
-// Start animating the image
-
-
-// Later.. stop the animation
-//        splash.setAnimation(null);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(view, "rotationY", -15f, 15f);
+        animation.setRepeatCount(ObjectAnimator.INFINITE);
+        animation.setRepeatMode(ObjectAnimator.REVERSE);
+        animation.setDuration(1500);
+        animation.start();
     }
+
     public void addCardOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), ChoosePinForNewCard.class);
         startActivity(intent);
     }
+
     public void homeButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
         startActivity(intent);
     }
+
     public void graphButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
         startActivity(intent);
     }
+
     public void poundButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
         startActivity(intent);
