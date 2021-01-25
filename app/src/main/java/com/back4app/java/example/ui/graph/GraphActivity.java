@@ -25,10 +25,18 @@ import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
@@ -57,9 +65,7 @@ public class GraphActivity extends AppCompatActivity {
 
     private ArrayList<PieEntry> pieEntries;
 
-
-
-
+    private ArrayList<BarEntry> barEntries;
 
 
     @Override
@@ -95,6 +101,7 @@ public class GraphActivity extends AppCompatActivity {
                buildTransactionsRecycler();
                buildPieChart();
                calculateSpendingPrediction(totalsByMonth());
+               buildBarChart();
 
             }
             @Override
@@ -105,12 +112,48 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+    private void buildBarChart(){
+        barEntries = new ArrayList<>();
+        BarChart barChart = findViewById(R.id.analyticsBarChart);
+        HashMap<String, Float> monthlyValues = totalsByMonth();
+        int count = 0;
+        ArrayList<String> lables = new ArrayList<>();
+        for(String key: monthlyValues.keySet()){
+            barEntries.add(new BarEntry(count, monthlyValues.get(key)));
+            count++;
+            lables.add(key);
+        }
+
+        barEntries.add(new BarEntry(count, calculateSpendingPrediction(monthlyValues)));
+        lables.add("Prediction");
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Monthly Totals");
+        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        barDataSet.setValueTextColor(Color.BLACK);
+        barDataSet.setValueTextSize(16f);
+
+        BarData barData = new BarData(barDataSet);
+
+        barChart.setFitBars(true);
+        barChart.setData(barData);
+        barChart.getDescription().setEnabled(false);
+        barChart.animateY(1000);
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(lables));
+
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+
+        barChart.invalidate();
+
+
+    }
+
     private HashMap<String, Float> totalsByMonth(){
         List<ParseObject> transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
         HashMap<String,Float> monthlyTotals = new HashMap<>();
         for (ParseObject transaction: transactionList){
             String date = transaction.getDate("transactionDate").toString();
-            String day = date.substring(8,10);
             String month = date.substring(4,7);
             String year = date.substring(24);
             String key = month + year;
@@ -140,6 +183,8 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+
+
     private void buildPieChart(){
         pieEntries = new ArrayList<>();
         PieChart pieChart = findViewById(R.id.analyticsPieChart);
@@ -160,7 +205,7 @@ public class GraphActivity extends AppCompatActivity {
         pieChart.getDescription().setEnabled(false);
         pieChart.setCenterText("Transaction Totals");
         pieChart.setDrawEntryLabels(false);
-        //pieChart.animate();
+        pieChart.animate();
         pieChart.invalidate();
     }
 
