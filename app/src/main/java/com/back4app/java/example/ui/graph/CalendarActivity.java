@@ -53,17 +53,15 @@ public class CalendarActivity extends GraphActivity {
         calendarview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                //String date = dayOfMonth + "/" + (month + 1) + "/" + year;
-                //Log.d(TAG, "DateSelected: " + date);
                 String month2 = getmonth(month + 1);
                 TransferDate = dayOfMonth + " " + (month2) + " " + year;
-
+                //date set on the page so it is visible to the user.
                 myDate.setText(TransferDate);
             }
         });
 
 
-
+        //gets the buttons from the page including navigation bar .
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
@@ -75,6 +73,7 @@ public class CalendarActivity extends GraphActivity {
 
     }
 
+    //converts the month number to shortened month in words.
     public String getmonth(int month){
         String month2 = null;
 
@@ -118,7 +117,7 @@ public class CalendarActivity extends GraphActivity {
 
     }
 
-
+    //changes the page depending on what button is clicked.
     public void homeButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
         startActivity(intent);
@@ -145,6 +144,7 @@ public class CalendarActivity extends GraphActivity {
         startActivity(intent);
     }
 
+    //this onclick also passes some variables to the next page.
     public void okbuttonOnClick(View V){
         Intent intent = new Intent(getApplicationContext(), DateTransferActivity.class);
         intent.putExtra("selectedAccount", selectedAccount);

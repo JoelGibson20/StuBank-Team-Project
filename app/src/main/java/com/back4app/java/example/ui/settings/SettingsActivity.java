@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
+        //gets the buttons from the page.
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
@@ -144,13 +144,14 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
         passwordDialog PasswordDialog = new passwordDialog();
         PasswordDialog.show(getSupportFragmentManager(), "password dialog");
     }
+    //gets the password that is inputted to change.
 
     @Override
     public void applyTexts(String password1, String password2) {
         Log.d(TAG, "----------------");
         Log.d(TAG, password1);
         Log.d(TAG, password2);
-
+        //database methods function is called and the password is passed.
         databaseMethods.changePassword(password1);
 
 

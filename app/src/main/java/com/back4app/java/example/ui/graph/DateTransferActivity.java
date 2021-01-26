@@ -82,9 +82,10 @@ public class DateTransferActivity extends CalendarActivity {
         Log.d(TAG, "================");
         Log.d(TAG, "INSIDE READ OBJECT");
         ArrayList<ExampleItem> exampleList = new ArrayList<>();
-
+        //method is called from database methods to retrieve specific bits of data.
+        //the data is added to a list to be used in this function.
         List<ParseObject> datetransactionList = databaseMethods.getTransaction(Accountnum, date);
-
+        //goes through the list and displaying the data wanted from each transaction.
         for (ParseObject transaction : datetransactionList) {
             String reference = transaction.getString("reference");
             Log.d(TAG, transferdate);
@@ -106,15 +107,14 @@ public class DateTransferActivity extends CalendarActivity {
 
 
         }
-
+//checks whether there are any transfers on that day and displays a message for the user if not
         boolean listcheck = exampleList.isEmpty();
 
         if (listcheck){
             exampleList.add(new ExampleItem(R.drawable.ic_android,"No Transfers on this day", ""));
         }
-
+        //creates the recycler view from the data.
         recyclerView = findViewById(R.id.recyclerView);
-        //recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         adapter = new ExampleAdapter(exampleList);
         recyclerView.setLayoutManager(layoutManager);
@@ -122,11 +122,7 @@ public class DateTransferActivity extends CalendarActivity {
 
     }
 
-
-
-
-
-
+    //goes back to previous page when button is clicked.
     public void backbuttonOnClick(View v) {
         Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
         startActivity(intent);

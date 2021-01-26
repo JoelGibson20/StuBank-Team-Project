@@ -29,11 +29,12 @@ public class passwordDialog extends AppCompatDialogFragment {
     private  TextInputLayout textInputPassword2;
 
     private static final String TAG = "PasswordDialog";
+    //password regex pattern is created to validate the password entered.
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
 
 
-
+    //creates a custom dialog for the popout when the button is clicked.
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -41,32 +42,38 @@ public class passwordDialog extends AppCompatDialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.layout_dialog, null);
-
+        //passwords entered are passed.
         editTextTypePassword = view.findViewById(R.id.type_password);
         editTextRetypePassword = view.findViewById(R.id.retype_password);
 
         textInputPassword1 = view.findViewById(R.id.type_password_layout);
         textInputPassword2 = view.findViewById(R.id.retype_password_layout);
-        //textInputPassword1.setError("Please input new Password");
 
-
+        //builds the buttons on the dialog and sets the title.
         builder.setView(view)
                 .setTitle("Change Password")
+                //cancel button is created to go back to main settings page.
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 })
+                //ok button is created for when the user types in the passwords.
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        //if statement for when the passwords entered are invalid.
                         if (!validatePassword() | !validatePassword2()){
+                            //pop up message is displayed on the screen for the user.
                             Toast.makeText(getContext(), "Password Invalid", Toast.LENGTH_SHORT).show();
+                            //Also checks whether the passwords match to confirm the password.
                         }else if(!(editTextTypePassword.getText().toString().equals(editTextRetypePassword.getText().toString()))){
+                            //pop up message is shown when the passwords do not match.
                             Toast.makeText(getContext(), "Passwords do not match", Toast.LENGTH_SHORT).show();
                         }
                         else{
+                            //if the passwords are valid then the input is saved and passed.
                             String password1 = editTextTypePassword.getText().toString();
                             String password2 = editTextRetypePassword.getText().toString();
                             listener.applyTexts(password1, password2);
@@ -78,7 +85,9 @@ public class passwordDialog extends AppCompatDialogFragment {
 
     }
 
-
+    //validation for the password for the error message so the user knows the password is invalid.
+    //error message works however ok button always dismisses the dialog so messaged are never shown to the user
+    //doesn't work due to it being a custom dialog.
     private boolean validatePassword(){
         String passwordInput = textInputPassword1.getEditText().getText().toString();
 
@@ -128,7 +137,7 @@ public class passwordDialog extends AppCompatDialogFragment {
         }
 
     }
-
+    //password is passed to the settings class.
     public interface passwordDialogListener{
         void applyTexts(String password1, String password2);
 
