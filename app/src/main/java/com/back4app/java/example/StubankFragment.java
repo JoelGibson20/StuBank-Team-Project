@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,79 +71,81 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
                 ParseObject outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
                 String originalBalance = outgoingAccount.get("balance").toString();
                 System.out.println(originalBalance);
-                String currencySymbol = originalBalance.substring(0,1);
+                String currencySymbol = originalBalance.substring(0, 1);
                 Double originalBalanceDob = Double.parseDouble(originalBalance.substring(1));
 
                 String amount = amountET.getText().toString();
-                Double amountDob = Double.parseDouble(amount);
+                Double amountDob = null;
+                if (!amount.equals("")) {
+                    amountDob = Double.parseDouble(amount);
+                }
                 String email = emailET.getText().toString();
                 String phone = phoneET.getText().toString();
+
+
                 String reference = referenceET.getText().toString();
                 String currentAccount = "";
+                if (TextUtils.isEmpty(referenceET.getText())) {
+                    referenceET.setError("Please enter a reference!");
 
+                } else if (TextUtils.isEmpty(amountET.getText())) {
+                    amountET.setError("Please enter an amount!");
+                } else {
 
-
-              if (!email.equals("")) {
-                   currentAccount = databaseMethods.getUser(email);
+                if (!email.equals("")) {
+                    currentAccount = databaseMethods.getUser(email);
+                } else {
+                    currentAccount = databaseMethods.getUserByPhone(phone);
                 }
-              else {
-                  currentAccount = databaseMethods.getUserByPhone(phone);
-              }
 
 
-              ParseObject incomingAccount = databaseMethods.getUserCurrentAccount(currentAccount);
+                ParseObject incomingAccount = databaseMethods.getUserCurrentAccount(currentAccount);
 
                 String oldIncomingBalance = incomingAccount.get("balance").toString();
                 String incomingAccountName = incomingAccount.get("accountName").toString();
                 System.out.println(oldIncomingBalance);
                 Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
 
-                if (amountDob<=originalBalanceDob) {
-                    String transactionAmount = updateBalance(oldIncomingBalanceDob, amountDob, currencySymbol,
-                            incomingAccount, originalBalanceDob, outgoingAccount);
-
-                    databaseMethods.createTransaction(selectedAccount, reference, transactionAmount, incomingAccountName, false, currencySymbol);
-                    System.out.println(incomingAccountName);
-                    Intent intent = new Intent(getContext(), TransferComplete.class);
-                    startActivity(intent);
 
 
+                    if (amountDob <= originalBalanceDob) {
+                        String transactionAmount = updateBalance(oldIncomingBalanceDob, amountDob, currencySymbol,
+                                incomingAccount, originalBalanceDob, outgoingAccount);
+
+
+                        databaseMethods.createTransaction(selectedAccount, reference, transactionAmount, incomingAccountName, false, currencySymbol);
+                        System.out.println(incomingAccountName);
+                        Intent intent = new Intent(getContext(), TransferComplete.class);
+                        startActivity(intent);
+
+
+                    } else {
+                        AlertDialog ad1 = new AlertDialog.Builder(getActivity()).create();
+                        ad1.setTitle("Insufficient Funds");
+                        ad1.setMessage("Please add funds or transfer from a different account");
+                        ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        ad1.show();
+                    }
 
 
                 }
-                else {
-                    AlertDialog ad1 = new AlertDialog.Builder(getActivity()).create();
-                    ad1.setTitle("Insufficient Funds");
-                    ad1.setMessage("Please add funds or transfer from a different account");
-                    ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    ad1.show();
-                }
 
 
 
-            }
 
 
-            catch (ParseException e) {
+
+            } catch (ParseException e) {
                 e.printStackTrace();
-
             }
-
-
-
 
 
         }
-
-
-
-
-
 
 
     public void onViewCreated(@NotNull View view, @Nullable Bundle savedInstanceState) {
