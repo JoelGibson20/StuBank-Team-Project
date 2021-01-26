@@ -54,19 +54,8 @@ public class DateTransferActivity extends CalendarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_datetransfer);
 
-
         Intent intent=getIntent();
         transferdate = intent.getStringExtra("TransferDate");
-
-
-
-        Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, selectedAccount);
-        Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, accountnumber);
-
 
         final Button backbutton = findViewById(R.id.backbutton);
 
@@ -78,9 +67,6 @@ public class DateTransferActivity extends CalendarActivity {
 
     //this method reads the data from the database and collects specific bits of data from the inputted date
     public void readObject(String Accountnum, String date) {
-        Log.d(TAG, transferdate);
-        Log.d(TAG, "================");
-        Log.d(TAG, "INSIDE READ OBJECT");
         ArrayList<ExampleItem> exampleList = new ArrayList<>();
         //method is called from database methods to retrieve specific bits of data.
         //the data is added to a list to be used in this function.
@@ -88,18 +74,11 @@ public class DateTransferActivity extends CalendarActivity {
         //goes through the list and displaying the data wanted from each transaction.
         for (ParseObject transaction : datetransactionList) {
             String reference = transaction.getString("reference");
-            Log.d(TAG, transferdate);
-            Log.d(TAG, "================");
-            Log.d(TAG, reference);
             String value = transaction.getString("value");
-            Log.d(TAG, "================");
-            Log.d(TAG, value);
+            //gets the date from the database and changes the format to suit the query.
             String transactionDate = transaction.getDate("transactionDate").toString();
             String[] separatedDate = transactionDate.split(" ");
             String justDate = separatedDate[2] + " " + separatedDate[1] + " " + separatedDate[5];
-            Log.d(TAG, "after parse");
-            Log.d(TAG,transferdate);
-            Log.d(TAG, justDate);
             if (justDate.equals(transferdate)) {
                 exampleList.add(new ExampleItem(R.drawable.ic_right_arrow, reference, value));
             }

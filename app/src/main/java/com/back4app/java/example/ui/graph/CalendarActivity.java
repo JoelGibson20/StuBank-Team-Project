@@ -40,13 +40,6 @@ public class CalendarActivity extends GraphActivity {
         Intent intent = getIntent();
         selectedAccount = intent.getStringExtra("selectedAccount");
         accountnumber = intent.getStringExtra("accountnumber");
-        Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, selectedAccount);
-        Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, "------------------------------------------------------------------");
-        Log.d(TAG, accountnumber);
-
 
 
         //changes the date depending on which date is clicked on the calendar.

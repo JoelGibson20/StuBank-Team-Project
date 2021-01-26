@@ -105,6 +105,7 @@ public class passwordDialog extends AppCompatDialogFragment {
 
     }
 
+    //does the same as the other validate password.
     private boolean validatePassword2(){
         String passwordInput =  textInputPassword2.getEditText().getText().toString();
 

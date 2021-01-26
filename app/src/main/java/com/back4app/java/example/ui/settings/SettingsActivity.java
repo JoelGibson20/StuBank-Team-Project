@@ -149,9 +149,6 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
 
     @Override
     public void applyTexts(String password1, String password2) {
-        Log.d(TAG, "----------------");
-        Log.d(TAG, password1);
-        Log.d(TAG, password2);
         //database methods function is called and the password is passed.
         databaseMethods.changePassword(password1);
     }
