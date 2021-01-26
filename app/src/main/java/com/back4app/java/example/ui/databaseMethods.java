@@ -179,7 +179,7 @@ public class databaseMethods {
     public static List<ParseObject> getAllAccountsOfOneUser() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
 
-        query.whereEqualTo("accountOwner", databaseMethods.getCurrentUser().getObjectId());
+        query.whereEqualTo("accountOwner", getCurrentUser().getObjectId());
         try {
             return (query.find());
         }
@@ -240,10 +240,9 @@ public class databaseMethods {
 
             }
         });
-
-
-
     }
+
+
 
 
 }

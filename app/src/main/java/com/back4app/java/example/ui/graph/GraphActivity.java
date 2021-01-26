@@ -6,11 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.back4app.java.example.ui.databaseMethods;
 
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -40,8 +38,6 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
