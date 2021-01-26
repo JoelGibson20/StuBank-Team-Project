@@ -166,6 +166,21 @@ public class databaseMethods {
         transactions.put("Saved", saved);
         transactions.save();
     }
+        public static String getUserNames(String user) throws ParseException {
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+            query.whereEqualTo("objectId", user);
+            query.find();
+            ParseObject userPO = query.getFirst();
+        String firstName = userPO.get("firstName").toString();
+        String lastName = userPO.get("surname").toString();
+        String names = firstName + " " + lastName;
+        return names;
+        }
+
+
+
 }
+
+
 
 

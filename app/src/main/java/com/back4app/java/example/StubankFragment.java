@@ -94,11 +94,12 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
 
                 if (!email.equals("")) {
                     currentAccount = databaseMethods.getUser(email);
-                } else {
+                }
+                else {
                     currentAccount = databaseMethods.getUserByPhone(phone);
                 }
-
-
+               // System.out.println(currentAccount);
+                String payeeName = databaseMethods.getUserNames(currentAccount);
                 ParseObject incomingAccount = databaseMethods.getUserCurrentAccount(currentAccount);
 
                 String oldIncomingBalance = incomingAccount.get("balance").toString();
@@ -109,14 +110,45 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
 
 
                     if (amountDob <= originalBalanceDob) {
-                        String transactionAmount = updateBalance(oldIncomingBalanceDob, amountDob, currencySymbol,
-                                incomingAccount, originalBalanceDob, outgoingAccount);
 
 
-                        databaseMethods.createTransaction(selectedAccount, reference, transactionAmount, incomingAccountName, false, currencySymbol);
-                        System.out.println(incomingAccountName);
-                        Intent intent = new Intent(getContext(), TransferComplete.class);
-                        startActivity(intent);
+
+                        AlertDialog ad2 = new AlertDialog.Builder(getActivity()).create();
+                        ad2.setTitle("Confirm Transfer");
+                        ad2.setMessage("You are transferring " + currencySymbol + amount + " to " + payeeName);
+                        Double finalAmountDob = amountDob;
+                        ad2.setButton(AlertDialog.BUTTON_POSITIVE, "Confirm",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String transactionAmount = updateBalance(oldIncomingBalanceDob, finalAmountDob, currencySymbol,
+                                                incomingAccount, originalBalanceDob, outgoingAccount);
+                                        try {
+                                            databaseMethods.createTransaction(selectedAccount, reference, transactionAmount, incomingAccountName, false, currencySymbol);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                        System.out.println(incomingAccountName);
+                                        Intent intent = new Intent(getContext(), TransferComplete.class);
+                                        startActivity(intent);
+
+
+
+                                        dialog.dismiss();
+                                    }
+                                });
+                        ad2.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int i) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                ad2.show();
+
+
+
+
+
 
 
                     } else {
