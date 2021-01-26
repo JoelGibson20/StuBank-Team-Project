@@ -48,6 +48,8 @@ public class GraphActivity extends AppCompatActivity {
 
     private ArrayList<ExampleItem> accountSpinnerItems = new ArrayList<>();
 
+    private List<ParseObject> transactionList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class GraphActivity extends AppCompatActivity {
         Spinner spinner = findViewById(R.id.accountSpinner);
         List<Account> accountList = populateAccountList();
         ArrayAdapter<Account> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, accountList);
+
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -75,6 +78,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                selectedAccount = (Account) parent.getSelectedItem();
+               transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
                fillTransactionRecycler(totalTransactionsFromAllSellers());
                buildTransactionsRecycler();
                buildPieChart();
@@ -132,7 +136,6 @@ public class GraphActivity extends AppCompatActivity {
 
     //creates a hashmap where the keys are months money was spent and the values are how much money was spent in that month
     private HashMap<String, Float> totalsByMonth(){
-        List<ParseObject> transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
         HashMap<String,Float> monthlyTotals = new HashMap<>();
         //goes through every transaction from a given account
         for (ParseObject transaction: transactionList){
@@ -214,7 +217,7 @@ public class GraphActivity extends AppCompatActivity {
 
 
     // returns how much was payed to a given seller from one account
-    private String totalTransactionsFromOneSeller(String seller, List<ParseObject> transactionList){
+    private String totalTransactionsFromOneSeller(String seller){
         String userAccountNumber = selectedAccount.getAccountNumber();
         int total = 0;
         for (ParseObject transaction : transactionList) {
@@ -230,12 +233,10 @@ public class GraphActivity extends AppCompatActivity {
     //collects totals spent on each seller and stores amount in a hashmap with seller's name as a key
     private Map<String, String> totalTransactionsFromAllSellers(){
         Map<String, String> allTotals = new HashMap<>();
-
-        List<ParseObject> transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
         for(ParseObject transaction:transactionList){
             String seller = transaction.getString("ingoingAccount");
             if(!allTotals.containsKey(seller)){
-                allTotals.put(seller, totalTransactionsFromOneSeller(seller, transactionList));
+                allTotals.put(seller, totalTransactionsFromOneSeller(seller));
             }
         }
         return allTotals;
