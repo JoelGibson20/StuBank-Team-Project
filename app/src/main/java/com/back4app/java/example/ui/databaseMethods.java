@@ -97,6 +97,7 @@ public class databaseMethods {
         List <ParseObject> accounts = null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountName", outgoingAccount);
+        query.whereEqualTo("accountOwner", getCurrentUser().getObjectId());
         query.find();
         account = query.getFirst();
         return (account);

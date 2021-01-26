@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Back4AppExample">
-        <activity android:name=".TransferToOthers"></activity>
+        <activity
+            android:name=".NewRecipientTabbed"
+            android:label="@string/title_activity_new_recipient_tabbed"
+            android:theme="@style/Theme.Back4AppExample.NoActionBar"></activity>
+        <activity android:name=".TransferToOthers" />
         <activity android:name=".TransferBetweenOwnAccounts" />
         <activity android:name=".TransferComplete" />
         <activity android:name=".NewRecipient" />
@@ -43,7 +47,6 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/back4app_client_key" />
-
     </application>
 
 </manifest>

@@ -38,7 +38,7 @@ public class TransferToOthers extends AppCompatActivity {
         final FloatingActionButton addButton = findViewById(R.id.add);
         addButton.setOnClickListener(new View.OnClickListener() {
         public void onClick (View view){
-            Intent intent = new Intent(getApplicationContext(), NewRecipient.class);
+            Intent intent = new Intent(getApplicationContext(), NewRecipientTabbed.class);
 
             startActivity(intent);
 
