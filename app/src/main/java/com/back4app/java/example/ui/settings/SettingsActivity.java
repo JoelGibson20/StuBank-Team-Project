@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SettingsActivity extends AppCompatActivity implements passwordDialog.passwordDialogListener{
+public class SettingsActivity extends AppCompatActivity implements passwordDialog.passwordDialogListener, CloseAccountDialog.CloseAccountDialogListener {
 
 
     private static final String TAG = "SettingsActivity";
@@ -52,11 +52,11 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
             @Override
             public void onClick(View v) { //TODO need to add conformation alert before account is deleted
                 if (checkEmptyBalance()){
-                    deleteAccountAllAccounts();
-                    logOutUser();
+                    openDialogCloseAccount();
+
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Please empty all accounts and vaults before closing account", Toast.LENGTH_LONG);
+                    Toast.makeText(getApplicationContext(), "Please empty all accounts and vaults before closing account", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -67,19 +67,21 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
             @Override
             public void onClick(View v) {
                 logOutUser();
-
             }
         });
-
     }
 
-    private void deleteAccountAllAccounts(){
+    public void openDialogCloseAccount(){
+        CloseAccountDialog closeAccountDialog = new CloseAccountDialog();
+        closeAccountDialog.show(getSupportFragmentManager(), "close account dialog");
+    }
+
+    public void deleteAllAccounts(){
         for(ParseObject account : databaseMethods.getAllAccountsOfOneUser()){
             account.deleteInBackground();
         }
         ParseObject currentUser = databaseMethods.getCurrentUser();
         currentUser.deleteInBackground();
-
     }
 
     private void logOutUser(){
@@ -153,10 +155,16 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
         Log.d(TAG, password2);
         //database methods function is called and the password is passed.
         databaseMethods.changePassword(password1);
+    }
+
+    @Override
+    public void onYesClicked() {
 
 
-
-
+        Log.d(TAG, "Deleted");
+        deleteAllAccounts();
+        logOutUser();
 
     }
+
 }
