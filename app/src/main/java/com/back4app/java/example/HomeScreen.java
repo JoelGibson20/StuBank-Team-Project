@@ -39,7 +39,9 @@ import com.parse.ParseObject;
 import java.util.ArrayList;
 import java.util.List;
 import com.back4app.java.example.ui.databaseMethods;
-
+/* Home page for the app when logged in
+Creator: Joel Gibson (B9020460)
+ */
 public class HomeScreen extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override

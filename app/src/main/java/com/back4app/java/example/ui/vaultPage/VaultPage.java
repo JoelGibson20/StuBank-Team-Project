@@ -27,7 +27,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.List;
-
+/* App page for user's vault (savings pot)
+Creator: Joel Gibson (B9020460)
+ */
 public class VaultPage extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)

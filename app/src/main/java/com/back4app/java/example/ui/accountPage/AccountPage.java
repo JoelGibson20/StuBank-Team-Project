@@ -39,6 +39,9 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
+/* App page for user's current account
+Creator: Joel Gibson (B9020460)
+ */
 public class AccountPage extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)

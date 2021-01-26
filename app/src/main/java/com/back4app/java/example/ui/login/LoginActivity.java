@@ -33,7 +33,9 @@ import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.signup.SignUpActivity;
 import com.parse.ParseException;
-
+/* App page for login, based off the template provided in Android Studio
+Creator: Joel Gibson (B9020460)
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;

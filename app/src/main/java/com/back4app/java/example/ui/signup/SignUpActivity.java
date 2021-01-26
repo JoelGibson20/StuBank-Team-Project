@@ -28,7 +28,9 @@ import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
-
+/* App page for sign up, based off the template provided in Android Studio
+Creator: Joel Gibson (B9020460)
+ */
 
 public class SignUpActivity extends AppCompatActivity {
 
