@@ -6,6 +6,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.List;
 
 public class databaseMethods {
@@ -125,10 +126,20 @@ public class databaseMethods {
         query.find();
         ParseObject userPO = query.getFirst();
         String accountOwner = userPO.getObjectId();
-        System.out.println(accountOwner);
         return accountOwner;
     }
-        public static ParseObject getUserCurrentAccount(String accountOwner) throws ParseException {
+
+    public static String getUserByPhone(String phone) throws ParseException {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("phone", phone);
+        query.find();
+        ParseObject userPO = query.getFirst();
+        String accountOwner = userPO.getObjectId();
+        return accountOwner;
+    }
+
+
+    public static ParseObject getUserCurrentAccount(String accountOwner) throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", accountOwner);
         query.whereEqualTo("accountName", "Current Account");
@@ -139,7 +150,22 @@ public class databaseMethods {
 
     }
 
-
+    public static void createTransaction(String outgoingAccount, String reference,
+                                         String value, String ingoingAccount,
+                                             boolean saved, String currencySymbol) throws ParseException {
+        ParseObject transactions = new ParseObject("Transactions");
+       // query.put("objectId", objectId);
+        Date todayDate = new Date();
+        value = currencySymbol + value;
+        transactions.put("outgoingAccount", outgoingAccount);
+        transactions.put("reference", reference);
+        transactions.put("transactionDate", todayDate);
+        transactions.put("value", value);
+        transactions.put("ingoingAccount", ingoingAccount);
+        transactions.put("transactionType", "payment");
+        transactions.put("Saved", saved);
+        transactions.save();
+    }
 }
 
 
