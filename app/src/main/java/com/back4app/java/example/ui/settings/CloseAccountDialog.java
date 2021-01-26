@@ -15,18 +15,19 @@ import com.back4app.java.example.ui.login.LoginActivity;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+// dialog box to allow the user to confirm whether or not they want to close their account
 public class CloseAccountDialog extends AppCompatDialogFragment {
     private CloseAccountDialogListener listener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // sets attributes of dialog box
         builder.setTitle("Attention!")
                 .setMessage("Are you sure you want to close all your accounts?")
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 })
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -39,6 +40,7 @@ public class CloseAccountDialog extends AppCompatDialogFragment {
         return builder.create();
     }
 
+    // allows for onclick method to be written in SettingsActivity
     public interface CloseAccountDialogListener {
         void onYesClicked();
     }

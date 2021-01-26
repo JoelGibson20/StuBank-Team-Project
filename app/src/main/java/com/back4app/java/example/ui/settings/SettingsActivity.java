@@ -19,8 +19,6 @@ import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.login.LoginActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 
-import com.back4app.java.example.ui.databaseMethods;
-import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -28,8 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//the settings tab
 public class SettingsActivity extends AppCompatActivity implements passwordDialog.passwordDialogListener, CloseAccountDialog.CloseAccountDialogListener {
-
 
     private static final String TAG = "SettingsActivity";
 
@@ -47,21 +45,23 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
         final Button passwordbutton = findViewById(R.id.passwordbutton);
         final Button creditsButton = findViewById(R.id.button_credits);
 
+
         Button closeAccountButton = findViewById(R.id.closeAccountButton);
         closeAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //TODO need to add conformation alert before account is deleted
+            public void onClick(View v) {
+                //allows for account closing if all are empty
                 if (checkEmptyBalance()){
                     openDialogCloseAccount();
-
                 }
+                //prevents account being closed if there are any that contain money
                 else {
                     Toast.makeText(getApplicationContext(), "Please empty all accounts and vaults before closing account", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
+        // logs the user out
         Button logoutButton = findViewById(R.id.logoutbutton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,26 +77,26 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
     }
 
     public void deleteAllAccounts(){
+        //removes current account and all vaults
         for(ParseObject account : databaseMethods.getAllAccountsOfOneUser()){
             account.deleteInBackground();
         }
+        //removes the users log in details from database
         ParseObject currentUser = databaseMethods.getCurrentUser();
         currentUser.deleteInBackground();
     }
 
+    //logs user out of session and redirects them to sign in page
     private void logOutUser(){
         ParseUser.logOut();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
-
     }
 
-
+    // checks that all of the current users account are empty, returns result of this check
     private boolean checkEmptyBalance(){
-        Boolean valid = true;
-        ParseObject currentUser =  databaseMethods.getCurrentUser();
+        boolean valid = true;
         List<ParseObject> accounts = databaseMethods.getAllAccountsOfOneUser();
-        List<String> validForms = new ArrayList<>(Arrays.asList("£0","£0.0","£0.00","0","0.0","0.00"));
         for (ParseObject account:accounts) {
             String balance = account.getString("balance");
             if (balance.equals("£0") || balance.equals("£0.0") || balance.equals("£0.00")){
@@ -108,7 +108,6 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
             }
         }
         return valid;
-
     }
 
     public void homeButtonOnClick(View v){

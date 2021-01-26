@@ -13,6 +13,7 @@ import com.back4app.java.example.R;
 
 import java.util.ArrayList;
 
+//an adaptor to allow for dynamic additions to RecyclerView that displays total amount of money sent to each seller
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     private ArrayList<ExampleItem> mExampleList;
 
@@ -26,7 +27,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             mImageView = itemView.findViewById(R.id.imageView);
             mTextView1 = itemView.findViewById(R.id.textView);
             mTextView2 = itemView.findViewById(R.id.textView2);
-
         }
     }
 
@@ -49,8 +49,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         holder.mImageView.setImageResource(currentItem.getImageResource());
         holder.mTextView1.setText(currentItem.getText1());
         holder.mTextView2.setText(currentItem.getText2());
-
-
     }
 
     @Override

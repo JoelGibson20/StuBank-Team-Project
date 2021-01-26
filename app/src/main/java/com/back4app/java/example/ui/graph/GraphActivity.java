@@ -17,51 +17,36 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.back4app.java.example.ui.graph.CalendarActivity;
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.parse.FindCallback;
 import com.parse.ParseObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class GraphActivity extends AppCompatActivity {
-    private final String TAG = "GraphActivityTag";
+    private final String TAG = "GraphActivityTag"; // Tag used for Logcat messages
 
-    private Spinner spinner;
     private Account selectedAccount;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<ExampleItem> exampleItems = new ArrayList<>();
-
-    private ArrayList<PieEntry> pieEntries;
-
-    private ArrayList<BarEntry> barEntries;
+    private ArrayList<ExampleItem> accountSpinnerItems = new ArrayList<>();
 
 
     @Override
@@ -78,17 +63,14 @@ public class GraphActivity extends AppCompatActivity {
         final ImageButton calendarImageButton = findViewById(R.id.calendarImageButton);
 
 
-
-
-
         // creates a dropdown menu to select account
-        spinner = findViewById(R.id.accountSpinner);
+        Spinner spinner = findViewById(R.id.accountSpinner);
         List<Account> accountList = populateAccountList();
         ArrayAdapter<Account> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, accountList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        //defines what happens when item in dropdown menu is selected
+        //builds graphs and other analytics for the account that is selected
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -105,23 +87,26 @@ public class GraphActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Please open an account", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
+
+    // creates a bar chart which displays the total amount spent each month and then a spending prediction for the next month
     private void buildBarChart(){
-        barEntries = new ArrayList<>();
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
         BarChart barChart = findViewById(R.id.analyticsBarChart);
         HashMap<String, Float> monthlyValues = totalsByMonth();
         int count = 0;
-        ArrayList<String> lables = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+        // loops through each month that money has been spent and adds the total to entries
         for(String key: monthlyValues.keySet()){
             barEntries.add(new BarEntry(count, monthlyValues.get(key)));
             count++;
-            lables.add(key);
+            labels.add(key);// used to preserve order of addition to bar chart so each bar is given the correct lable
         }
 
+        //adds spending prediction as the final bar on the graph
         barEntries.add(new BarEntry(count, calculateSpendingPrediction(monthlyValues)));
-        lables.add("Prediction");
+        labels.add("Prediction");
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Monthly Totals");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -134,55 +119,58 @@ public class GraphActivity extends AppCompatActivity {
         barChart.setData(barData);
         barChart.getDescription().setEnabled(false);
         barChart.animateY(1000);
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(lables));
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
 
+        // keeps labels in correct place when zooming on bar chart
         XAxis xAxis = barChart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setGranularityEnabled(true);
 
         barChart.invalidate();
-
-
     }
 
+
+    //creates a hashmap where the keys are months money was spent and the values are how much money was spent in that month
     private HashMap<String, Float> totalsByMonth(){
         List<ParseObject> transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
         HashMap<String,Float> monthlyTotals = new HashMap<>();
+        //goes through every transaction from a given account
         for (ParseObject transaction: transactionList){
+            //parses transaction date to get month and year to create keys for the hashmap
             String date = transaction.getDate("transactionDate").toString();
             String month = date.substring(4,7);
             String year = date.substring(24);
             String key = month + year;
-            float currentValue = Float.parseFloat(transaction.getString("value").substring(1));
+            float currentValue = Float.parseFloat(transaction.getString("value").substring(1)); // substring removes £ from beginning of string
 
+            //creates new entry in hashmap if this month has not encountered yet
             if(!monthlyTotals.containsKey(month+year)){
                 monthlyTotals.put(key, currentValue);
             }
+            //if month has already been encountered, adds to that months current total
             else{
                 float totalValue = monthlyTotals.get(key);
                 monthlyTotals.put(key, totalValue + currentValue);
             }
-            //Log.d(TAG, day + " " + month + " " + year);
         }
-        Log.d(TAG, monthlyTotals.toString());
         return monthlyTotals;
     }
 
+
+    //calculates mean of all previous months totals
     private float calculateSpendingPrediction(HashMap<String, Float> monthlyTotals){
         float total = 0f;
         for(String key: monthlyTotals.keySet()){
             total += monthlyTotals.get(key);
         }
-
         Log.d(TAG, Float.toString(total/monthlyTotals.keySet().size()));
         return total/monthlyTotals.keySet().size();
-
     }
 
 
-
+    //builds a pie chart to display how much has been spent where
     private void buildPieChart(){
-        pieEntries = new ArrayList<>();
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
         PieChart pieChart = findViewById(R.id.analyticsPieChart);
         Map<String, String> transactionTotals = totalTransactionsFromAllSellers();
         for(String key: transactionTotals.keySet()){
@@ -201,50 +189,47 @@ public class GraphActivity extends AppCompatActivity {
         pieChart.getDescription().setEnabled(false);
         pieChart.setCenterText("Transaction Totals");
         pieChart.setDrawEntryLabels(false);
-        pieChart.animate();
         pieChart.invalidate();
     }
 
-    private void buildTransactionsRecycler(){
-        mRecyclerView = findViewById(R.id.analyticsRecycler);
-        //mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new ExampleAdapter(exampleItems);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter );
 
+    //creates a recycler view to display all transaction totals by seller
+    private void buildTransactionsRecycler(){
+        RecyclerView mRecyclerView = findViewById(R.id.analyticsRecycler);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.Adapter mAdapter = new ExampleAdapter(accountSpinnerItems);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
+
+    //fills recycler view with transaction totals
     private void fillTransactionRecycler(Map<String, String> items){
-        exampleItems = new ArrayList<>();
+        accountSpinnerItems = new ArrayList<>();
         Set<String> keys = items.keySet();
         for(String key:keys){
-            exampleItems.add(new ExampleItem(R.drawable.ic_right_arrow,key,"£"+items.get(key)));
+            accountSpinnerItems.add(new ExampleItem(R.drawable.ic_right_arrow,key,"£"+items.get(key)));
         }
     }
-
 
 
     // returns how much was payed to a given seller from one account
     private String totalTransactionsFromOneSeller(String seller, List<ParseObject> transactionList){
         String userAccountNumber = selectedAccount.getAccountNumber();
         int total = 0;
-
         for (ParseObject transaction : transactionList) {
             if(transaction.getString("ingoingAccount").equals(seller)){
                 String valueAsString = transaction.getString("value");
                 total += Integer.parseInt(valueAsString.substring(1));
-
             }
         }
-
         return Integer.toString(total);
     }
+
 
     //collects totals spent on each seller and stores amount in a hashmap with seller's name as a key
     private Map<String, String> totalTransactionsFromAllSellers(){
         Map<String, String> allTotals = new HashMap<>();
-
 
         List<ParseObject> transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
         for(ParseObject transaction:transactionList){
@@ -255,6 +240,7 @@ public class GraphActivity extends AppCompatActivity {
         }
         return allTotals;
     }
+
 
     // creates a List of Account objects generated from all accounts of the current user
     private List<Account> populateAccountList(){
@@ -274,13 +260,6 @@ public class GraphActivity extends AppCompatActivity {
         return accountList;
     }
 
-
-
-
-    public void openCalendar(){
-        Intent intent = new Intent(GraphActivity.this, CalendarActivity.class);
-        startActivity(intent);
-    }
 
     public void homeButtonOnClick(View v) {
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
