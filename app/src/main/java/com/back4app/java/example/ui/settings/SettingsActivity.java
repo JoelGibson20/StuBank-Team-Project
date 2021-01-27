@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.CreditsPage;
-import com.back4app.java.example.ui.card.CardActivity;
+import com.back4app.java.example.ui.card.CardPage;
 import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.login.LoginActivity;
@@ -22,8 +22,6 @@ import com.back4app.java.example.ui.pound.PoundActivity;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 //the settings tab
@@ -123,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
         startActivity(intent);
     }
     public void cardButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CardPage.class);
         startActivity(intent);
     }
     public void gearsButtonOnClick(View v){

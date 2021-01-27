@@ -30,7 +30,7 @@ import java.time.LocalDate;
 import java.util.Random;
 
 
-public class ChoosePinForNewCard extends AppCompatActivity {
+public class ChoosePinForNewCardPage extends AppCompatActivity {
     private String PIN;
     private String PINREENTER;
     static final private String DIGITS = "0123456789";
@@ -54,7 +54,7 @@ public class ChoosePinForNewCard extends AppCompatActivity {
                 EditText pin2 = (EditText) findViewById(R.id.PIN);
                 PIN = pin.getText().toString();
                 PINREENTER = pin2.getText().toString();
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChoosePinForNewCard.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChoosePinForNewCardPage.this);
                 if(!PIN.equals(PINREENTER)){
                     builder.setMessage("The entered PINs don't match. Please try again!");
                 }
@@ -69,7 +69,7 @@ public class ChoosePinForNewCard extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), CardPage.class);
                             startActivity(intent);
                         }
                     }, 1000L);

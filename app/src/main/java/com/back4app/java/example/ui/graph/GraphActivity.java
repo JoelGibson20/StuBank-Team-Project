@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
-import com.back4app.java.example.ui.card.CardActivity;
+import com.back4app.java.example.ui.card.CardPage;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
 import com.github.mikephil.charting.charts.BarChart;
@@ -278,7 +278,7 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void cardButtonOnClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CardPage.class);
         startActivity(intent);
     }
 

@@ -2,8 +2,6 @@ package com.back4app.java.example.ui.graph;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -11,11 +9,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
-import com.back4app.java.example.ui.card.CardActivity;
+import com.back4app.java.example.ui.card.CardPage;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
 
@@ -124,7 +121,7 @@ public class CalendarActivity extends GraphActivity {
         startActivity(intent);
     }
     public void cardButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CardPage.class);
         startActivity(intent);
     }
     public void gearsButtonOnClick(View v){

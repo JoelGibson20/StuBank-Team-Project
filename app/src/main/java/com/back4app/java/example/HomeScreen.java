@@ -14,21 +14,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.back4app.java.example.ui.accountPage.AccountPage;
-import com.back4app.java.example.ui.card.CardActivity;
-import com.back4app.java.example.ui.card.CreateCard;
+import com.back4app.java.example.ui.card.CardPage;
+import com.back4app.java.example.ui.card.CreateCardPage;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
@@ -92,10 +89,10 @@ public class HomeScreen extends AppCompatActivity {
     public void cardButtonOnClick(View v){
         Intent intent;
         if (databaseMethods.hasCard){
-            intent = new Intent(getApplicationContext(), CardActivity.class);
+            intent = new Intent(getApplicationContext(), CardPage.class);
         }
         else {
-            intent = new Intent(getApplicationContext(), CreateCard.class);
+            intent = new Intent(getApplicationContext(), CreateCardPage.class);
         }
         startActivity(intent);
 

@@ -14,7 +14,7 @@ import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
 
-public class CreateCard extends AppCompatActivity {
+public class CreateCardPage extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class CreateCard extends AppCompatActivity {
     }
 
     public void addCardOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), ChoosePinForNewCard.class);
+        Intent intent = new Intent(getApplicationContext(), ChoosePinForNewCardPage.class);
         startActivity(intent);
     }
 
