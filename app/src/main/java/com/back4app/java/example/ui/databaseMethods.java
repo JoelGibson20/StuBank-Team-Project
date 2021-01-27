@@ -67,35 +67,37 @@ public class databaseMethods {
         } catch (ParseException e) {
             System.out.println(e);
         }
-        return(userDetails);
+        return (userDetails);
     }
 
-    public static ParseObject getCurrentUser(){
-       return(ParseUser.getCurrentUser());
+    public static ParseObject getCurrentUser() {
+        return (ParseUser.getCurrentUser());
     }
 
     public static List<ParseObject> getAccounts() throws ParseException {
         ParseObject currentUser = getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", currentUser.getObjectId());
-        return(query.find());
+        return (query.find());
     }
 
     public static void changeAccountName(ParseObject accountParseObject, String newName) throws ParseException {
         accountParseObject.put("accountName", newName);
         accountParseObject.save();
     }
+
     public static List<ParseObject> currentAccount(String outgoingAccount) throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", getCurrentUser().getObjectId());
         query.whereEqualTo("accountName", outgoingAccount);
         String fromAccount = query.find().toString();
-        return(query.find());
+        return (query.find());
     }
+
     //Creates parse object from selected outgoing account
     public static ParseObject outgoingAccount(String outgoingAccount) throws ParseException {
         ParseObject account = null;
-        List <ParseObject> accounts = null;
+        List<ParseObject> accounts = null;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountName", outgoingAccount);
         query.whereEqualTo("accountOwner", getCurrentUser().getObjectId());
@@ -103,9 +105,10 @@ public class databaseMethods {
         account = query.getFirst();
         return (account);
     }
+
     //Using account parse object to change corresponding balance after transfer
     public static void updateBalance(ParseObject account, String newBalance) {
-      // ParseObject balance = account.getFirst();
+        // ParseObject balance = account.getFirst();
         //String name = (String) account.get("accountName");
         //ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         //query.whereEqualTo("accountName", name);
@@ -152,9 +155,8 @@ public class databaseMethods {
 
     public static void createTransaction(String outgoingAccount, String reference,
                                          String value, String ingoingAccount,
-                                             boolean saved, String currencySymbol) throws ParseException {
+                                         boolean saved, String currencySymbol) throws ParseException {
         ParseObject transactions = new ParseObject("Transactions");
-       // query.put("objectId", objectId);
         Date todayDate = new Date();
         value = currencySymbol + value;
         transactions.put("outgoingAccount", outgoingAccount);
@@ -166,16 +168,52 @@ public class databaseMethods {
         transactions.put("Saved", saved);
         transactions.save();
     }
-        public static String getUserNames(String user) throws ParseException {
-            ParseQuery<ParseUser> query = ParseUser.getQuery();
-            query.whereEqualTo("objectId", user);
-            query.find();
-            ParseObject userPO = query.getFirst();
+
+    public static String getUserNames(String user) throws ParseException {
+        ParseQuery<ParseUser> query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", user);
+        query.find();
+        ParseObject userPO = query.getFirst();
         String firstName = userPO.get("firstName").toString();
         String lastName = userPO.get("surname").toString();
         String names = firstName + " " + lastName;
         return names;
+    }
+
+    public static List<ParseObject> getSavedTransactions(String outgoingAccount) throws ParseException {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
+        query.whereEqualTo("outgoingAccount", outgoingAccount);
+        query.whereEqualTo("Saved", true);
+        query.find();
+        return query.find();
+    }
+        public static boolean payeeAlreadySaved (String accountNumber) throws ParseException {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
+        query.whereEqualTo("outgoingAccount", accountNumber);
+        query.whereEqualTo("Saved", true);
+        List<ParseObject> exists = query.find();
+        if (exists.size()>0) {
+            return true;
         }
+        else {
+            return false;
+        }
+        }
+        public static ParseObject getAccountByNumber(String accountNumber) throws ParseException {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
+        String sortCode = accountNumber.substring(0,8);
+        accountNumber = accountNumber.substring(accountNumber.length()-8);
+        query.whereEqualTo("sortCode", sortCode);
+        query.whereEqualTo("accountNumber", accountNumber);
+        query.find();
+        ParseObject account = query.getFirst();
+        //String accountOwner = account.get("accountOwner").toString();
+
+
+
+
+        return account;
+    }
 
 
 

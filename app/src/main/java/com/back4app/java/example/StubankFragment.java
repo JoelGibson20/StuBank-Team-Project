@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -38,7 +39,7 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
     EditText phoneET;
     EditText amountET;
     EditText referenceET;
-
+    boolean checked = false;
     View view;
     @Nullable
     @Override
@@ -49,6 +50,15 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
         phoneET = (EditText) view.findViewById(R.id.phoneNumberInput);
         referenceET = (EditText) view.findViewById(R.id.referenceStubank);
 
+        CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkBoxStubank);
+        checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checked = checkbox.isChecked();
+            }
+
+
+            });
 
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
         try {
@@ -67,12 +77,13 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
         public void onClick(View view) {
 
             try {
-
-                ParseObject outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
-                String originalBalance = outgoingAccount.get("balance").toString();
-                System.out.println(originalBalance);
-                String currencySymbol = originalBalance.substring(0, 1);
-                Double originalBalanceDob = Double.parseDouble(originalBalance.substring(1));
+                    ParseObject outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
+                    String originalBalance = outgoingAccount.get("balance").toString();
+                    String outgoingAccountNumber = outgoingAccount.get("accountNumber").toString();
+                    String outgoingAccountSort = outgoingAccount.get("sortCode").toString();
+                    outgoingAccountNumber = outgoingAccountSort + " " + outgoingAccountNumber;
+                    String currencySymbol = originalBalance.substring(0, 1);
+                    Double originalBalanceDob = Double.parseDouble(originalBalance.substring(1));
 
                 String amount = amountET.getText().toString();
                 Double amountDob = null;
@@ -98,13 +109,14 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
                 else {
                     currentAccount = databaseMethods.getUserByPhone(phone);
                 }
-               // System.out.println(currentAccount);
+
                 String payeeName = databaseMethods.getUserNames(currentAccount);
                 ParseObject incomingAccount = databaseMethods.getUserCurrentAccount(currentAccount);
 
                 String oldIncomingBalance = incomingAccount.get("balance").toString();
                 String incomingAccountName = incomingAccount.get("accountName").toString();
-                System.out.println(oldIncomingBalance);
+                String incomingAccountNumber = incomingAccount.get("sortCode").toString();
+                incomingAccountNumber = incomingAccountNumber + " " + incomingAccount.get("accountNumber");
                 Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
 
 
@@ -115,19 +127,33 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
 
                         AlertDialog ad2 = new AlertDialog.Builder(getActivity()).create();
                         ad2.setTitle("Confirm Transfer");
-                        ad2.setMessage("You are transferring " + currencySymbol + amount + " to " + payeeName);
+                        DecimalFormat df = new DecimalFormat("#.00");
+                        String messageAmount = df.format(amountDob);
+                        ad2.setMessage("You are transferring " + currencySymbol + messageAmount + " to " + payeeName);
                         Double finalAmountDob = amountDob;
+                        String finalOutgoingAccountNumber = outgoingAccountNumber;
+                        String finalIncomingAccountNumber = incomingAccountNumber;
                         ad2.setButton(AlertDialog.BUTTON_POSITIVE, "Confirm",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
+
+
+
+
                                         String transactionAmount = updateBalance(oldIncomingBalanceDob, finalAmountDob, currencySymbol,
                                                 incomingAccount, originalBalanceDob, outgoingAccount);
+
                                         try {
-                                            databaseMethods.createTransaction(selectedAccount, reference, transactionAmount, incomingAccountName, false, currencySymbol);
+
+                                            //Prevents payee being saved twice
+                                            boolean exists = databaseMethods.payeeAlreadySaved(finalOutgoingAccountNumber);
+                                            if (exists) {
+                                               // checked = false;
+                                            }
+                                            databaseMethods.createTransaction(finalOutgoingAccountNumber, reference, transactionAmount, finalIncomingAccountNumber, checked, currencySymbol);
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        System.out.println(incomingAccountName);
                                         Intent intent = new Intent(getContext(), TransferComplete.class);
                                         startActivity(intent);
 
@@ -209,13 +235,7 @@ public String populateSpinner(List<ParseObject> accountsList, View view) {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedAccount = adapterView.getItemAtPosition(i).toString();
-
-       /*     try {
-                databaseMethods.currentAccount(outgoingAccount);
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
-     */   }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -230,7 +250,7 @@ public String populateSpinner(List<ParseObject> accountsList, View view) {
         System.out.println(selectedAccount);
         return selectedAccount;}
 
-    public  String updateBalance(Double oldIncomingBalanceDob, Double amountDob, String currencySymbol,
+    public String updateBalance(Double oldIncomingBalanceDob, Double amountDob, String currencySymbol,
                               ParseObject incomingAccount, Double originalBalanceDob, ParseObject outgoingAccount) {
         DecimalFormat df = new DecimalFormat("#.00");
 

@@ -20,7 +20,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="20dp"
         android:layout_marginStart="0dp"
         android:layout_gravity="center_horizontal"
         android:text="Transfer to another Stubank user"
@@ -121,7 +121,7 @@
 
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxStubank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
