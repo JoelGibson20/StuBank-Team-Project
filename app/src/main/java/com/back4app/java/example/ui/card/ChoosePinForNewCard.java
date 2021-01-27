@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -72,7 +74,11 @@ public class ChoosePinForNewCard extends AppCompatActivity {
                         }
                     }, 1000L);
                 }
-                builder.show();
+                AlertDialog dialog4 = builder.show();
+                TextView messageText = (TextView) dialog4.findViewById(android.R.id.message);
+                assert messageText != null;
+                messageText.setGravity(Gravity.CENTER);
+                dialog4.show();
             }
         });
     }

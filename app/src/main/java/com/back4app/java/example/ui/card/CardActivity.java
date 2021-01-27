@@ -216,7 +216,7 @@ public class CardActivity extends AppCompatActivity {
                                     AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
                                     builder.setCancelable(true);
                                     if (userInputNewPIN.length() == 4) {
-                                        builder.setTitle("Please reenter your new 4-digit PIN");
+                                        builder.setTitle("Please re-enter your new 4-digit PIN");
                                         // Set up the input
                                         final EditText input2 = new EditText(CardActivity.this);
                                         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
