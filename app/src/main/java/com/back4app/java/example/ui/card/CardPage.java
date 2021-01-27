@@ -281,6 +281,9 @@ public class CardPage extends AppCompatActivity {
                 if (e == null) {
                     username = result.getString("username");
                 }
+                else {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -292,9 +295,12 @@ public class CardPage extends AppCompatActivity {
         query.getInBackground(cardID, new GetCallback<ParseObject>() {
             public void done(ParseObject entity, ParseException e) {
                 if (e == null) {
-                        entity.deleteInBackground();
-                    }
+                    entity.deleteInBackground();
                 }
+                else {
+                    e.printStackTrace();
+                }
+            }
         });
     }
 
@@ -342,6 +348,9 @@ public class CardPage extends AppCompatActivity {
                     // All other fields will remain the same
                     entity.saveInBackground();
                 }
+                else {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -382,6 +391,9 @@ public class CardPage extends AppCompatActivity {
                     accountID = account.getObjectId();
                     ((TextView)findViewById(R.id.accountNumber)).setText("Account Number:" + " " + accountNumber);
                     ((TextView)findViewById(R.id.sortCode)).setText("Sort Code:" + " " + sortCode);
+                }
+                else {
+                    e.printStackTrace();
                 }
             }
         });
@@ -426,6 +438,9 @@ public class CardPage extends AppCompatActivity {
                     isFrozen = result.getBoolean("Frozen");
                     setFreezeChecked();
                 }
+                else {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -461,6 +476,9 @@ public class CardPage extends AppCompatActivity {
                     entity.put("PIN", newPIN);
                     // All other fields will remain the same
                     entity.saveInBackground();
+                }
+                else {
+                    e.printStackTrace();
                 }
             }
         });

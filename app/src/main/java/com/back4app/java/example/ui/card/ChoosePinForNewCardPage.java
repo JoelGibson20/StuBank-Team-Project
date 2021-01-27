@@ -143,6 +143,9 @@ public class ChoosePinForNewCardPage extends AppCompatActivity {
                     accountID = account.getObjectId();
                     System.out.println(accountID);
                 }
+                else {
+                    e.printStackTrace();
+                }
             }
         });
     }
