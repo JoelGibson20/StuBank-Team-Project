@@ -76,6 +76,7 @@ public class TransferToOthers extends AppCompatActivity {
 
         //List of Parse Objects
         List<ParseObject> savedTransactions = new ArrayList();
+        List<ParseObject> savedTransactionsFromAccount = new ArrayList();
 
         //Gets the userID of the user logged in to allow the app to show saved payees only for themselves
         String currentUser = databaseMethods.getCurrentUser().getObjectId().toString();
@@ -87,16 +88,24 @@ public class TransferToOthers extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        String accountNumber = currentAccount.get("accountNumber").toString();
-        String sortCode = currentAccount.get("sortCode").toString();
-        accountNumber = sortCode + " " + accountNumber;
         try {
-            savedTransactions = databaseMethods.getSavedTransactions(accountNumber);
-        } catch (ParseException e) {
+
+           //Iterates through a user's accounts ensuring saved transactions are presented from all
+            //of them
+            for (int x=0;x<accountsList.size();x++) {
+                ParseObject account = accountsList.get(x);
+                String accountNumber = account.get("accountNumber").toString();
+                String sortCode = account.get("sortCode").toString();
+                accountNumber = sortCode + " " + accountNumber;
+                savedTransactions.addAll(databaseMethods.getSavedTransactions(accountNumber));
+
+            }
+        }
+        catch (ParseException e) {
             e.printStackTrace();
         }
 
-        //TextView accountNameSaved = new TextView(getApplicationContext());
+       //Find layout to use with Card View
         LinearLayout linearLayout = findViewById(R.id.linearLayoutTransactions);
         LinearLayout.LayoutParams layoutparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -117,7 +126,7 @@ public class TransferToOthers extends AppCompatActivity {
 
             CardView savedPayees = new CardView(getApplicationContext());
 
-            //Set params for CardView
+            //Set Card View properties
             savedPayees.setUseCompatPadding(true);
             savedPayees.setLayoutParams(layoutparams);
             savedPayees.setMinimumHeight(100);
@@ -133,6 +142,7 @@ public class TransferToOthers extends AppCompatActivity {
             ParseObject finalIncoming = outgoingAccountOwnerObject;
             List<ParseObject> finalAccountsList = accountsList;
             savedPayees.setOnClickListener(new View.OnClickListener() {
+                //Create onClick listener for the saved payees
                 public void onClick(View v) {
 
                     View spinnerView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
