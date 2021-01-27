@@ -1,18 +1,23 @@
 package com.back4app.java.example;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +28,7 @@ import android.widget.TextView;
 
 import com.back4app.java.example.ui.accountPage.AccountPage;
 import com.back4app.java.example.ui.card.CardActivity;
+import com.back4app.java.example.ui.card.CreateCard;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
@@ -33,13 +39,16 @@ import com.parse.ParseObject;
 import java.util.ArrayList;
 import java.util.List;
 import com.back4app.java.example.ui.databaseMethods;
-
+/* Home page for the app when logged in
+Creator: Joel Gibson (B9020460)
+ */
 public class HomeScreen extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        databaseMethods.checkIfHasCard();
         //Load all the clickable buttons on the page
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
@@ -64,6 +73,7 @@ public class HomeScreen extends AppCompatActivity {
         }
         createMyCardView(accountsList);
 
+
     }
 
 
@@ -80,8 +90,15 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(intent);
     }
     public void cardButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+        Intent intent;
+        if (databaseMethods.hasCard){
+            intent = new Intent(getApplicationContext(), CardActivity.class);
+        }
+        else {
+            intent = new Intent(getApplicationContext(), CreateCard.class);
+        }
         startActivity(intent);
+
     }
     public void gearsButtonOnClick(View v){
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -106,59 +123,63 @@ public class HomeScreen extends AppCompatActivity {
     public void newVaultButtonOnClick(View v){
         //Load progress bar (loading circle)
         final ProgressBar loading = findViewById(R.id.vaultsLoading);
-        //Inflate the layout of the popup window
-        LayoutInflater inflater = (LayoutInflater)
-                getSystemService(LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.activity_popup, null);
 
-        //Set the properties for the popup window
-        int width = LinearLayout.LayoutParams.MATCH_PARENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+        //Define a builder to create an AlertDialog (popup window)
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.AlertDialogCustom));
+        builder.setCancelable(true);
+        //Create a TextView for the title and set its attributes
+        TextView titleText = new TextView(this);
+        titleText.setText(getString(R.string.newAccountPopup));
+        titleText.setGravity(Gravity.CENTER_HORIZONTAL);
+        titleText.setPadding(10,10,10,10);
+        titleText.setTextSize(20);
+        builder.setCustomTitle(titleText); //Set the title for the AlertDialog
 
-        //Show the popup window
-        popupWindow.showAtLocation(findViewById(R.id.greeting), Gravity.CENTER, 0, 0);
+        //Create the EditText to accept user input for new vault name
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        //Load the buttons on the popup window
-        Button backButton = popupView.findViewById(R.id.backButton);
-        Button createButton = popupView.findViewById(R.id.createButton);
-        EditText accountNameInput = popupView.findViewById(R.id.accountNameInput);
+        input.setLayoutParams(layoutParams); //Apply layout params to EditText
+        builder.setView(input); //Add EditText to the AlertDialog window
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.backButton), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                //If the back button is clicked close the popup
+            public void onClick(DialogInterface dialog, int which) {
+                //If back is click, close the AlertDialog
+                dialog.cancel();
             }
         });
 
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.Q)
+        builder.setPositiveButton(getString(R.string.createButton), new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //Creates vault using the name provided
+            public void onClick(DialogInterface dialog, int which) {
+                //If create is clicked, attempt to create vault with that name
                 try {
-                    databaseMethods.retrieveAccountsBeforeCreation("vault", accountNameInput.getText().toString());
+                    databaseMethods.retrieveAccountsBeforeCreation("vault", input.getText().toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                popupWindow.dismiss(); //Close popup window after account creation
-                loading.setVisibility(View.VISIBLE);
+                dialog.dismiss(); //Close AlertDialog window after account creation
+                loading.setVisibility(View.VISIBLE); //Show loading circle
 
                 /*This forces the program to wait 1 seconds (1000ms) before refreshing the page
                 as it would refresh too quick prior, and the new vault object wouldn't be retrieved
                 and displayed */
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
+                    @RequiresApi(api = Build.VERSION_CODES.Q)
                     public void run() {
                         onRestart();
                     }
                 }, 1000);
-
             }
         });
 
+        AlertDialog alert = builder.create(); //Creates AlertDialog with specified properties
+        alert.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alert.show(); //Shows AlertDialog
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -218,7 +239,8 @@ public class HomeScreen extends AppCompatActivity {
 
                 //Create a TextView for the account name
                 TextView accountNameText = new TextView(getApplicationContext());
-                accountNameText.setPadding(10,30,0,30);
+                accountNameText.setPadding(15,30,0,30);
+                accountNameText.setGravity(Gravity.START);
                 accountNameText.setLayoutParams(layoutparams);
                 accountNameText.setText(accountsList.get(i).getString("accountName"));
                 accountNameText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);
@@ -228,7 +250,8 @@ public class HomeScreen extends AppCompatActivity {
 
                 //Create a TextView for the account balance
                 TextView balanceText = new TextView(getApplicationContext());
-                balanceText.setPadding(700,30,10,30);
+                balanceText.setPadding(0,30,15,30);
+                balanceText.setGravity(Gravity.END);
                 balanceText.setLayoutParams(layoutparams);
                 balanceText.setText(accountsList.get(i).getString("balance"));
                 balanceText.setTextAppearance(android.R.style.TextAppearance_Material_Headline);

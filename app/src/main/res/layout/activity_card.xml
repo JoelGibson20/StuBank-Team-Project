@@ -6,56 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".ui.card.CardActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Digital Card Page"
-        tools:layout_editor_absoluteX="177dp"
-        tools:layout_editor_absoluteY="323dp" />
-
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:backgroundTint="@color/teal_700"
+        app:backgroundTint="@color/teal_200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/greeting"
-        app:layout_constraintVertical_bias="1.0" />
+        tools:ignore="BottomAppBar" />
 
     <ImageButton
         android:id="@+id/homeImageButton"
-        android:onClick="homeButtonOnClick"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
+        android:contentDescription="@string/homescreen"
+        android:onClick="homeButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/graphImageButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_home_page_48"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/icons8_home_page_48" />
 
     <ImageButton
         android:id="@+id/graphImageButton"
-        android:onClick="graphButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
+        android:onClick="graphButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/poundImageButton"
         app:layout_constraintStart_toEndOf="@+id/homeImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_combo_chart_48" />
+        app:srcCompat="@drawable/icons8_combo_chart_48"
+        android:contentDescription="@string/analytics" />
 
     <ImageButton
         android:id="@+id/poundImageButton"
@@ -74,11 +66,12 @@
 
     <ImageButton
         android:id="@+id/cardImageButton"
-        android:onClick="cardButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
+        android:clickable="false"
+        android:contentDescription="@string/cards"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
         app:layout_constraintStart_toEndOf="@+id/poundImageButton"
@@ -87,16 +80,142 @@
 
     <ImageButton
         android:id="@+id/gearsImageButton"
-        android:onClick="gearsButtonOnClick"
         android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
+        android:onClick="gearsButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toEndOf="@+id/homeBottomAppBar"
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_automation_48" />
+        app:srcCompat="@drawable/icons8_automation_48"
+        android:contentDescription="@string/settings" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="252dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-4dp" />
+
+    <Button
+        android:id="@+id/viewPIN"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/view_pin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardDetails" />
+
+    <Button
+        android:id="@+id/cardDetails"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="264dp"
+        android:text="@string/show_card_details"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/changePIN"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/change_pin"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPIN" />
+
+    <Button
+        android:id="@+id/removeCard"
+        style="@android:style/Widget.Material.Light.Button.Toggle"
+        android:layout_width="382dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/remove_card"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freezeCard" />
+
+    <ToggleButton
+        android:id="@+id/freezeCard"
+        android:layout_width="375dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/teal_700"
+        android:fontFamily="sans-serif"
+        android:onClick="freezeCardOnClick"
+        android:text="@string/freezecard"
+        android:textAlignment="inherit"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#FFFFFF"
+        android:textOff="@string/freeze_card"
+        android:textOn="@string/unfreeze_card"
+        android:textSize="18sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changePIN" />
+
+    <ImageView
+        android:id="@+id/card"
+        android:layout_width="267dp"
+        android:layout_height="168dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="40dp"
+        android:clickable="false"
+        android:contentDescription="@string/image_of_card"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421"
+        app:srcCompat="@drawable/blue_card" />
+
+    <TextView
+        android:id="@+id/accountNumber"
+        android:layout_width="189dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="139dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sortCode"
+        android:layout_width="137dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="156dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

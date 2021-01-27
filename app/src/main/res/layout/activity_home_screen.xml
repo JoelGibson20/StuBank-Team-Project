@@ -11,7 +11,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
             android:paddingTop="80dp"
             android:paddingBottom="80dp"
             app:cardBackgroundColor="@color/teal_700"
-            app:cardCornerRadius="50px"
+            app:cardCornerRadius="18dp"
             app:cardElevation="20dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="false">
@@ -74,38 +74,45 @@
                 android:id="@+id/currentAccountName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10px"
-                android:paddingTop="10px"
-                android:text="Current Account"
+                android:layout_gravity="start"
+                android:paddingLeft="3.6dp"
+                android:paddingTop="3.6dp"
+                android:paddingRight="3.6dp"
+                android:text="@string/current_account_default"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/currentAccountNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10px"
-                android:paddingTop="70px"
-                android:text="00001111"
+                android:layout_gravity="start"
+                android:paddingLeft="3.6dp"
+                android:paddingTop="25.5dp"
+                android:paddingRight="3.6dp"
+                android:text="@string/account_number_default"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/currentAccountSortCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10px"
-                android:paddingTop="130px"
-                android:paddingBottom="10px"
-                android:text="00-11-22"
+                android:layout_gravity="start"
+                android:paddingLeft="3.6dp"
+                android:paddingTop="47dp"
+                android:paddingRight="3.6dp"
+                android:paddingBottom="3.6dp"
+                android:text="@string/sortcode_default"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/currentAccountBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="700px"
-                android:paddingTop="70px"
-                android:paddingEnd="10px"
-                android:text="Balance"
+                android:layout_gravity="end"
+                android:paddingStart="60dp"
+                android:paddingTop="25.5dp"
+                android:paddingEnd="60dp"
+                android:text="@string/balance"
                 android:textSize="16sp" />
 
         </androidx.cardview.widget.CardView>
@@ -133,7 +140,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:text="Vaults:"
+                android:text="@string/vaults"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -142,15 +149,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
                 android:minWidth="20dp"
                 android:minHeight="20dp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/password"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/password"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5" />
 
@@ -184,7 +189,7 @@
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             android:fillViewport="false">
 
@@ -221,7 +226,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/home_button"
         android:onClick="homeButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/graphImageButton"
@@ -235,6 +240,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
+        android:contentDescription="@string/analytics_button"
         android:onClick="graphButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/poundImageButton"
@@ -250,6 +256,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
+        android:contentDescription="@string/transfers_button"
         android:onClick="poundButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/cardImageButton"
@@ -263,6 +270,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="#0000"
+        android:contentDescription="@string/digital_cards_button"
         android:onClick="cardButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/gearsImageButton"
@@ -278,6 +286,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
+        android:contentDescription="@string/settings_button"
         android:onClick="gearsButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toEndOf="@+id/homeBottomAppBar"

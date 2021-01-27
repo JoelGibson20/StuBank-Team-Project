@@ -3,6 +3,7 @@ package com.back4app.java.example.ui;
 import android.util.Log;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -11,6 +12,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,6 +20,7 @@ import java.util.Random;
 import static android.content.ContentValues.TAG;
 
 public class databaseMethods {
+    public static boolean hasCard;
     public static void addToDatabase(String firstName, String surname, String phoneNo, String email, String password) throws ParseException {
         //Might add a return type to return correct error message to display on screen?
         ParseUser user = new ParseUser();
@@ -129,7 +132,13 @@ public class databaseMethods {
         //Assign attributes we set
         account.put("accountOwner",getCurrentUser().getObjectId());
         account.put("accountType", accountType);
-        account.put("accountName", accountName);
+        if(accountName.equals("")){
+            //If the user provides no name assign default name to prevent an error
+            account.put("accountName","New Vault");
+        }
+        else{
+            account.put("accountName", accountName);
+        }
         account.put("balance", "£0");
         account.put("locked", false);
 
@@ -201,25 +210,11 @@ public class databaseMethods {
         }
     }
 
-    public static List<ParseObject> getTransaction(String Accountnum, String date){
-        ParseQuery<ParseObject> accountquery = ParseQuery.getQuery("Transactions");
-
-
-        accountquery.whereEqualTo("outgoingAccount", Accountnum);
-
-        ParseQuery<ParseObject> datequery = ParseQuery.getQuery("Transactions");
-
-        datequery.whereEqualTo("transactionDate", date);
-
-        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
-
-        queries.add(accountquery);
-        queries.add(datequery);
-
-        ParseQuery<ParseObject> mainquery = ParseQuery.or(queries);
-
+    public static List<ParseObject> getTransaction(String Object_ID){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
+        query.whereEqualTo("objectId", Object_ID);
         try{
-            return (mainquery.find());
+            return (query.find());
 
         }
         catch (ParseException e){
@@ -228,20 +223,44 @@ public class databaseMethods {
         }
 
     }
+    public static List<ParseObject> getTransactionsForAccount(String accountID) throws ParseException {
+        ParseQuery<ParseObject> outgoingTransactions = ParseQuery.getQuery("Transactions");
+        outgoingTransactions.whereEqualTo("outgoingAccount", accountID);
+        //Get outgoing transactions
 
-    public static void changePassword(String Password){
-        ParseObject currentUser = getCurrentUser();
+        ParseQuery<ParseObject> ingoingTransactions = ParseQuery.getQuery("Transactions");
+        ingoingTransactions.whereEqualTo("ingoingAccount", accountID);
+        //Get ingoing transactions
 
-        currentUser.put("password", Password);
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+        queries.add(outgoingTransactions);
+        queries.add(ingoingTransactions);
 
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
 
+        ParseQuery<ParseObject> query = ParseQuery.or(queries);
+        query.setLimit(20); //Get only the last 20 transactions to show
+        query.orderByDescending("transactionDate"); //Order by most recent
+        List<ParseObject> transactionsList = new ArrayList<>(query.find());
+
+        return(transactionsList);
+    }
+    public static void checkIfHasCard() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Cards");
+        // The query will search for a ParseObject, given its objectId.
+        // When the query finishes running, it will invoke the GetCallback
+        // with either the object, or the exception thrown
+        query.whereEqualTo("cardOwner", getCurrentUser().getObjectId());
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            public void done(ParseObject result, ParseException e) {
+                if (e == null) {
+                    hasCard=true;
+                }
+                else {
+                    hasCard=false;
+                }
             }
         });
     }
-
 
 
 

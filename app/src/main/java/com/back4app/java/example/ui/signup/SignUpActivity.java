@@ -15,17 +15,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
-
+/* App page for sign up, based off the template provided in Android Studio
+Creator: Joel Gibson (B9020460)
+ */
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -108,52 +113,27 @@ public class SignUpActivity extends AppCompatActivity {
         };
         emailEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.addTextChangedListener(afterTextChangedListener);
-/*        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 //Clicking enter to submit form rather than button
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(emailEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                    if(registerButton.isEnabled()) {
+                        submitForm();
+                    }
                 }
                 return false;
             }
-        });*/
-        /*Above is commented out as it lacks the checks to see if the form has been filled out before
-        allowing submission */
+        });
+
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Listens for clicking the register button
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                try {
-                    //New account added to database
-                    databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
-                            surnameEditText.getText().toString(), phoneNoEditText.getText().toString(),
-                            emailEditText.getText().toString(), passwordEditText.getText().toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                //Creates a current account for the user on sign-up
-                try {
-                    databaseMethods.retrieveAccountsBeforeCreation("currentAccount", "Current Account");
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                               /*This forces the program to wait 1 seconds (1000ms) before loading
-                the homepage, delaying enough time for the current account to be saved so it can
-                 be properly displayed on the homescreen */
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        //Directs to home page
-                        Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
-                        startActivity(intent);
-                    }
-                }, 1000);
+                submitForm();
 
             }
         });
@@ -167,5 +147,42 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    private void submitForm(){
+        final EditText firstNameEditText = findViewById(R.id.firstName);
+        final EditText surnameEditText = findViewById(R.id.surname);
+        final EditText phoneNoEditText = findViewById(R.id.phoneNo);
+        final EditText emailEditText = findViewById(R.id.email);
+        final EditText passwordEditText = findViewById(R.id.password);
+        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        loadingProgressBar.setVisibility(View.VISIBLE);
+        try {
+            //New account added to database
+            databaseMethods.addToDatabase(firstNameEditText.getText().toString(),
+                    surnameEditText.getText().toString(), phoneNoEditText.getText().toString(),
+                    emailEditText.getText().toString().toLowerCase(), passwordEditText.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //Creates a current account for the user on sign-up
+        try {
+            databaseMethods.retrieveAccountsBeforeCreation("currentAccount", "Current Account");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+                               /*This forces the program to wait 1 seconds (1000ms) before loading
+                the homepage, delaying enough time for the current account to be saved so it can
+                 be properly displayed on the homescreen */
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                //Directs to home page
+                Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
+                startActivity(intent);
+            }
+        }, 1000);
     }
 }

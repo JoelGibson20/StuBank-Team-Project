@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.back4app.java.example.R;
-
+/* Basic app page to credit creators of the icons used throughout the app
+Creator: Joel Gibson (B9020460)
+ */
 public class CreditsPage extends AppCompatActivity {
 
     @Override
