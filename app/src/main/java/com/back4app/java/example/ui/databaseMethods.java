@@ -10,11 +10,14 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static android.content.ContentValues.TAG;
 
 public class databaseMethods {
     public static boolean hasCard;
@@ -185,7 +188,7 @@ public class databaseMethods {
     public static List<ParseObject> getAllAccountsOfOneUser() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
 
-        query.whereEqualTo("accountOwner", databaseMethods.getCurrentUser().getObjectId());
+        query.whereEqualTo("accountOwner", getCurrentUser().getObjectId());
         try {
             return (query.find());
         }
