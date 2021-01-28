@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.back4app.java.example.HomeScreen;
+import com.back4app.java.example.ui.HomeScreen;
+import com.back4app.java.example.ui.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardPage;
 import com.back4app.java.example.ui.card.CreateCardPage;

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.back4app.java.example.ui.HomeScreen;
 import com.back4app.java.example.ui.card.CreateCardPage;
 import com.back4app.java.example.ui.databaseMethods;
 
@@ -18,7 +19,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.back4app.java.example.HomeScreen;
+import com.back4app.java.example.ui.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardPage;
 import com.back4app.java.example.ui.pound.PoundActivity;
