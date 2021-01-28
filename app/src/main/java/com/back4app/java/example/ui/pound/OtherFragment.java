@@ -201,10 +201,91 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
 
 
 
-
+//If the user tries to transfer to an account without Stubank, just their balance is updated
+                //and not the payee
          catch (ParseException e) {
             e.printStackTrace();
-       System.out.println("Fail");
+
+             if (amountDob <= originalBalanceDob) {
+
+
+
+                 AlertDialog ad2 = new AlertDialog.Builder(getActivity()).create();
+                 ad2.setTitle("Confirm Transfer");
+                 DecimalFormat df = new DecimalFormat("#.00");
+                 String messageAmount = df.format(amountDob);
+                 ad2.setMessage("You are transferring " + currencySymbol + messageAmount + " to " + payeeName);
+                 Double finalAmountDob = amountDob;
+                 String finalOutgoingAccountNumber = outgoingAccountNumber;
+                 String finalIncomingAccountNumber = accountNumber;
+                 Double finalAmountDob1 = amountDob;
+                 ad2.setButton(AlertDialog.BUTTON_POSITIVE, "Confirm",
+                         new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+
+
+                                final Double finalAD = finalAmountDob1;
+                                 StubankFragment sf = new StubankFragment();
+                                 DecimalFormat df = new DecimalFormat("#.00");
+                                 Double newOutgoingBalance = (originalBalanceDob - finalAmountDob1);
+                                 String newOutgoingBalanceStr = newOutgoingBalance.toString();
+                                 newOutgoingBalanceStr = df.format(newOutgoingBalance);
+                                 newOutgoingBalanceStr = currencySymbol + newOutgoingBalanceStr;
+                                 outgoingAccount.put("balance", newOutgoingBalanceStr);
+                                 outgoingAccount.saveInBackground();
+                                 String transactionAmount = df.format(finalAD);
+
+                                 try {
+
+                                     //Prevents payee being saved twice
+                                     boolean exists = databaseMethods.payeeAlreadySaved(finalOutgoingAccountNumber);
+                                     if (exists) {
+                                         checked = false;
+                                     }
+                                     databaseMethods.createTransaction(finalOutgoingAccountNumber, reference, transactionAmount, finalIncomingAccountNumber, checked, currencySymbol);
+                                 } catch (ParseException e) {
+                                     e.printStackTrace();
+                                 }
+                                 Intent intent = new Intent(getContext(), TransferComplete.class);
+                                 startActivity(intent);
+
+
+
+                                 dialog.dismiss();
+                             }
+                         });
+                 ad2.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                         new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int i) {
+                                 dialog.dismiss();
+                             }
+                         });
+                 ad2.show();
+
+
+
+
+
+
+
+             } else {
+                 AlertDialog ad1 = new AlertDialog.Builder(getActivity()).create();
+                 ad1.setTitle("Insufficient Funds");
+                 ad1.setMessage("Please add funds or transfer from a different account");
+                 ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                         new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int which) {
+                                 dialog.dismiss();
+                             }
+                         });
+                 ad1.show();
+             }
+
+
+
+
+
         }
 
 

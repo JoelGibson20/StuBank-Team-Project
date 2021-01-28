@@ -32,7 +32,6 @@
         <activity android:name=".ui.pound.TransferToOthers" />
         <activity android:name=".ui.pound.TransferBetweenOwnAccounts" />
         <activity android:name=".ui.pound.TransferComplete" />
-        <activity android:name=".ui.pound.NewRecipient" />
 
         <activity
             android:name=".ui.login.LoginActivity"
