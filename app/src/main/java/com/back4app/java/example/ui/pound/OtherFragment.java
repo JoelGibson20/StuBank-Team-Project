@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -54,6 +55,15 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
         accountNumberET = (EditText) view.findViewById(R.id.accountOther);
         payeeNameET = (EditText) view.findViewById(R.id.payeeOther);
 
+        CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkBoxOther);
+        checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checked = checkbox.isChecked();
+            }
+
+
+        });
 
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
         try {
@@ -158,9 +168,9 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
 
                                             //Prevents payee being saved twice
                                             boolean exists = databaseMethods.payeeAlreadySaved(finalOutgoingAccountNumber);
-                                            if (exists) {
-                                                 checked = false;
-                                            }
+                                           // if (exists) {
+                                            //     checked = false;
+                                           // }
                                             databaseMethods.createTransaction(finalOutgoingAccountNumber, reference, transactionAmount, finalIncomingAccountNumber, checked, currencySymbol);
                                         } catch (ParseException e) {
                                             e.printStackTrace();
@@ -244,11 +254,8 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
 
                                  try {
 
-                                     //Prevents payee being saved twice
-                                     boolean exists = databaseMethods.payeeAlreadySaved(finalOutgoingAccountNumber);
-                                     if (exists) {
-                                         checked = false;
-                                     }
+
+
                                      databaseMethods.createTransaction(finalOutgoingAccountNumber, reference, transactionAmount, finalIncomingAccountNumber, checked, currencySymbol);
                                  } catch (ParseException e) {
                                      e.printStackTrace();
