@@ -96,9 +96,7 @@ public class TransferToOthers extends AppCompatActivity {
                 ParseObject savedPayee = savedTransactions.get(i);
                 String accountNumber = savedPayee.get("ingoingAccount").toString();
                 savedAccountsSet.add(accountNumber);
-                System.out.println(savedTransactionsSet);
             }
-            System.out.println(savedAccountsSet);
             List<String> savedAccountsList = new ArrayList<>(savedAccountsSet);
             savedTransactions.clear();
             for(int i=0;i<savedAccountsList.size();i++){
