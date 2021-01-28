@@ -1,4 +1,4 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui.pound;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.back4app.java.example.R;
+import com.back4app.java.example.ui.HomeScreen;
 import com.back4app.java.example.ui.pound.PoundActivity;
 
 public class TransferComplete extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui.pound;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,16 +9,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

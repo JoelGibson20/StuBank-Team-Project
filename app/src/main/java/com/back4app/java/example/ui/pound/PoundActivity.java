@@ -18,13 +18,12 @@ import com.back4app.java.example.ui.card.CreateCardPage;
 import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.settings.SettingsActivity;
-import com.back4app.java.example.ui.signup.SignUpActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class PoundActivity extends AppCompatActivity {
     //Variable returned after Spinner method called

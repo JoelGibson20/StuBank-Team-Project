@@ -1,7 +1,8 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui.pound;
 
 import android.app.Application;
 
+import com.back4app.java.example.R;
 import com.parse.Parse;
 
 public class App extends Application {

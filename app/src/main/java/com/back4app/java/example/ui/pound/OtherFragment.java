@@ -1,4 +1,4 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui.pound;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 import com.parse.ParseObject;

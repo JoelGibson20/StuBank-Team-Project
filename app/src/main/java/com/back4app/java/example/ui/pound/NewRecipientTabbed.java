@@ -1,16 +1,12 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui.pound;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.back4app.java.example.R;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
 
 public class NewRecipientTabbed extends AppCompatActivity {
 

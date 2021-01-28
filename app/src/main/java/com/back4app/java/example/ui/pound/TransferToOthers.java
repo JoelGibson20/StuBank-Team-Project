@@ -1,50 +1,34 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui.pound;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.cardview.widget.CardView;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.back4app.java.example.HomeScreen;
-import com.back4app.java.example.NewRecipient;
 import com.back4app.java.example.R;
-import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.databaseMethods;
-import com.back4app.java.example.ui.graph.GraphActivity;
-import com.back4app.java.example.ui.settings.SettingsActivity;
-import com.back4app.java.example.ui.signup.SignUpActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

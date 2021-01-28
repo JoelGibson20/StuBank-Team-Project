@@ -1,4 +1,4 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui.pound;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.back4app.java.example.R;
 import com.back4app.java.example.ui.databaseMethods;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
