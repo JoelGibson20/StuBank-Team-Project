@@ -124,7 +124,6 @@ public class GraphActivity extends AppCompatActivity {
         barChart.setFitBars(true);
         barChart.setData(barData);
         barChart.getDescription().setEnabled(false);
-        barChart.animateY(1000);
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
 
         // keeps labels in correct place when zooming on bar chart
