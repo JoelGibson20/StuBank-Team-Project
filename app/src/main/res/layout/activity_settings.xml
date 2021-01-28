@@ -6,13 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ui.settings.SettingsActivity">
 
+    <Button
+        android:id="@+id/logoutbutton"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:text="Log out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/closeAccountButton"
+        app:layout_constraintVertical_bias="0.07" />
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings Page"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="306dp" />
+        android:text="Settings"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
@@ -99,4 +117,43 @@
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
         app:srcCompat="@drawable/icons8_automation_48" />
+
+    <Button
+        android:id="@+id/passwordbutton"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="12dp"
+        android:text="Change Password"
+        android:onClick="passwordButtonOnClick"
+        app:layout_constraintBottom_toTopOf="@+id/closeAccountButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.929" />
+
+    <Button
+        android:id="@+id/closeAccountButton"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:text="Close Account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.387"
+        />
+
+    <Button
+        android:id="@+id/button_credits"
+        android:layout_width="102dp"
+        android:layout_height="38dp"
+        android:text="Credits"
+        android:onClick="creditsButtonOnClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.884" />
 </androidx.constraintlayout.widget.ConstraintLayout>

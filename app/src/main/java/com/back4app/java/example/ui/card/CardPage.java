@@ -36,7 +36,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 
-public class CardActivity extends AppCompatActivity {
+public class CardPage extends AppCompatActivity {
     private String cardNumber;
     private String PIN;
     private String cvv;
@@ -70,7 +70,7 @@ public class CardActivity extends AppCompatActivity {
         cardDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardPage.this);
                 builder.setCancelable(true);
                 builder.setTitle("These are your card details:");
                 builder.setMessage("Card Number: " + cardNumber + "\n" +"CVV: " + cvv + "\n" +"Expiry Date: "+ expiryDate);
@@ -92,11 +92,11 @@ public class CardActivity extends AppCompatActivity {
         viewPINButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardPage.this);
                 builder.setCancelable(true);
                 builder.setTitle("Please enter your password");
                 // Set up the input
-                final EditText input = new EditText(CardActivity.this);
+                final EditText input = new EditText(CardPage.this);
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 input.setGravity(Gravity.CENTER);
@@ -107,7 +107,7 @@ public class CardActivity extends AppCompatActivity {
                         userInputPassword = input.getText().toString();
                         try {
                             boolean checkPassword = databaseMethods.attemptLogin(username, userInputPassword);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CardPage.this);
                             builder.setCancelable(true);
                             if (checkPassword){
                                 builder.setMessage("PIN: " + PIN);
@@ -134,11 +134,11 @@ public class CardActivity extends AppCompatActivity {
         removeCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardPage.this);
                 builder.setCancelable(true);
                 builder.setTitle("Please enter your 4-digit PIN to remove the card");
                 // Set up the input
-                final EditText input = new EditText(CardActivity.this);
+                final EditText input = new EditText(CardPage.this);
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
                 input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
@@ -148,7 +148,7 @@ public class CardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         userInputPIN = input.getText().toString();
-                        AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CardPage.this);
                         builder.setCancelable(true);
                         if (userInputPIN.equals(PIN)){
                             removeCardFromDB();
@@ -184,11 +184,11 @@ public class CardActivity extends AppCompatActivity {
         changePINButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(CardPage.this);
                 builder.setCancelable(true);
                 builder.setTitle("Please enter your current 4-digit PIN");
                 // Set up the input
-                final EditText input = new EditText(CardActivity.this);
+                final EditText input = new EditText(CardPage.this);
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
                 input.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
@@ -198,12 +198,12 @@ public class CardActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         userInputOldPIN = input.getText().toString();
-                        AlertDialog.Builder builder1 = new AlertDialog.Builder(CardActivity.this);
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(CardPage.this);
                         builder1.setCancelable(true);
                         if(userInputOldPIN.equals(PIN)){
                             builder1.setTitle("Please choose a new 4-digit PIN");
                             // Set up the input
-                            final EditText input1 = new EditText(CardActivity.this);
+                            final EditText input1 = new EditText(CardPage.this);
                             // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                             input1.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
                             input1.setFilters(new InputFilter[] { new InputFilter.LengthFilter(4) });
@@ -213,12 +213,12 @@ public class CardActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     userInputNewPIN = input1.getText().toString();
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(CardPage.this);
                                     builder.setCancelable(true);
                                     if (userInputNewPIN.length() == 4) {
-                                        builder.setTitle("Please reenter your new 4-digit PIN");
+                                        builder.setTitle("Please re-enter your new 4-digit PIN");
                                         // Set up the input
-                                        final EditText input2 = new EditText(CardActivity.this);
+                                        final EditText input2 = new EditText(CardPage.this);
                                         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                                         input2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
                                         input2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
@@ -228,7 +228,7 @@ public class CardActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 userInputNewPINReenter = input2.getText().toString();
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(CardActivity.this);
+                                                AlertDialog.Builder builder = new AlertDialog.Builder(CardPage.this);
                                                 builder.setCancelable(true);
                                                 if (userInputNewPIN.equals(userInputNewPINReenter)) {
                                                     updatePINInDB(userInputNewPIN);
@@ -281,6 +281,9 @@ public class CardActivity extends AppCompatActivity {
                 if (e == null) {
                     username = result.getString("username");
                 }
+                else {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -292,9 +295,12 @@ public class CardActivity extends AppCompatActivity {
         query.getInBackground(cardID, new GetCallback<ParseObject>() {
             public void done(ParseObject entity, ParseException e) {
                 if (e == null) {
-                        entity.deleteInBackground();
-                    }
+                    entity.deleteInBackground();
                 }
+                else {
+                    e.printStackTrace();
+                }
+            }
         });
     }
 
@@ -342,6 +348,9 @@ public class CardActivity extends AppCompatActivity {
                     // All other fields will remain the same
                     entity.saveInBackground();
                 }
+                else {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -382,6 +391,9 @@ public class CardActivity extends AppCompatActivity {
                     accountID = account.getObjectId();
                     ((TextView)findViewById(R.id.accountNumber)).setText("Account Number:" + " " + accountNumber);
                     ((TextView)findViewById(R.id.sortCode)).setText("Sort Code:" + " " + sortCode);
+                }
+                else {
+                    e.printStackTrace();
                 }
             }
         });
@@ -426,6 +438,9 @@ public class CardActivity extends AppCompatActivity {
                     isFrozen = result.getBoolean("Frozen");
                     setFreezeChecked();
                 }
+                else {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -461,6 +476,9 @@ public class CardActivity extends AppCompatActivity {
                     entity.put("PIN", newPIN);
                     // All other fields will remain the same
                     entity.saveInBackground();
+                }
+                else {
+                    e.printStackTrace();
                 }
             }
         });

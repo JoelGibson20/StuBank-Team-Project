@@ -10,11 +10,14 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static android.content.ContentValues.TAG;
 
 public class databaseMethods {
     public static boolean hasCard;
@@ -185,7 +188,7 @@ public class databaseMethods {
     public static List<ParseObject> getAllAccountsOfOneUser() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
 
-        query.whereEqualTo("accountOwner", databaseMethods.getCurrentUser().getObjectId());
+        query.whereEqualTo("accountOwner", getCurrentUser().getObjectId());
         try {
             return (query.find());
         }
@@ -207,11 +210,25 @@ public class databaseMethods {
         }
     }
 
-    public static List<ParseObject> getTransaction(String Object_ID){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
-        query.whereEqualTo("objectId", Object_ID);
+    public static List<ParseObject> getTransaction(String Accountnum, String date){
+        ParseQuery<ParseObject> accountquery = ParseQuery.getQuery("Transactions");
+
+
+        accountquery.whereEqualTo("outgoingAccount", Accountnum);
+
+        ParseQuery<ParseObject> datequery = ParseQuery.getQuery("Transactions");
+
+        datequery.whereEqualTo("transactionDate", date);
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+
+        queries.add(accountquery);
+        queries.add(datequery);
+
+        ParseQuery<ParseObject> mainquery = ParseQuery.or(queries);
+
         try{
-            return (query.find());
+            return (mainquery.find());
 
         }
         catch (ParseException e){
@@ -220,6 +237,22 @@ public class databaseMethods {
         }
 
     }
+
+    public static void changePassword(String Password){
+        ParseObject currentUser = getCurrentUser();
+
+        currentUser.put("password", Password);
+
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+            }
+        });
+    }
+
+
+
     public static List<ParseObject> getTransactionsForAccount(String accountID) throws ParseException {
         ParseQuery<ParseObject> outgoingTransactions = ParseQuery.getQuery("Transactions");
         outgoingTransactions.whereEqualTo("outgoingAccount", accountID);

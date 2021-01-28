@@ -1,5 +1,6 @@
 package com.back4app.java.example.ui.graph;
 
+// structure of item to be added to RecyclerView that displays total amount of money sent to each seller
 public class ExampleItem {
     private int mImageResource;
     private String mText1;

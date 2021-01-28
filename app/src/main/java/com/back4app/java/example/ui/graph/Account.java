@@ -21,6 +21,7 @@ public class Account {
         this.balance = balance;
     }
 
+    // getters and setters for all attributes
     public String getID() {
         return ID;
     }
@@ -77,6 +78,7 @@ public class Account {
         this.balance = balance;
     }
 
+    // displays account name when toString is called
     @Override
     public String toString(){
         return accountName;

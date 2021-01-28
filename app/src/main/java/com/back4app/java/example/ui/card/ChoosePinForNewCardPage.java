@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -28,7 +30,7 @@ import java.time.LocalDate;
 import java.util.Random;
 
 
-public class ChoosePinForNewCard extends AppCompatActivity {
+public class ChoosePinForNewCardPage extends AppCompatActivity {
     private String PIN;
     private String PINREENTER;
     static final private String DIGITS = "0123456789";
@@ -41,6 +43,7 @@ public class ChoosePinForNewCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_pin_for_new_card);
         getAccountID();
+        randomDigit();
 
         //confirm to create new card on click
         Button button = (Button) findViewById(R.id.confirmNewCard);
@@ -52,7 +55,7 @@ public class ChoosePinForNewCard extends AppCompatActivity {
                 EditText pin2 = (EditText) findViewById(R.id.PIN);
                 PIN = pin.getText().toString();
                 PINREENTER = pin2.getText().toString();
-                AlertDialog.Builder builder = new AlertDialog.Builder(ChoosePinForNewCard.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ChoosePinForNewCardPage.this);
                 if(!PIN.equals(PINREENTER)){
                     builder.setMessage("The entered PINs don't match. Please try again!");
                 }
@@ -67,12 +70,16 @@ public class ChoosePinForNewCard extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            Intent intent = new Intent(getApplicationContext(), CardActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), CardPage.class);
                             startActivity(intent);
                         }
                     }, 1000L);
                 }
-                builder.show();
+                AlertDialog dialog4 = builder.show();
+                TextView messageText = (TextView) dialog4.findViewById(android.R.id.message);
+                assert messageText != null;
+                messageText.setGravity(Gravity.CENTER);
+                dialog4.show();
             }
         });
     }
@@ -135,7 +142,9 @@ public class ChoosePinForNewCard extends AppCompatActivity {
             public void done(ParseObject account, ParseException e) {
                 if (e == null) {
                     accountID = account.getObjectId();
-                    System.out.println(accountID);
+                }
+                else {
+                    e.printStackTrace();
                 }
             }
         });
