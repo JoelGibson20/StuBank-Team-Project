@@ -13,19 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Back4AppExample">
-        <activity
-            android:name=".NewRecipientTabbed"
-            android:label="@string/title_activity_new_recipient_tabbed"
-            android:theme="@style/Theme.Back4AppExample.NoActionBar"></activity>
-        <activity android:name=".TransferToOthers" />
-        <activity android:name=".TransferBetweenOwnAccounts" />
-        <activity android:name=".TransferComplete" />
-        <activity android:name=".NewRecipient" />
+        <activity android:name=".ui.vaultPage.VaultPage" />
+        <activity android:name=".ui.CreditsPage" />
+        <activity android:name=".ui.accountPage.AccountPage" />
+        <activity android:name=".ui.card.ChoosePinForNewCardPage" />
+        <activity android:name=".ui.card.CreateCardPage" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.pound.PoundActivity" />
+        <activity android:name=".ui.graph.CalendarActivity" />
+        <activity android:name=".ui.graph.DateTransferActivity" />
         <activity android:name=".ui.graph.GraphActivity" />
-        <activity android:name=".ui.card.CardActivity" />
-        <activity android:name=".HomeScreen" />
+        <activity android:name=".ui.card.CardPage" />
+        <activity android:name=".ui.HomeScreen" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login">

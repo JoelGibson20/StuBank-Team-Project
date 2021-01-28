@@ -4,33 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingsActivity">
-
-    <Button
-        android:id="@+id/logoutbutton"
-        android:layout_width="328dp"
-        android:layout_height="48dp"
-        android:text="Log out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/closeAccountButton"
-        app:layout_constraintVertical_bias="0.07" />
+    tools:context=".ui.graph.CalendarActivity">
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
+        android:id="@+id/myDate"
+        android:layout_width="132dp"
+        android:layout_height="42dp"
         android:textSize="23sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintVertical_bias="0.143" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
@@ -77,18 +63,18 @@
 
     <ImageButton
         android:id="@+id/poundImageButton"
+        android:onClick="poundButtonOnClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:background="#0000"
-        android:onClick="poundButtonOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintEnd_toStartOf="@+id/cardImageButton"
         app:layout_constraintStart_toEndOf="@+id/graphImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
-        app:srcCompat="@drawable/icons8_data_transfer_48" />
+        app:srcCompat="@drawable/icons8_money_pound_48" />
 
     <ImageButton
         android:id="@+id/cardImageButton"
@@ -118,42 +104,49 @@
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
         app:srcCompat="@drawable/icons8_automation_48" />
 
-    <Button
-        android:id="@+id/passwordbutton"
-        android:layout_width="328dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="12dp"
-        android:text="Change Password"
-        android:onClick="passwordButtonOnClick"
-        app:layout_constraintBottom_toTopOf="@+id/closeAccountButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="363dp"
+        android:layout_height="375dp"
+        app:layout_constraintBottom_toBottomOf="@+id/homeBottomAppBar"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.929" />
+        app:layout_constraintVertical_bias="0.432"
+        tools:layout_editor_absoluteX="24dp" />
 
     <Button
-        android:id="@+id/closeAccountButton"
-        android:layout_width="328dp"
-        android:layout_height="48dp"
-        android:text="Close Account"
+        android:id="@+id/button_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cancelbuttonOnClick"
+        android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.626"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387"
-        />
+        app:layout_constraintVertical_bias="0.918" />
 
     <Button
-        android:id="@+id/button_credits"
-        android:layout_width="102dp"
-        android:layout_height="38dp"
-        android:text="Credits"
-        android:onClick="creditsButtonOnClick"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/button_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ok"
+        android:onClick="okbuttonOnClick"
+        app:layout_constraintBottom_toBottomOf="@+id/gearsImageButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toEndOf="@+id/button_cancel"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.884" />
+        app:layout_constraintVertical_bias="0.918" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calendar"
+        android:textStyle="bold"
+        android:textSize="23sp"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="16dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

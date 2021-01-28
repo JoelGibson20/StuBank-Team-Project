@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.accountPage.AccountPage">
+    tools:context=".ui.vaultPage.VaultPage">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:id="@+id/accountTopBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/teal_700">
+            android:background="@color/teal_200">
 
             <EditText
                 android:id="@+id/accountName"
@@ -46,7 +46,7 @@
                 android:adjustViewBounds="false"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/unlocked"
-                android:contentDescription="@string/account_unlocked_description" />
+                android:contentDescription="@string/rename_account_hint" />
 
             <ImageView
                 android:id="@+id/lockedImage"
@@ -57,74 +57,50 @@
                 android:adjustViewBounds="false"
                 android:visibility="invisible"
                 app:srcCompat="@drawable/locked"
-                android:contentDescription="@string/account_locked_description" />
+                android:contentDescription="@string/lock_account_description" />
         </FrameLayout>
-
-        <TextView
-            android:id="@+id/accountNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/account_number_default"
-            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="40dp"
-            android:background="@color/teal_700"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:background="@color/teal_200"
             android:text="@string/balance"
             android:textSize="24sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/sortCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginStart="10dp"
-            android:text="@string/sortcode_default"
-            android:textSize="16sp" />
 
         <LinearLayout
             android:id="@+id/buttonBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/renameButton"
+                style="android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:backgroundTint="@color/teal_200"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="@string/renameButton"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:cornerRadius="10dp" />
 
             <Button
                 android:id="@+id/lockButton"
                 style="android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="0.5"
-                android:backgroundTint="@color/teal_700"
+                android:layout_weight="0.33"
+                android:backgroundTint="@color/teal_200"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                app:cornerRadius="10dp" />
-
-            <Button
-                android:id="@+id/shareDetailsButton"
-                style="android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_weight="0.5"
-                android:backgroundTint="@color/teal_700"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="@string/shareDetailsButton"
                 android:textSize="13sp"
                 android:textStyle="bold"
                 app:cornerRadius="10dp" />
@@ -156,13 +132,11 @@
             android:layout_marginTop="5dp">
 
             <LinearLayout
-                android:id="@+id/accountTransactionsLayout"
+                android:id="@+id/vaultTransactionsList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
         </ScrollView>
 
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
