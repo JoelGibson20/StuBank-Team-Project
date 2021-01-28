@@ -57,7 +57,7 @@ public class VaultPage extends AppCompatActivity {
         setLockButtonText(accountParseObject,lockButton);
 
         try { //Create the cards for the transactions list
-            createMyCardView(databaseMethods.getTransactionsForAccount(accountParseObject.getString("accountNumber")));
+            createMyCardView(databaseMethods.getTransactionsForAccount(accountParseObject.getString("sortCode") + " " + accountParseObject.getString("accountNumber")));
         } catch (ParseException e) {
             e.printStackTrace();
         }

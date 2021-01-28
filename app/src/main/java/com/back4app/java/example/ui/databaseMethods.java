@@ -253,13 +253,13 @@ public class databaseMethods {
 
 
 
-    public static List<ParseObject> getTransactionsForAccount(String accountID) throws ParseException {
+    public static List<ParseObject> getTransactionsForAccount(String sortCodeAccountNumber) throws ParseException {
         ParseQuery<ParseObject> outgoingTransactions = ParseQuery.getQuery("Transactions");
-        outgoingTransactions.whereEqualTo("outgoingAccount", accountID);
+        outgoingTransactions.whereEqualTo("outgoingAccount", sortCodeAccountNumber);
         //Get outgoing transactions
 
         ParseQuery<ParseObject> ingoingTransactions = ParseQuery.getQuery("Transactions");
-        ingoingTransactions.whereEqualTo("ingoingAccount", accountID);
+        ingoingTransactions.whereEqualTo("ingoingAccount", sortCodeAccountNumber);
         //Get ingoing transactions
 
         List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
