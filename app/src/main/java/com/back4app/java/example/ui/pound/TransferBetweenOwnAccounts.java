@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -70,6 +71,7 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
                             });
                     ad1.show();
                 } else {
+
                     try {
                         ParseObject outgoingAccountObject = databaseMethods.outgoingAccount(selectedAccount1);
                         ParseObject incomingAccountObject = databaseMethods.outgoingAccount(selectedAccount2);
@@ -84,41 +86,45 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
                         Double outgoingBalanceDob = Double.parseDouble(outgoingBalance);
                         Double incomingBalanceDob = Double.parseDouble(incomingBalance);
                         EditText et = (EditText) findViewById(R.id.amountToOwnAcc);
-                        String amount = et.getText().toString();
-                        Double amountDob = Double.parseDouble(amount);
-                        if (amountDob <= outgoingBalanceDob) {
-                            Double newOutgoingBalance = (outgoingBalanceDob - amountDob);
-                            Double newIncomingBalance = (incomingBalanceDob + amountDob);
-
-                            DecimalFormat df = new DecimalFormat("#.00");
-                            String newOutgoingBalanceStr = currencySymbol + (df.format(newOutgoingBalance).toString());
-                            String newIncomingBalanceStr = currencySymbol + (df.format(newIncomingBalance).toString());
-
-                            outgoingAccountObject.put("balance", newOutgoingBalanceStr);
-                            incomingAccountObject.put("balance", newIncomingBalanceStr);
-                            outgoingAccountObject.saveInBackground();
-                            incomingAccountObject.saveInBackground();
-
-                            Intent intent = new Intent(getApplicationContext(), TransferComplete.class);
-                            startActivity(intent);
-                        } else {
-
-                            //Create dialogue which is presented to user if the outgoing account has a
-                            //balance less than the amount they wish to transfer
-                            AlertDialog ad1 = new AlertDialog.Builder(context).create();
-                            ad1.setTitle("Insufficient Funds");
-                            ad1.setMessage("Please add funds or transfer from a different account");
-                            ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                            ad1.show();
+                        if (TextUtils.isEmpty(et.getText())) {
+                            et.setError("Enter an amount");
                         }
+                        else {
+                            String amount = et.getText().toString();
+                            Double amountDob = Double.parseDouble(amount);
+                            if (amountDob <= outgoingBalanceDob) {
+                                Double newOutgoingBalance = (outgoingBalanceDob - amountDob);
+                                Double newIncomingBalance = (incomingBalanceDob + amountDob);
+
+                                DecimalFormat df = new DecimalFormat("#.00");
+                                String newOutgoingBalanceStr = currencySymbol + (df.format(newOutgoingBalance).toString());
+                                String newIncomingBalanceStr = currencySymbol + (df.format(newIncomingBalance).toString());
+
+                                outgoingAccountObject.put("balance", newOutgoingBalanceStr);
+                                incomingAccountObject.put("balance", newIncomingBalanceStr);
+                                outgoingAccountObject.saveInBackground();
+                                incomingAccountObject.saveInBackground();
+
+                                Intent intent = new Intent(getApplicationContext(), TransferComplete.class);
+                                startActivity(intent);
+                            } else {
+
+                                //Create dialogue which is presented to user if the outgoing account has a
+                                //balance less than the amount they wish to transfer
+                                AlertDialog ad1 = new AlertDialog.Builder(context).create();
+                                ad1.setTitle("Insufficient Funds");
+                                ad1.setMessage("Please add funds or transfer from a different account");
+                                ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                ad1.show();
+                            }
 
 
-                    } catch (ParseException e) {
+                        } } catch (ParseException e) {
                         e.printStackTrace();
                     }
 

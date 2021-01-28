@@ -78,7 +78,7 @@ public class TransferToOthers extends AppCompatActivity {
         }
         try {
 
-           //Iterates through a user's accounts ensuring saved transactions are presented from all
+            //Iterates through a user's accounts ensuring saved transactions are presented from all
             //of them
             for (int x=0;x<accountsList.size();x++) {
                 ParseObject account = accountsList.get(x);
@@ -88,14 +88,28 @@ public class TransferToOthers extends AppCompatActivity {
                 savedTransactions.addAll(databaseMethods.getSavedTransactions(accountNumber));
 
             }
+
+            //Add transactions to set to remove duplicates
+            Set<ParseObject> savedTransactionsSet = new HashSet<>(savedTransactions);
+            Set<String> savedAccountsSet = new HashSet<>();
+            for(int i=0; i<savedTransactions.size();i++) {
+                ParseObject savedPayee = savedTransactions.get(i);
+                String accountNumber = savedPayee.get("ingoingAccount").toString();
+                savedAccountsSet.add(accountNumber);
+                System.out.println(savedTransactionsSet);
+            }
+            System.out.println(savedAccountsSet);
+            List<String> savedAccountsList = new ArrayList<>(savedAccountsSet);
+            savedTransactions.clear();
+            for(int i=0;i<savedAccountsList.size();i++){
+            String account = savedAccountsList.get(i);
+            savedTransactions.add(databaseMethods.getTransactions(account));
+        }
+
         }
         catch (ParseException e) {
             e.printStackTrace();
         }
-        //Add transactions to set to remove duplicates
-        Set<ParseObject> savedTransactionsSet = new HashSet<>(savedTransactions);
-        savedTransactions.clear();
-        savedTransactions.addAll(savedTransactionsSet);
 
        //Find layout to use with Card View
         LinearLayout linearLayout = findViewById(R.id.linearLayoutTransactions);

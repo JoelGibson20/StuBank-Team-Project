@@ -105,7 +105,14 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
 
         } else if (TextUtils.isEmpty(amountET.getText())) {
             amountET.setError("Please enter an amount!");
-        } else {
+        }
+        else if (TextUtils.isEmpty(sortCodeET.getText())) {
+            sortCodeET.setError("Please enter a sort code!");
+        }
+        else if (TextUtils.isEmpty(payeeNameET.getText())) {
+            payeeNameET.setError("Please enter a name!");
+        }
+        else {
 
                 String payeeName = payeeNameET.getText().toString();
                 ParseObject incomingAccount =null;

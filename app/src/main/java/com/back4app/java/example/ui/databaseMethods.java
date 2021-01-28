@@ -413,6 +413,15 @@ public class databaseMethods {
         return account;
 
 
+    }
+public static ParseObject getTransactions(String account) throws ParseException {
+        ParseQuery query = ParseQuery.getQuery("Transactions");
+                query.whereEqualTo("ingoingAccount", account);
+                query.find();
+                return query.getFirst();
+
+
+    }
 
 
 
@@ -427,9 +436,7 @@ public class databaseMethods {
 
 
 
-
-
-    }}
+   }
 
 
 
