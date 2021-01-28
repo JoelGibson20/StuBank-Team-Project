@@ -8,11 +8,16 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pound activity?"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="291dp" />
+        android:layout_width="195dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
+        android:text="Transfers"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/homeBottomAppBar"
@@ -26,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greeting"
-        app:layout_constraintVertical_bias="1.0" />
+    app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/homeImageButton"
@@ -99,4 +104,33 @@
         app:layout_constraintStart_toEndOf="@+id/cardImageButton"
         app:layout_constraintTop_toTopOf="@+id/homeBottomAppBar"
         app:srcCompat="@drawable/icons8_automation_48" />
+
+
+
+
+    <Button
+        android:id="@+id/ownAccountButton"
+        android:layout_height="48dp"
+        android:text="Transfer Bewteen Own Accounts"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.379"
+        android:layout_width="326dp" />
+
+    <Button
+        android:id="@+id/otherAccountButton"
+        android:layout_width="326dp"
+        android:layout_height="48dp"
+        android:text="Transfer to others"
+        app:layout_constraintBottom_toBottomOf="@+id/poundImageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

@@ -77,7 +77,7 @@ public class databaseMethods {
         } catch (ParseException e) {
             System.out.println(e);
         }
-        return(userDetails);
+        return (userDetails);
     }
 
     public static ParseObject getCurrentUser(){
