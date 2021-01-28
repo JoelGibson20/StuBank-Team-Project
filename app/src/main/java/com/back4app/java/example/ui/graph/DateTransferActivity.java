@@ -58,8 +58,10 @@ public class DateTransferActivity extends CalendarActivity {
         transferdate = intent.getStringExtra("TransferDate");
 
         final Button backbutton = findViewById(R.id.backbutton);
+        Log.d(TAG, "--------------------------");
+        Log.d(TAG, accountnumber);
 
-
+        //String sortnum = sortcode + " " + accountnumber;
         readObject(accountnumber, transferdate);
 
 

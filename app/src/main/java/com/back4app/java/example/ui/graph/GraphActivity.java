@@ -288,12 +288,15 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void calendarButtonOnClick(View v) {
-
-        String accnum = selectedAccount.getAccountNumber();
-
+        String sortnum = selectedAccount.getSortCode() + " " + selectedAccount.getAccountNumber();
+        //String accnum = selectedAccount.getAccountNumber();
+        //String sort = selectedAccount.getSortCode();
+        //.d(TAG, "----------------");
+        //Log.d(TAG, sort);
         Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
         intent.putExtra("selectedAccount", selectedAccount.toString());
-        intent.putExtra("accountnumber", accnum);
+        intent.putExtra("accountnumber", sortnum);
+        //intent.putExtra("sortcode", sort);
         startActivity(intent);
     }
 

@@ -27,7 +27,7 @@ public class CalendarActivity extends GraphActivity {
 
     String selectedAccount;
     String accountnumber;
-
+    String sortcode;
     String TransferDate;
 
     @Override
@@ -40,7 +40,10 @@ public class CalendarActivity extends GraphActivity {
         Intent intent = getIntent();
         selectedAccount = intent.getStringExtra("selectedAccount");
         accountnumber = intent.getStringExtra("accountnumber");
+        //ortcode = intent.getStringExtra("sortcode");
 
+        //.d(TAG, "------------");
+        //Log.d(TAG, sortcode);
 
         //changes the date depending on which date is clicked on the calendar.
         calendarview.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -143,6 +146,7 @@ public class CalendarActivity extends GraphActivity {
         intent.putExtra("selectedAccount", selectedAccount);
         intent.putExtra("accountnumber", accountnumber);
         intent.putExtra("TransferDate", TransferDate);
+        //intent.putExtra("sortcode", sortcode);
 
         startActivity(intent);
     }
