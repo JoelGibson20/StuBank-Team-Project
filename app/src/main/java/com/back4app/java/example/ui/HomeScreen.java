@@ -226,7 +226,7 @@ public class HomeScreen extends AppCompatActivity {
                 cardview.setClipToPadding(true);
 
             /*Add onClickListener so when the account is clicked, the account ParseObject can be
-            passed to the account page to */
+            passed to the account page */
                 int finalI = i;
                 cardview.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
