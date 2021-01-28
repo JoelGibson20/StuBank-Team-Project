@@ -78,7 +78,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                selectedAccount = (Account) parent.getSelectedItem();
-               transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
+               transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getSortCode() + " "+ selectedAccount.getAccountNumber());
                fillTransactionRecycler(totalTransactionsFromAllSellers());
                buildTransactionsRecycler();
                buildPieChart();
@@ -219,14 +219,14 @@ public class GraphActivity extends AppCompatActivity {
     // returns how much was payed to a given seller from one account
     private String totalTransactionsFromOneSeller(String seller){
         String userAccountNumber = selectedAccount.getAccountNumber();
-        int total = 0;
+        float total = 0;
         for (ParseObject transaction : transactionList) {
             if(transaction.getString("ingoingAccount").equals(seller)){
                 String valueAsString = transaction.getString("value");
-                total += Integer.parseInt(valueAsString.substring(1));
+                total += Float.parseFloat(valueAsString.substring(1));
             }
         }
-        return Integer.toString(total);
+        return Float.toString(total);
     }
 
 

@@ -210,11 +210,25 @@ public class databaseMethods {
         }
     }
 
-    public static List<ParseObject> getTransaction(String Object_ID){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
-        query.whereEqualTo("objectId", Object_ID);
+    public static List<ParseObject> getTransaction(String Accountnum, String date){
+        ParseQuery<ParseObject> accountquery = ParseQuery.getQuery("Transactions");
+
+
+        accountquery.whereEqualTo("outgoingAccount", Accountnum);
+
+        ParseQuery<ParseObject> datequery = ParseQuery.getQuery("Transactions");
+
+        datequery.whereEqualTo("transactionDate", date);
+
+        List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+
+        queries.add(accountquery);
+        queries.add(datequery);
+
+        ParseQuery<ParseObject> mainquery = ParseQuery.or(queries);
+
         try{
-            return (query.find());
+            return (mainquery.find());
 
         }
         catch (ParseException e){
@@ -223,6 +237,21 @@ public class databaseMethods {
         }
 
     }
+
+    public static void changePassword(String Password){
+        ParseObject currentUser = getCurrentUser();
+
+        currentUser.put("password", Password);
+
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+            }
+        });
+    }
+
+
     public static List<ParseObject> getTransactionsForAccount(String accountID) throws ParseException {
         ParseQuery<ParseObject> outgoingTransactions = ParseQuery.getQuery("Transactions");
         outgoingTransactions.whereEqualTo("outgoingAccount", accountID);
