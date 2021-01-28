@@ -297,7 +297,7 @@ public class GraphActivity extends AppCompatActivity {
 
     public void calendarButtonOnClick(View v) {
 
-        String accnum = selectedAccount.getAccountNumber();
+        String accnum = selectedAccount.getSortCode() + " " + selectedAccount.getAccountNumber();
 
         Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
         intent.putExtra("selectedAccount", selectedAccount.toString());
