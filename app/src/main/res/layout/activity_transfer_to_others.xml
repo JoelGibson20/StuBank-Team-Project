@@ -45,11 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="207dp"
-        tools:layout_editor_absoluteY="191dp" />
+
     <LinearLayout
         android:id="@+id/linearLayoutTransactions"
         android:layout_width="match_parent"
