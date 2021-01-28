@@ -50,11 +50,23 @@
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="207dp"
         tools:layout_editor_absoluteY="191dp" />
-<LinearLayout
-    android:id="@+id/linearLayoutTransactions"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="150dp"/>
+    <LinearLayout
+        android:id="@+id/linearLayoutTransactions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="150dp">
+
+        <TextView
+            android:id="@+id/noPayees"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="120dp"
+            android:text="No saved payees! Tap the button below to get started!"
+            android:textAlignment="center"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

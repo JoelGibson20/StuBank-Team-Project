@@ -207,10 +207,6 @@ public class databaseMethods {
         query.whereEqualTo("accountNumber", accountNumber);
         query.find();
         ParseObject account = query.getFirst();
-        //String accountOwner = account.get("accountOwner").toString();
-
-
-
 
         return account;
     }

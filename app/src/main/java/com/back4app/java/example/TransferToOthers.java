@@ -46,12 +46,16 @@ import com.parse.ParseObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 public class TransferToOthers extends AppCompatActivity {
     String selectedAccount;
     EditText amountET;
     EditText referenceET;
     ParseObject outgoingAccountOwnerObject;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -104,6 +108,10 @@ public class TransferToOthers extends AppCompatActivity {
         catch (ParseException e) {
             e.printStackTrace();
         }
+        //Add transactions to set to remove duplicates
+        Set<ParseObject> savedTransactionsSet = new HashSet<>(savedTransactions);
+        savedTransactions.clear();
+        savedTransactions.addAll(savedTransactionsSet);
 
        //Find layout to use with Card View
         LinearLayout linearLayout = findViewById(R.id.linearLayoutTransactions);
@@ -113,6 +121,10 @@ public class TransferToOthers extends AppCompatActivity {
         );
 
         for (int i = 0; i < savedTransactions.size(); i++) {
+            if (savedTransactions.size()<1) {
+                TextView tv = (TextView) findViewById(R.id.noPayees);
+                tv.setVisibility(View.VISIBLE);
+            }
 
             String incomingAccount = savedTransactions.get(i).getString("ingoingAccount");
             try {
@@ -120,7 +132,8 @@ public class TransferToOthers extends AppCompatActivity {
                 final String outgoingAccountOwner = outgoingAccountOwnerObject.get("accountOwner").toString();
                 outgoingUser = databaseMethods.getUserNames(outgoingAccountOwner);
                 text = outgoingUser + " " + "(" + incomingAccount + ")";
-            } catch (ParseException e) {
+            }
+            catch (ParseException e) {
                 e.printStackTrace();
             }
 

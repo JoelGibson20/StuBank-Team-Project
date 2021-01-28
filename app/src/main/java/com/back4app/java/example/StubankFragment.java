@@ -30,6 +30,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.parse.Parse.getApplicationContext;
+
 public class StubankFragment extends Fragment implements View.OnClickListener {
     final Context context = getActivity();
     String selectedAccount = "";
@@ -218,8 +220,6 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
 
             List<ParseObject> finalAccountsList = accountsList;
 
-
-           // populateSpinner(accountsList, view);
         }
 
     }
@@ -228,7 +228,6 @@ public String populateSpinner(List<ParseObject> accountsList, View view) {
         for (int i = 0; i < accountsList.size(); i++) {
             accountsNameList.add(accountsList.get(i).getString("accountName"));
         }
-
         Spinner spinner = (Spinner) view.findViewById(R.id.accounts_spinner_stubank);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
