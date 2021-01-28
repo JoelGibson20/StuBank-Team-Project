@@ -202,6 +202,16 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
 
             } catch (ParseException e) {
                 e.printStackTrace();
+                AlertDialog ad3 = new AlertDialog.Builder(getActivity()).create();
+                ad3.setTitle("Stubank Account Not Found");
+                ad3.setMessage("Please try again");
+                ad3.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                ad3.show();
             }
 
 
