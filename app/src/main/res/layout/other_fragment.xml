@@ -123,17 +123,7 @@
                 app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <CheckBox
-                android:id="@+id/checkBoxOther"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Save payee for later use"
-                android:layout_gravity="center_horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.53"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
             <Button
                 android:id="@+id/sendbutton"
                 android:layout_width="wrap_content"

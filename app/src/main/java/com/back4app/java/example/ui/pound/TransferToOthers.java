@@ -100,16 +100,16 @@ public class TransferToOthers extends AppCompatActivity {
             List<String> savedAccountsList = new ArrayList<>(savedAccountsSet);
             savedTransactions.clear();
             for(int i=0;i<savedAccountsList.size();i++){
-            String account = savedAccountsList.get(i);
-            savedTransactions.add(databaseMethods.getTransactions(account));
-        }
+                String account = savedAccountsList.get(i);
+                savedTransactions.add(databaseMethods.getTransactions(account));
+            }
 
         }
         catch (ParseException e) {
             e.printStackTrace();
         }
 
-       //Find layout to use with Card View
+        //Find layout to use with Card View
         LinearLayout linearLayout = findViewById(R.id.linearLayoutTransactions);
         LinearLayout.LayoutParams layoutparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -188,106 +188,106 @@ public class TransferToOthers extends AppCompatActivity {
 
                     builder.setView(spinnerView);
                     builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    ParseObject outgoingAccount = null;
-                                    try {
-                                        outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
-                                    } catch (ParseException e) {
-                                        System.out.println("Fail 2");
-                                        e.printStackTrace();
-                                    }
-                                    String originalBalance = outgoingAccount.get("balance").toString();
-                                    String outgoingAccountNumber = outgoingAccount.get("accountNumber").toString();
-                                    String outgoingAccountSort = outgoingAccount.get("sortCode").toString();
-                                    outgoingAccountNumber = outgoingAccountSort + " " + outgoingAccountNumber;
-                                    String currencySymbol = originalBalance.substring(0, 1);
-                                    Double originalBalanceDob = Double.parseDouble(originalBalance.substring(1));
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ParseObject outgoingAccount = null;
+                            try {
+                                outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
+                            } catch (ParseException e) {
+                                System.out.println("Fail 2");
+                                e.printStackTrace();
+                            }
+                            String originalBalance = outgoingAccount.get("balance").toString();
+                            String outgoingAccountNumber = outgoingAccount.get("accountNumber").toString();
+                            String outgoingAccountSort = outgoingAccount.get("sortCode").toString();
+                            outgoingAccountNumber = outgoingAccountSort + " " + outgoingAccountNumber;
+                            String currencySymbol = originalBalance.substring(0, 1);
+                            Double originalBalanceDob = Double.parseDouble(originalBalance.substring(1));
 
 
-                                    if (TextUtils.isEmpty(referenceET.getText())) {
-                                        referenceET.setError("Please enter a reference!");
-                                        Toast.makeText(getBaseContext(), "Please enter a reference", Toast.LENGTH_LONG).show();
-                                    } else if (TextUtils.isEmpty(amountET.getText())) {
-                                        Toast.makeText(getBaseContext(), "Please enter an amount", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        String amount = amountET.getText().toString();
-                                        Double amountDob = null;
-                                        if (!amount.equals("")) {
-                                            amountDob = Double.parseDouble(amount);
-                                        }
-                                        String reference = referenceET.getText().toString();
+                            if (TextUtils.isEmpty(referenceET.getText())) {
+                                referenceET.setError("Please enter a reference!");
+                                Toast.makeText(getBaseContext(), "Please enter a reference", Toast.LENGTH_LONG).show();
+                            } else if (TextUtils.isEmpty(amountET.getText())) {
+                                Toast.makeText(getBaseContext(), "Please enter an amount", Toast.LENGTH_LONG).show();
+                            } else {
+                                String amount = amountET.getText().toString();
+                                Double amountDob = null;
+                                if (!amount.equals("")) {
+                                    amountDob = Double.parseDouble(amount);
+                                }
+                                String reference = referenceET.getText().toString();
 
-                                        ParseObject incomingAccount = outgoingAccountOwnerObject;
+                                ParseObject incomingAccount = outgoingAccountOwnerObject;
 
-                                        String oldIncomingBalance = finalIncoming.get("balance").toString();
-                                        String incomingAccountName = finalIncoming.get("accountName").toString();
-                                        String incomingAccountNumber = finalIncoming.get("sortCode").toString();
-                                        incomingAccountNumber = incomingAccountNumber + " " + finalIncoming.get("accountNumber");
-                                        Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
-
-
-                                        if (amountDob <= originalBalanceDob) {
+                                String oldIncomingBalance = finalIncoming.get("balance").toString();
+                                String incomingAccountName = finalIncoming.get("accountName").toString();
+                                String incomingAccountNumber = finalIncoming.get("sortCode").toString();
+                                incomingAccountNumber = incomingAccountNumber + " " + finalIncoming.get("accountNumber");
+                                Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
 
 
-                                            AlertDialog ad2 = new AlertDialog.Builder(context).create();
-                                            ad2.setTitle("Confirm Transfer");
-                                            Double finalAmountDob = amountDob;
-                                            String finalOutgoingAccountNumber = outgoingAccountNumber;
-                                            String finalIncomingAccountNumber = incomingAccountNumber;
-                                            final ParseObject finalOA = outgoingAccount;
-                                            ad2.setButton(AlertDialog.BUTTON_POSITIVE, "Confirm",
-                                             new DialogInterface.OnClickListener() {
-                                             public void onClick(DialogInterface dialog, int which) {
+                                if (amountDob <= originalBalanceDob) {
 
 
-                                                 StubankFragment sf = new StubankFragment();
-                                                 String transactionAmount = sf.updateBalance(oldIncomingBalanceDob, finalAmountDob, currencySymbol,
-                                                         finalIncoming, originalBalanceDob, finalOA);
-
-                                                 try {
-                                                     databaseMethods.createTransaction(finalOutgoingAccountNumber, reference, transactionAmount, finalIncomingAccountNumber, false, currencySymbol);
-                                                 } catch (ParseException e) {
-                                                     e.printStackTrace();
-                                                 }
-
-
-                                                 Intent intent = new Intent(getApplicationContext(), TransferComplete.class);
-
-                                                 startActivity(intent);
-                                             }});
-                                            ad2.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
-                                                    new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int i) {
-                                                            dialog.dismiss();
-                                                        }
-                                                    });
-                                            ad2.show();
+                                    AlertDialog ad2 = new AlertDialog.Builder(context).create();
+                                    ad2.setTitle("Confirm Transfer");
+                                    Double finalAmountDob = amountDob;
+                                    String finalOutgoingAccountNumber = outgoingAccountNumber;
+                                    String finalIncomingAccountNumber = incomingAccountNumber;
+                                    final ParseObject finalOA = outgoingAccount;
+                                    ad2.setButton(AlertDialog.BUTTON_POSITIVE, "Confirm",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
 
 
+                                                    StubankFragment sf = new StubankFragment();
+                                                    String transactionAmount = sf.updateBalance(oldIncomingBalanceDob, finalAmountDob, currencySymbol,
+                                                            finalIncoming, originalBalanceDob, finalOA);
 
+                                                    try {
+                                                        databaseMethods.createTransaction(finalOutgoingAccountNumber, reference, transactionAmount, finalIncomingAccountNumber, false, currencySymbol);
+                                                    } catch (ParseException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+
+                                                    Intent intent = new Intent(getApplicationContext(), TransferComplete.class);
+
+                                                    startActivity(intent);
+                                                }});
+                                    ad2.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel",
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int i) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                    ad2.show();
 
 
 
-                                        } else {
-                                            AlertDialog ad1 = new AlertDialog.Builder(context).create();
-                                            ad1.setTitle("Insufficient Funds");
-                                            ad1.setMessage("Please add funds or transfer from a different account");
-                                            ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                                    new DialogInterface.OnClickListener() {
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            dialog.dismiss();
-                                                        }
-                                                    });
-                                            ad1.show();
 
 
-                                        }
-                                        // );
 
-                                        //}
-                                    } }});
+                                } else {
+                                    AlertDialog ad1 = new AlertDialog.Builder(context).create();
+                                    ad1.setTitle("Insufficient Funds");
+                                    ad1.setMessage("Please add funds or transfer from a different account");
+                                    ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                            new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            });
+                                    ad1.show();
+
+
+                                }
+                                // );
+
+                                //}
+                            } }});
 
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
@@ -314,14 +314,14 @@ public class TransferToOthers extends AppCompatActivity {
 
         }
 
-                            addButton.setOnClickListener(new View.OnClickListener()
+        addButton.setOnClickListener(new View.OnClickListener()
 
-    {
-        public void onClick (View view){
-        Intent intent = new Intent(getApplicationContext(), NewRecipientTabbed.class);
+        {
+            public void onClick (View view){
+                Intent intent = new Intent(getApplicationContext(), NewRecipientTabbed.class);
 
-        startActivity(intent);
+                startActivity(intent);
 
 
-    }
-    });}}
+            }
+        });}}

@@ -55,15 +55,6 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
         accountNumberET = (EditText) view.findViewById(R.id.accountOther);
         payeeNameET = (EditText) view.findViewById(R.id.payeeOther);
 
-        CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkBoxOther);
-        checkbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checked = checkbox.isChecked();
-            }
-
-
-        });
 
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
         try {
