@@ -80,7 +80,7 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                selectedAccount = (Account) parent.getSelectedItem();
-               transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getAccountNumber());
+               transactionList = databaseMethods.getAllOutgoingTransactionsFromOneAccount(selectedAccount.getSortCode() + " " + selectedAccount.getAccountNumber());
                fillTransactionRecycler(totalTransactionsFromAllSellers());
                buildTransactionsRecycler();
                buildPieChart();
@@ -107,12 +107,12 @@ public class GraphActivity extends AppCompatActivity {
         for(String key: monthlyValues.keySet()){
             barEntries.add(new BarEntry(count, monthlyValues.get(key)));
             count++;
-            labels.add(key);// used to preserve order of addition to bar chart so each bar is given the correct lable
+            labels.add(key + " (£)");// used to preserve order of addition to bar chart so each bar is given the correct label
         }
 
         //adds spending prediction as the final bar on the graph
         barEntries.add(new BarEntry(count, calculateSpendingPrediction(monthlyValues)));
-        labels.add("Prediction");
+        labels.add("Prediction (£)");
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Monthly Totals");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
@@ -221,14 +221,14 @@ public class GraphActivity extends AppCompatActivity {
     // returns how much was payed to a given seller from one account
     private String totalTransactionsFromOneSeller(String seller){
         String userAccountNumber = selectedAccount.getAccountNumber();
-        int total = 0;
+        float total = 0;
         for (ParseObject transaction : transactionList) {
             if(transaction.getString("ingoingAccount").equals(seller)){
                 String valueAsString = transaction.getString("value");
-                total += Integer.parseInt(valueAsString.substring(1));
+                total += Float.parseFloat(valueAsString.substring(1));
             }
         }
-        return Integer.toString(total);
+        return Float.toString(total);
     }
 
 
@@ -297,7 +297,7 @@ public class GraphActivity extends AppCompatActivity {
 
     public void calendarButtonOnClick(View v) {
 
-        String accnum = selectedAccount.getAccountNumber();
+        String accnum = selectedAccount.getSortCode() + " " + selectedAccount.getAccountNumber();
 
         Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
         intent.putExtra("selectedAccount", selectedAccount.toString());
