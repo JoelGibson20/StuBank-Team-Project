@@ -43,6 +43,7 @@ public class ChoosePinForNewCardPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_pin_for_new_card);
         getAccountID();
+        randomDigit();
 
         //confirm to create new card on click
         Button button = (Button) findViewById(R.id.confirmNewCard);
@@ -141,7 +142,6 @@ public class ChoosePinForNewCardPage extends AppCompatActivity {
             public void done(ParseObject account, ParseException e) {
                 if (e == null) {
                     accountID = account.getObjectId();
-                    System.out.println(accountID);
                 }
                 else {
                     e.printStackTrace();

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.back4app.java.example.ui.card.CreateCardPage;
 import com.back4app.java.example.ui.databaseMethods;
 
 import android.content.Intent;
@@ -278,7 +279,13 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void cardButtonOnClick(View v) {
-        Intent intent = new Intent(getApplicationContext(), CardPage.class);
+        Intent intent;
+        if (databaseMethods.hasCard){
+            intent = new Intent(getApplicationContext(), CardPage.class);
+        }
+        else {
+            intent = new Intent(getApplicationContext(), CreateCardPage.class);
+        }
         startActivity(intent);
     }
 

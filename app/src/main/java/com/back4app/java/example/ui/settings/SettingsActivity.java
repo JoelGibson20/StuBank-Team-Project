@@ -14,6 +14,7 @@ import com.back4app.java.example.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.CreditsPage;
 import com.back4app.java.example.ui.card.CardPage;
+import com.back4app.java.example.ui.card.CreateCardPage;
 import com.back4app.java.example.ui.databaseMethods;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.login.LoginActivity;
@@ -121,7 +122,13 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
         startActivity(intent);
     }
     public void cardButtonOnClick(View v){
-        Intent intent = new Intent(getApplicationContext(), CardPage.class);
+        Intent intent;
+        if (databaseMethods.hasCard){
+            intent = new Intent(getApplicationContext(), CardPage.class);
+        }
+        else {
+            intent = new Intent(getApplicationContext(), CreateCardPage.class);
+        }
         startActivity(intent);
     }
     public void gearsButtonOnClick(View v){
