@@ -2,7 +2,6 @@ package com.back4app.java.example.ui.graph;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,9 +10,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.back4app.java.example.HomeScreen;
+import com.back4app.java.example.ui.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;

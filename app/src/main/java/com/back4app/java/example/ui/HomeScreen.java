@@ -1,4 +1,4 @@
-package com.back4app.java.example;
+package com.back4app.java.example.ui;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -26,6 +26,7 @@ import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.back4app.java.example.R;
 import com.back4app.java.example.ui.accountPage.AccountPage;
 import com.back4app.java.example.ui.card.CardActivity;
 import com.back4app.java.example.ui.card.CreateCard;

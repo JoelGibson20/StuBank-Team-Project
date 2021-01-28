@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.back4app.java.example.HomeScreen;
+import com.back4app.java.example.ui.HomeScreen;
 import com.back4app.java.example.R;
 import com.back4app.java.example.ui.graph.GraphActivity;
 import com.back4app.java.example.ui.pound.PoundActivity;
