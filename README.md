@@ -6,6 +6,7 @@ This app can be run on either an Android device, or an Android emulator.
 
 ## Accounts
 Feel free to create your own account, but to best showcase the features of the app we have provided the following test account pre-populated with data.
-```Email: example@mail.com
+```
+Email: example@mail.com
 Password: Ex@mple123
 ```
