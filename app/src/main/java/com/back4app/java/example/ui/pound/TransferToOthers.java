@@ -89,7 +89,7 @@ public class TransferToOthers extends AppCompatActivity {
 
             }
 
-            //Add transactions to set to remove duplicates
+            //Add transactions to set to remove duplicates and re-query with non-duplicated account numbers
             Set<ParseObject> savedTransactionsSet = new HashSet<>(savedTransactions);
             Set<String> savedAccountsSet = new HashSet<>();
             for(int i=0; i<savedTransactions.size();i++) {
@@ -124,6 +124,7 @@ public class TransferToOthers extends AppCompatActivity {
 
             String incomingAccount = savedTransactions.get(i).getString("ingoingAccount");
             try {
+                //Create parse object of ingoing account from the saved transations
                 outgoingAccountOwnerObject = databaseMethods.getAccountByNumber(incomingAccount);
                 final String outgoingAccountOwner = outgoingAccountOwnerObject.get("accountOwner").toString();
                 outgoingUser = databaseMethods.getUserNames(outgoingAccountOwner);
@@ -159,7 +160,7 @@ public class TransferToOthers extends AppCompatActivity {
                     referenceET = (EditText) spinnerView.findViewById(R.id.refDialog);
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-
+                    //Aleet the user who they will be transferring to
                     builder.setTitle("Transfer to " + finalOutgoingUser);
                     Spinner spinner = (Spinner) spinnerView.findViewById(R.id.dialogSpinner);
 
@@ -181,7 +182,7 @@ public class TransferToOthers extends AppCompatActivity {
                         }
                     });
 
-
+                    //Adapter for spinner
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(TransferToOthers.this, android.R.layout.simple_spinner_item, accountsNameList);
                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(dataAdapter);
@@ -194,9 +195,9 @@ public class TransferToOthers extends AppCompatActivity {
                             try {
                                 outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
                             } catch (ParseException e) {
-                                System.out.println("Fail 2");
                                 e.printStackTrace();
                             }
+                            //Get details of outgoing account
                             String originalBalance = outgoingAccount.get("balance").toString();
                             String outgoingAccountNumber = outgoingAccount.get("accountNumber").toString();
                             String outgoingAccountSort = outgoingAccount.get("sortCode").toString();
@@ -204,12 +205,18 @@ public class TransferToOthers extends AppCompatActivity {
                             String currencySymbol = originalBalance.substring(0, 1);
                             Double originalBalanceDob = Double.parseDouble(originalBalance.substring(1));
 
+                            //If user leaves a field blank show dialog box
+                            if (TextUtils.isEmpty(referenceET.getText()) || TextUtils.isEmpty(amountET.getText())) {
+                                AlertDialog ad1 = new AlertDialog.Builder(context).create();
+                                ad1.setTitle("Ensure all fields are completed");
+                                ad1.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                ad1.show();
 
-                            if (TextUtils.isEmpty(referenceET.getText())) {
-                                referenceET.setError("Please enter a reference!");
-                                Toast.makeText(getBaseContext(), "Please enter a reference", Toast.LENGTH_LONG).show();
-                            } else if (TextUtils.isEmpty(amountET.getText())) {
-                                Toast.makeText(getBaseContext(), "Please enter an amount", Toast.LENGTH_LONG).show();
                             } else {
                                 String amount = amountET.getText().toString();
                                 Double amountDob = null;
@@ -219,17 +226,17 @@ public class TransferToOthers extends AppCompatActivity {
                                 String reference = referenceET.getText().toString();
 
                                 ParseObject incomingAccount = outgoingAccountOwnerObject;
-
+                                //Get incoming account details
                                 String oldIncomingBalance = finalIncoming.get("balance").toString();
                                 String incomingAccountName = finalIncoming.get("accountName").toString();
                                 String incomingAccountNumber = finalIncoming.get("sortCode").toString();
                                 incomingAccountNumber = incomingAccountNumber + " " + finalIncoming.get("accountNumber");
                                 Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
 
-
+                                //Only proceed if user will not be overdrawn
                                 if (amountDob <= originalBalanceDob) {
 
-
+                                    //Ask user to confirm transfer
                                     AlertDialog ad2 = new AlertDialog.Builder(context).create();
                                     ad2.setTitle("Confirm Transfer");
                                     Double finalAmountDob = amountDob;
@@ -240,7 +247,7 @@ public class TransferToOthers extends AppCompatActivity {
                                             new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int which) {
 
-
+                                                    //Call method from other class and execute transfer
                                                     StubankFragment sf = new StubankFragment();
                                                     String transactionAmount = sf.updateBalance(oldIncomingBalanceDob, finalAmountDob, currencySymbol,
                                                             finalIncoming, originalBalanceDob, finalOA);
@@ -269,7 +276,7 @@ public class TransferToOthers extends AppCompatActivity {
 
 
 
-
+                                //Dialog if user does not have enough
                                 } else {
                                     AlertDialog ad1 = new AlertDialog.Builder(context).create();
                                     ad1.setTitle("Insufficient Funds");
@@ -299,7 +306,7 @@ public class TransferToOthers extends AppCompatActivity {
                     builder.show();
                 }
             });
-
+            //Set apperance of saved payee(s)
             TextView payeeName = new TextView(getApplicationContext());
             payeeName.setPadding(10, 40, 0, 40);
             payeeName.setLayoutParams(layoutparams);

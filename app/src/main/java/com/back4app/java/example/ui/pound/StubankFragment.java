@@ -45,12 +45,14 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //Get text inputted by user
         view = inflater.inflate(R.layout.stubank_fragment, container, false);
         emailET = (EditText) view.findViewById(R.id.emailInputStubank);
         amountET = (EditText) view.findViewById(R.id.amountStubank);
         phoneET = (EditText) view.findViewById(R.id.phoneNumberInput);
         referenceET = (EditText) view.findViewById(R.id.referenceStubank);
 
+        //Get value of checkbox to know whether or not to save payee
         CheckBox checkbox = (CheckBox) view.findViewById(R.id.checkBoxStubank);
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,11 +64,13 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
             });
 
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
+        //Create accounts list
         try {
             accountsList = databaseMethods.getAccounts();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        //Populate spinner with accounts
         populateSpinner(accountsList, view);
         Button submit = (Button) view.findViewById(R.id.sendbuttonStubank);
         List<ParseObject> finalAccountsList = accountsList;
@@ -78,6 +82,7 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
         public void onClick(View view) {
 
             try {
+                    //Get outgoing account details
                     ParseObject outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
                     String originalBalance = outgoingAccount.get("balance").toString();
                     String outgoingAccountNumber = outgoingAccount.get("accountNumber").toString();
@@ -97,16 +102,18 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
 
                 String reference = referenceET.getText().toString();
                 String currentAccount = "";
+                //Ensure fields not left blank
                 if (TextUtils.isEmpty(referenceET.getText())) {
                     referenceET.setError("Please enter a reference!");
 
                 } else if (TextUtils.isEmpty(amountET.getText())) {
                     amountET.setError("Please enter an amount!");
                 } else {
-
+                //Get user by email if it is not null
                 if (!email.equals("")) {
                     currentAccount = databaseMethods.getUser(email);
                 }
+                //Else get by phone
                 else {
                     currentAccount = databaseMethods.getUserByPhone(phone);
                 }
@@ -114,6 +121,7 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
                 String payeeName = databaseMethods.getUserNames(currentAccount);
                 ParseObject incomingAccount = databaseMethods.getUserCurrentAccount(currentAccount);
 
+                //Get incoming account details
                 String oldIncomingBalance = incomingAccount.get("balance").toString();
                 String incomingAccountName = incomingAccount.get("accountName").toString();
                 String incomingAccountNumber = incomingAccount.get("sortCode").toString();
@@ -121,11 +129,11 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
                 Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
 
 
-
+                    //Only execute transfer if user will not be overdrawn
                     if (amountDob <= originalBalanceDob) {
 
 
-
+                        //Ask user to confirm transfer
                         AlertDialog ad2 = new AlertDialog.Builder(getActivity()).create();
                         ad2.setTitle("Confirm Transfer");
                         DecimalFormat df = new DecimalFormat("#.00");
@@ -140,7 +148,7 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
 
 
 
-
+                                        //Execute transfer and create transaction
                                         String transactionAmount = updateBalance(oldIncomingBalanceDob, finalAmountDob, currencySymbol,
                                                 incomingAccount, originalBalanceDob, outgoingAccount);
 
@@ -155,6 +163,7 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
+                                        //Take user to confirmation page
                                         Intent intent = new Intent(getContext(), TransferComplete.class);
                                         startActivity(intent);
 
@@ -195,10 +204,7 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
                 }
 
 
-
-
-
-
+          //If an incorrect email has been entered, alert the user
             } catch (ParseException e) {
                 e.printStackTrace();
                 AlertDialog ad3 = new AlertDialog.Builder(getActivity()).create();
@@ -232,7 +238,8 @@ public class StubankFragment extends Fragment implements View.OnClickListener {
         }
 
     }
-public String populateSpinner(List<ParseObject> accountsList, View view) {
+    //Provides adapter and data source for spinner
+    public String populateSpinner(List<ParseObject> accountsList, View view) {
         ArrayList<String> accountsNameList = new ArrayList<String>();
         for (int i = 0; i < accountsList.size(); i++) {
             accountsNameList.add(accountsList.get(i).getString("accountName"));

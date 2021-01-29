@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class NewRecipientTabbed extends AppCompatActivity {
 
+    //Create fragmented view to allow movement between transferring to other Stubank
+    //users and transferring to anyone else
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

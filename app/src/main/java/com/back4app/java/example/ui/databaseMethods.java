@@ -316,7 +316,7 @@ public class databaseMethods {
         return (account);
     }
 
-
+//Get account by sort code and account number
     public static ParseObject getAccount(String sortcode, String accountNumber) throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountNumber", accountNumber);
@@ -324,7 +324,7 @@ public class databaseMethods {
         ParseObject account = query.getFirst();
         return account;
     }
-
+//Get account owner by their email address
     public static String getUser(String email) throws ParseException {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("email", email);
@@ -333,7 +333,7 @@ public class databaseMethods {
         String accountOwner = userPO.getObjectId();
         return accountOwner;
     }
-
+//Get account owner by phone
     public static String getUserByPhone(String phone) throws ParseException {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("phone", phone);
@@ -343,7 +343,7 @@ public class databaseMethods {
         return accountOwner;
     }
 
-
+//Return parse object of a user's current account
     public static ParseObject getUserCurrentAccount(String accountOwner) throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         query.whereEqualTo("accountOwner", accountOwner);
@@ -354,7 +354,7 @@ public class databaseMethods {
 
 
     }
-
+//Create transaction to display in Transactions table
     public static void createTransaction(String outgoingAccount, String reference,
                                          String value, String ingoingAccount,
                                          boolean saved, String currencySymbol) throws ParseException {
@@ -370,7 +370,7 @@ public class databaseMethods {
         transactions.put("Saved", saved);
         transactions.save();
     }
-
+//Get the full name of a user
     public static String getUserNames(String user) throws ParseException {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("objectId", user);
@@ -381,7 +381,7 @@ public class databaseMethods {
         String names = firstName + " " + lastName;
         return names;
     }
-
+//Get all saved transactions
     public static List<ParseObject> getSavedTransactions(String outgoingAccount) throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
         query.whereEqualTo("outgoingAccount", outgoingAccount);
@@ -389,6 +389,7 @@ public class databaseMethods {
         query.find();
         return query.find();
     }
+   //Check if a payee is already saved to prevent duplicates
     public static boolean payeeAlreadySaved (String accountNumber) throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Transactions");
         query.whereEqualTo("outgoingAccount", accountNumber);
@@ -401,6 +402,7 @@ public class databaseMethods {
             return false;
         }
     }
+    //Get account by its number
     public static ParseObject getAccountByNumber(String accountNumber) throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Accounts");
         String sortCode = accountNumber.substring(0,8);
@@ -414,7 +416,8 @@ public class databaseMethods {
 
 
     }
-public static ParseObject getTransactions(String account) throws ParseException {
+//Get the transactions for an account, but only once every time method called
+    public static ParseObject getTransactions(String account) throws ParseException {
         ParseQuery query = ParseQuery.getQuery("Transactions");
                 query.whereEqualTo("ingoingAccount", account);
                 query.find();

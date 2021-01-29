@@ -48,6 +48,8 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        //Get inputted text and store as variable
         View view = inflater.inflate(R.layout.other_fragment, container, false);
         amountET = (EditText) view.findViewById(R.id.amountOther);
         referenceET = (EditText) view.findViewById(R.id.referenceOther);
@@ -55,15 +57,17 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
         accountNumberET = (EditText) view.findViewById(R.id.accountOther);
         payeeNameET = (EditText) view.findViewById(R.id.payeeOther);
 
-
+        //Create list of accounts
         List<ParseObject> accountsList = new ArrayList<ParseObject>();
         try {
             accountsList = databaseMethods.getAccounts();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+        //Populate the spinner with the account names
         populateSpinner(accountsList, view);
+
+        //Find submit button and set on click listener
         Button submit = (Button) view.findViewById(R.id.sendbutton);
         List<ParseObject> finalAccountsList = accountsList;
         submit.setOnClickListener(this);
@@ -76,6 +80,7 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         try {
+            //Get outgoing account object, including sort code and account number
             outgoingAccount = databaseMethods.outgoingAccount(selectedAccount);
             String originalBalance = outgoingAccount.get("balance").toString();
             outgoingAccountNumber = outgoingAccount.get("accountNumber").toString();
@@ -90,7 +95,6 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
 
         catch (ParseException e) {
             e.printStackTrace();
-       System.out.println("Fail2");
         }
 
         String amount = amountET.getText().toString();
@@ -101,6 +105,8 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
 
         String reference = referenceET.getText().toString();
         String currentAccount = "";
+
+        //Error handling to ensure all fields are inputted
         if (TextUtils.isEmpty(referenceET.getText())) {
             referenceET.setError("Please enter a reference!");
 
@@ -114,16 +120,18 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
             payeeNameET.setError("Please enter a name!");
         }
         else {
-
+            //If no fields are empty, proceed
                 String payeeName = payeeNameET.getText().toString();
                 ParseObject incomingAccount =null;
                 String sortCode = sortCodeET.getText().toString();
+                //Add hyphens between inputted sort code to be added to transactions
                 String formattedSortCode = sortCode.substring(0,2) + "-" + sortCode.substring(2,4) +
                         "-" + sortCode.substring(4,6);
                 String accountNumber = accountNumberET.getText().toString();
                 accountNumber = formattedSortCode + " " + accountNumber;
             System.out.println(accountNumber);
                 try {
+                    //Get incoming account object to allow balance to be updated
                     final ParseObject finalIncomingAccount = databaseMethods.getAccountByNumber(accountNumber);
                     String oldIncomingBalance = finalIncomingAccount.get("balance").toString();
                     String incomingAccountName = finalIncomingAccount.get("accountName").toString();
@@ -132,11 +140,11 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
                     Double oldIncomingBalanceDob = Double.parseDouble(oldIncomingBalance.substring(1));
 
 
-
+                //Only proceed if the user will not be overdrawn
                     if (amountDob <= originalBalanceDob) {
 
 
-
+                //Create dialogue asking user to confirm transfer
                         AlertDialog ad2 = new AlertDialog.Builder(getActivity()).create();
                         ad2.setTitle("Confirm Transfer");
                         DecimalFormat df = new DecimalFormat("#.00");
@@ -150,18 +158,13 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
                                     public void onClick(DialogInterface dialog, int which) {
 
 
-
+                                        //Call method from other class and initiate transfer
                                         StubankFragment sf = new StubankFragment();
                                         String transactionAmount = sf.updateBalance(oldIncomingBalanceDob, finalAmountDob, currencySymbol,
                                                 finalIncomingAccount, originalBalanceDob, outgoingAccount);
 
                                         try {
-
-                                            //Prevents payee being saved twice
-                                            boolean exists = databaseMethods.payeeAlreadySaved(finalOutgoingAccountNumber);
-                                           // if (exists) {
-                                            //     checked = false;
-                                           // }
+                                            //Create the corresponding transaction
                                             databaseMethods.createTransaction(finalOutgoingAccountNumber, reference, transactionAmount, finalIncomingAccountNumber, checked, currencySymbol);
                                         } catch (ParseException e) {
                                             e.printStackTrace();
@@ -188,7 +191,7 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
 
 
 
-
+                    //Displays if user attempts to transfer too much
                     } else {
                         AlertDialog ad1 = new AlertDialog.Builder(getActivity()).create();
                         ad1.setTitle("Insufficient Funds");
@@ -251,6 +254,7 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
                                  } catch (ParseException e) {
                                      e.printStackTrace();
                                  }
+                                 //Take user to confirmation page
                                  Intent intent = new Intent(getContext(), TransferComplete.class);
                                  startActivity(intent);
 
@@ -301,7 +305,7 @@ public class OtherFragment extends Fragment implements View.OnClickListener{
 
 
 
-
+    //Provides adapter to add list of account names to spinner
     public String populateSpinner(List<ParseObject> accountsList, View view) {
         ArrayList<String> accountsNameList = new ArrayList<String>();
         for (int i = 0; i < accountsList.size(); i++) {

@@ -26,12 +26,7 @@ import java.util.List;
 
 
 public class PoundActivity extends AppCompatActivity {
-    //Variable returned after Spinner method called
-    String selectedAccount = "";
-    //Selected outgoing account
-    String selectedAccount1 = "";
-    //Selected incoming account
-    String selectedAccount2 = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +41,7 @@ public class PoundActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pound);
-
+        //Set buttons at bottom of screen
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
         final ImageButton poundImageButton = findViewById(R.id.poundImageButton);
@@ -57,7 +52,7 @@ public class PoundActivity extends AppCompatActivity {
 
 
         ownAccount.setOnClickListener(new View.OnClickListener() {
-            public void onClick (View view){
+            public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TransferBetweenOwnAccounts.class);
 
                 startActivity(intent);
@@ -65,12 +60,15 @@ public class PoundActivity extends AppCompatActivity {
 
             }
         });
-          otherAccount.setOnClickListener(new View.OnClickListener() {
-        public void onClick (View view) {
-            Intent intent = new Intent(getApplicationContext(), TransferToOthers.class);
+        otherAccount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), TransferToOthers.class);
 
-            startActivity(intent);
-        }});}
+                startActivity(intent);
+            }
+        });
+    }
+
     public void homeButtonOnClick(View v) {
         Intent intent = new Intent(getApplicationContext(), HomeScreen.class);
         startActivity(intent);
@@ -85,12 +83,12 @@ public class PoundActivity extends AppCompatActivity {
 /*        Intent intent = new Intent(getApplicationContext(), PoundActivity.class);
         startActivity(intent);*/
     }
-    public void cardButtonOnClick(View v){
+
+    public void cardButtonOnClick(View v) {
         Intent intent;
-        if (databaseMethods.hasCard){
+        if (databaseMethods.hasCard) {
             intent = new Intent(getApplicationContext(), CardPage.class);
-        }
-        else {
+        } else {
             intent = new Intent(getApplicationContext(), CreateCardPage.class);
         }
         startActivity(intent);
@@ -112,54 +110,4 @@ public class PoundActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
-    public String populateSpinner(List<ParseObject> accountsList, String spinnerToUse) {
-        ArrayList<String> accountsNameList = new ArrayList<String>();
-        for (int i = 0; i < accountsList.size(); i++) {
-            accountsNameList.add(accountsList.get(i).getString("accountName"));
-        }
-        final String chosenSpinner = spinnerToUse;
-        Integer id = getResources().getIdentifier(spinnerToUse, "id", getPackageName());
-        Spinner spinner = (Spinner) findViewById(id);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {;
-
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //If the method is being called for outgoing account
-                if (chosenSpinner.equals("outgoing_spinner")) {
-                selectedAccount1 = adapterView.getItemAtPosition(i).toString();
-            }
-                else {
-                    selectedAccount2 = adapterView.getItemAtPosition(i).toString();
-                }
-  }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }});
-
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, accountsNameList);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-        // String selectedAccount = spinner.getSelectedItem().toString();
-        //Outgoing account has not been changed meaning this spinner will be incoming account
-        //Set returned value depending on which spinner is being called
-        if (selectedAccount1.equals("")){
-            selectedAccount = selectedAccount2;
-        }
-        //
-        else {
-            selectedAccount = selectedAccount1;
-        }
-        //Return corresponding account
-        return selectedAccount;}
-
-
 }
-
-
-
-

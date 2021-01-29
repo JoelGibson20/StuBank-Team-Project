@@ -165,7 +165,6 @@ public class TransferBetweenOwnAccounts extends AppCompatActivity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, accountsNameList);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
-        // String selectedAccount = spinner.getSelectedItem().toString();
         //Outgoing account has not been changed meaning this spinner will be incoming account
         //Set returned value depending on which spinner is being called
         if (selectedAccount1.equals("")){

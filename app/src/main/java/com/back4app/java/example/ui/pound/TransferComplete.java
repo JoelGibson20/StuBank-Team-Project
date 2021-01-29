@@ -12,7 +12,7 @@ import com.back4app.java.example.ui.HomeScreen;
 import com.back4app.java.example.ui.pound.PoundActivity;
 
 public class TransferComplete extends AppCompatActivity {
-
+    //Allows user to be redirected to desired page
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
