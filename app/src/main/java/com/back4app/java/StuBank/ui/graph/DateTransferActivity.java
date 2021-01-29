@@ -59,7 +59,7 @@ public class DateTransferActivity extends CalendarActivity {
         List<ParseObject> datetransactionList = databaseMethods.getTransaction(Accountnum, date);
         //goes through the list and displaying the data wanted from each transaction.
         for (ParseObject transaction : datetransactionList) {
-            String reference = transaction.getString("reference");
+            String reference = transaction.getString("ingoingAccount");
             String value = transaction.getString("value");
             //gets the date from the database and changes the format to suit the query.
             String transactionDate = transaction.getDate("transactionDate").toString();
