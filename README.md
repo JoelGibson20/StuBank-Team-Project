@@ -10,3 +10,9 @@ Feel free to create your own account, but to best showcase the features of the a
 Email: example@mail.com
 Password: Ex@mple123
 ```
+
+##Code
+Java code can be found at:
+```app/java```
+XML pages can be found at:
+```app/res/layout```
