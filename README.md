@@ -16,3 +16,10 @@ Java code can be found at:
 ```app/java```
 and XML pages can be found at:
 ```app/res/layout```
+
+## Back4App account
+App name - Stubank 2.0
+```
+Email: Stubank06@gmail.com
+Password: StubankPassword1
+```
