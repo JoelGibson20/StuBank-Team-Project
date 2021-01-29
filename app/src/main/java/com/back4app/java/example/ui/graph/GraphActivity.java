@@ -57,6 +57,7 @@ public class GraphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+        databaseMethods.checkIfHasCard();
 
         //creates buttons for bottom navigation bar
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);

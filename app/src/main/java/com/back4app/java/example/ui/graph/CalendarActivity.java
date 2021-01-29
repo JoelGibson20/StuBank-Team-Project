@@ -34,6 +34,7 @@ public class CalendarActivity extends GraphActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+        databaseMethods.checkIfHasCard();
         calendarview = (CalendarView) findViewById(R.id.calendarView);
         myDate  = (TextView) findViewById(R.id.myDate);
 

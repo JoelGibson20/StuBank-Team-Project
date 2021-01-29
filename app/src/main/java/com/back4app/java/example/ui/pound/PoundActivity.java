@@ -37,6 +37,7 @@ public class PoundActivity extends AppCompatActivity {
             e.printStackTrace();
 
         }
+        databaseMethods.checkIfHasCard();
 
 
         super.onCreate(savedInstanceState);

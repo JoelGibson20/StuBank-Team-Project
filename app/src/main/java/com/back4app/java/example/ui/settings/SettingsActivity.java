@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatActivity implements passwordDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        databaseMethods.checkIfHasCard();
         //gets the buttons from the page.
         final ImageButton homeImageButton = findViewById(R.id.homeImageButton);
         final ImageButton graphImageButton = findViewById(R.id.graphImageButton);
