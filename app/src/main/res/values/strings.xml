@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Back4AppExample</string>
+    <string name="app_name">StuBank</string>
 
 
     <string name="back4app_server_url" translatable="false">https://parseapi.back4app.com/</string>

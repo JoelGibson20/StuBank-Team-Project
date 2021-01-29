@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.back4app.java.example">
+    package="com.back4app.java.StuBank">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".ui.pound.App"
+        android:name="com.back4app.java.StuBank.ui.pound.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Back4AppExample">
-        <activity android:name=".ui.vaultPage.VaultPage" />
-        <activity android:name=".ui.CreditsPage" />
-        <activity android:name=".ui.accountPage.AccountPage" />
-        <activity android:name=".ui.card.ChoosePinForNewCardPage" />
-        <activity android:name=".ui.card.CreateCardPage" />
-        <activity android:name=".ui.settings.SettingsActivity" />
-        <activity android:name=".ui.pound.PoundActivity" />
-        <activity android:name=".ui.graph.CalendarActivity" />
-        <activity android:name=".ui.graph.DateTransferActivity" />
-        <activity android:name=".ui.graph.GraphActivity" />
-        <activity android:name=".ui.card.CardPage" />
-        <activity android:name=".ui.HomeScreen" />
+        android:theme="@style/Theme.StuBank">
+        <activity android:name="com.back4app.java.StuBank.ui.vaultPage.VaultPage" />
+        <activity android:name="com.back4app.java.StuBank.ui.CreditsPage" />
+        <activity android:name="com.back4app.java.StuBank.ui.accountPage.AccountPage" />
+        <activity android:name="com.back4app.java.StuBank.ui.card.ChoosePinForNewCardPage" />
+        <activity android:name="com.back4app.java.StuBank.ui.card.CreateCardPage" />
+        <activity android:name="com.back4app.java.StuBank.ui.settings.SettingsActivity" />
+        <activity android:name="com.back4app.java.StuBank.ui.pound.PoundActivity" />
+        <activity android:name="com.back4app.java.StuBank.ui.graph.CalendarActivity" />
+        <activity android:name="com.back4app.java.StuBank.ui.graph.DateTransferActivity" />
+        <activity android:name="com.back4app.java.StuBank.ui.graph.GraphActivity" />
+        <activity android:name="com.back4app.java.StuBank.ui.card.CardPage" />
+        <activity android:name="com.back4app.java.StuBank.ui.HomeScreen" />
         <activity
-            android:name=".ui.pound.NewRecipientTabbed"
+            android:name="com.back4app.java.StuBank.ui.pound.NewRecipientTabbed"
             android:label="@string/title_activity_new_recipient_tabbed"
-            android:theme="@style/Theme.Back4AppExample.NoActionBar"></activity>
-        <activity android:name=".ui.pound.TransferToOthers" />
-        <activity android:name=".ui.pound.TransferBetweenOwnAccounts" />
-        <activity android:name=".ui.pound.TransferComplete" />
+            android:theme="@style/Theme.StuBank.NoActionBar" />
+        <activity android:name="com.back4app.java.StuBank.ui.pound.TransferToOthers" />
+        <activity android:name="com.back4app.java.StuBank.ui.pound.TransferBetweenOwnAccounts" />
+        <activity android:name="com.back4app.java.StuBank.ui.pound.TransferComplete" />
 
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.back4app.java.StuBank.ui.login.LoginActivity"
             android:label="StuBank">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.signup.SignUpActivity"
+            android:name="com.back4app.java.StuBank.ui.signup.SignUpActivity"
             android:label="@string/title_activity_sign_up" /> <!-- PARSE -->
         <meta-data
             android:name="com.parse.SERVER_URL"
