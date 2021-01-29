@@ -183,11 +183,11 @@ public class AccountPage extends AppCompatActivity {
             //Set text here without + or - in case the if conditions somehow fail
             valueText.setText(transactionsList.get(i).getString("value"));
 
-            if(transactionsList.get(i).getString("outgoingAccount").equals(accountParseObject.getString("accountNumber"))){
+            if(transactionsList.get(i).getString("outgoingAccount").equals(accountParseObject.getString("sortCode") + " " + accountParseObject.getString("accountNumber"))){
                 //If the user's account is the outgoing account for the transaction money is being taken out
                 valueText.setText("-" + transactionsList.get(i).getString("value"));
             }
-            else if (transactionsList.get(i).getString("ingoingAccount").equals(accountParseObject.getString("accountNumber"))){
+            else if (transactionsList.get(i).getString("ingoingAccount").equals(accountParseObject.getString("sortCode") + " " + accountParseObject.getString("accountNumber"))){
                 //If the user's account is the ingoing account for the transaction money is being put into the account
                 valueText.setText("+" + transactionsList.get(i).getString("value"));
             }
